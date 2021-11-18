@@ -8,6 +8,17 @@ class OauthHeader extends BaseHeader
     private array $headerArray = array();
 
     /**
+     * コンストラクタ
+     *
+     * @param string|null $oauthToken　認証用トークン、nullなら何もしない
+     */
+    public function __construct(string $oauthToken = null)
+    {
+        if(!is_null($oauthToken))
+            $this->setOauthToken($oauthToken);
+    }
+
+    /**
      * 認証用トークンをセットする
      *
      * @param string $oauthToken 認証用トークン
