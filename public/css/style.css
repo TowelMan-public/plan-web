@@ -1,0 +1,226 @@
+@charset "utf-8";
+
+.pc_mode{
+    /*visibility: visible;*/
+    display: block
+}
+
+.mobile_mode{
+    /*visibility:hidden;
+    position:absolute;*/
+    display: none
+}
+
+body {
+    color: rgb(26, 29, 27);
+    background-color: #dbe5fa;
+    font-size: 1.6rem;
+    margin: 0;
+
+    min-height: 100vh;
+    position: relative;
+    padding-bottom: 120px;
+    /*←footerの高さ*/
+    box-sizing: border-box;
+    /*←全て含めてmin-height:100vhに*/
+}
+
+header {
+    display: flex;
+    background-color: #9c99ee;
+    color: #16254e;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: auto;
+    padding: 0 16px;
+}
+
+header>* {
+    margin: 0;
+}
+
+main {
+    margin: 10px 5%;
+}
+
+.title_bar {
+    margin: 10px 0;
+    display: flex;
+    background-color: #0040e9;
+    background-image: linear-gradient(90deg, #0040e9 0%, #c5ebe8 90%, #ffffff 99%, #ffffff 100%);
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    padding: 0 16px;
+}
+
+.title_bar>* {
+    margin: 0;
+}
+
+.title_bar>h2 {
+    text-align: center;
+}
+
+.contents {
+    margin-top: 2em;
+    align-items: center;
+}
+
+form {
+    text-align: center;
+}
+
+form>a {
+    font-size: 0.7em;
+}
+
+.error{
+    color: #f13232;
+}
+
+input[type="submit"] {
+    display: inline-block;
+    border-radius: 5%;
+    /* 角丸       */
+    font-size: 9pt;
+    /* 文字サイズ */
+    text-align: center;
+    /* 文字位置   */
+    cursor: pointer;
+    /* カーソル   */
+    padding: 12px 12px;
+    /* 余白       */
+    background: #6666ff;
+    /* 背景色     */
+    color: #ffffff;
+    /* 文字色     */
+    line-height: 1em;
+    /* 1行の高さ  */
+    transition: .3s;
+    /* なめらか変化 */
+    border: 2px solid #6666ff;
+    /* 枠の指定 */
+
+
+    font-size: 1.6rem;
+}
+
+input[type="submit"]:hover {
+    box-shadow: none;
+    /* カーソル時の影消去 */
+    color: #6666ff;
+    /* 背景色     */
+    background: #ffffff;
+    /* 文字色     */
+}
+
+input[type="text"],
+input[type="password"] {
+    padding: 0.8em;
+    outline: none;
+    border: 1px solid #DDD;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    font-size: 18px;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    box-shadow: 0 0 9px #6763d5;
+    border: 1px solid #6763d5;
+}
+
+.input_label {
+    align-items: center;
+    text-align: center;
+    margin-bottom: 1.5em;
+}
+
+footer {
+    background-color: #666766;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: auto;
+
+    position: absolute;
+    /*←絶対位置*/
+    bottom: 0;
+    /*下に固定*/
+}
+
+footer>p {
+    text-align: center;
+    margin: 0 auto;
+    width: auto;
+}
+
+/**
+*スマホ向け
+*/
+@media (max-width: 767px) {
+    .pc_mode{
+        /*visibility:hidden;
+        position:absolute;*/
+        display: none;
+    }
+    
+    .mobile_mode{
+        /*visibility: visible;*/
+        display: block;
+    }
+
+    body {
+        font-size: 1em;
+    }
+
+    main {
+        margin: 0;
+        width: 100%;
+    }
+
+    .mobile_mode>.error{
+        text-align: left;
+        margin: 0;
+        padding: 0;
+    }
+
+    input{
+        margin-bottom: 1.5em;
+    }
+
+    input[type="submit"] {
+        font-size: 1em;
+        align-items: center;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 0.8em;
+        outline: none;
+        border: 0px solid #6763d5;
+        border-bottom: 2px solid rgb(47, 47, 47);
+        font-size: 18px;
+        background-color: #dbe5fa;
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+        border: 0px solid #6763d5;
+        border-bottom: 2px solid rgb(97, 97, 241);
+        box-shadow: 0 0 0px #6763d5;
+    }
+
+    .input_label {
+        width: 100%;
+        align-items: center;
+        text-align: left;
+        margin: 0;
+    }
+}
