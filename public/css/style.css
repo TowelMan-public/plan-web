@@ -1,11 +1,11 @@
 @charset "utf-8";
 
-.pc_mode{
+.pc_mode {
     /*visibility: visible;*/
     display: block
 }
 
-.mobile_mode{
+.mobile_mode {
     /*visibility:hidden;
     position:absolute;*/
     display: none
@@ -66,18 +66,39 @@ main {
 .contents {
     margin-top: 2em;
     align-items: center;
+    text-align: center;
 }
 
 form {
     text-align: center;
+    width: auto;
+    display: inline-block;
 }
 
 form>a {
     font-size: 0.7em;
 }
 
-.error{
+.error {
+    text-align: left;
     color: #f13232;
+}
+
+.input_label {
+    margin-bottom: 1.5em;
+}
+
+.input_label_core {
+    display: flex;
+    justify-content: space-between;
+}
+
+.input_name {
+    margin-right: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
 }
 
 input[type="submit"] {
@@ -133,12 +154,6 @@ input[type="password"]:focus {
     border: 1px solid #6763d5;
 }
 
-.input_label {
-    align-items: center;
-    text-align: center;
-    margin-bottom: 1.5em;
-}
-
 footer {
     background-color: #666766;
     display: flex;
@@ -163,13 +178,13 @@ footer>p {
 *スマホ向け
 */
 @media (max-width: 767px) {
-    .pc_mode{
+    .pc_mode {
         /*visibility:hidden;
         position:absolute;*/
         display: none;
     }
-    
-    .mobile_mode{
+
+    .mobile_mode {
         /*visibility: visible;*/
         display: block;
     }
@@ -183,14 +198,22 @@ footer>p {
         width: 100%;
     }
 
-    .mobile_mode>.error{
+    .mobile_mode>.error {
         text-align: left;
         margin: 0;
         padding: 0;
     }
 
-    input{
-        margin-bottom: 1.5em;
+    form {
+        display: block;
+    }
+
+    .input_label_core {
+        display: block;
+    }
+
+    input {
+        margin: 0;
     }
 
     input[type="submit"] {
@@ -220,7 +243,5 @@ footer>p {
     .input_label {
         width: 100%;
         align-items: center;
-        text-align: left;
-        margin: 0;
     }
 }
