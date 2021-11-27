@@ -1,4 +1,4 @@
-@extends('base_layout')
+@extends('unlogined_layout')
 
 @section('page_name') 
     ログイン

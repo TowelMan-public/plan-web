@@ -1,0 +1,575 @@
+@charset "utf-8";
+
+/**
+* 全体
+*/
+html*{
+    box-sizing: border-box;
+}
+
+.pc_mode {
+    display: block !important;
+}
+
+.mobile_mode {
+    display: none !important;
+}
+
+body {
+    color: rgb(26, 29, 27);
+    background-color: #dbe5fa;
+    font-size: 1.6rem;
+    margin: 0;
+
+    min-height: 100vh;
+    /*フッター*/
+    position: relative;
+    /*フッターの高さ*/
+    padding-bottom: 120px;
+}
+
+/*
+* ヘッダー
+*/
+
+header {
+    display: flex;
+    background-color: #9c99ee;
+    color: #16254e;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: auto;
+    padding: 0 16px;
+}
+
+header>* {
+    margin: 0;
+}
+
+.top_menu {
+    flex-grow: 1;
+}
+
+.top_icons_img{    
+    margin-left: 1em;
+    width: 2.2em;
+    height: 2.2em;
+}
+
+.top_icons{
+    display: flex;
+}
+
+/*
+* main
+*/
+main {
+    margin: 10px 5%;
+    margin-bottom: 0;
+}
+
+/*
+* タイトルバー 
+*/
+
+.title_bar {
+    margin: 0;
+    margin-top: 10px;
+    display: flex;
+    background-color: #0040e9;
+    background-image: linear-gradient(90deg, #0040e9 0%, #c5ebe8 90%, #ffffff 99%, #ffffff 100%);
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    padding: 0 16px;
+}
+
+.title_bar.fixed {
+	left: 5%;
+    right: 5%;
+	position: fixed;
+	top: 0;
+    margin: 0;
+}
+
+.title_bar>h2 {
+    margin: 0;
+    text-align: center;
+}
+
+.title_name>h2 {
+    margin: 0;
+    text-align: center;
+}
+
+.title_bar_menu_img{
+    display: block;
+    width: 1.8em;
+    height: 1.8em;
+}
+
+.title_bar_inner{
+    margin-left: auto;
+    align-self: center;
+}
+
+.title_bar_menu{
+    margin-left: auto;
+}
+
+/*
+* コンテントの囲い
+*/
+.outer_contents {
+    display: flex;
+    justify-content: center;
+    justify-content: space-around;
+    margin-top: 0;
+    align-items: center;
+    text-align: center;
+}
+
+/*
+* コンテント
+*/
+.contents {
+    align-self: flex-start;
+    padding-top: 2em;
+    padding-bottom: 2em;
+    align-items: center;
+    text-align: center;
+    flex-grow: 1;
+}
+
+/**
+* コンテントのサイドメニュー
+*/
+
+.second_menu{
+    margin-top: 0;
+    align-self: stretch;
+    border-right: 3px solid#ab9bfd;
+    padding-right: 5px;
+    min-width: 7em;
+}
+
+.second_menu>ul{
+    flex-flow: column;    
+}
+
+/*
+* フォーム周り
+*/
+
+form {
+    text-align: center;
+    width: auto;
+    display: inline-block;
+}
+
+form>a {
+    font-size: 0.7em;
+}
+
+.error {
+    text-align: left;
+    color: #f13232;
+}
+
+.input_label {
+    margin-bottom: 1.5em;
+}
+
+.input_label_core {
+    display: flex;
+    justify-content: space-between;
+}
+
+.input_name {
+    margin-right: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+}
+
+input[type="submit"] {
+    display: inline-block;
+    border-radius: 5%;
+    /* 角丸       */
+    font-size: 9pt;
+    /* 文字サイズ */
+    text-align: center;
+    /* 文字位置   */
+    cursor: pointer;
+    /* カーソル   */
+    padding: 12px 12px;
+    /* 余白       */
+    background: #6666ff;
+    /* 背景色     */
+    color: #ffffff;
+    /* 文字色     */
+    line-height: 1em;
+    /* 1行の高さ  */
+    transition: .3s;
+    /* なめらか変化 */
+    border: 2px solid #6666ff;
+    /* 枠の指定 */
+
+
+    font-size: 1.6rem;
+}
+
+input[type="submit"]:hover {
+    box-shadow: none;
+    /* カーソル時の影消去 */
+    color: #6666ff;
+    /* 背景色     */
+    background: #ffffff;
+    /* 文字色     */
+}
+
+input[type="text"],
+input[type="password"] {
+    padding: 0.8em;
+    outline: none;
+    border: 1px solid #DDD;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    font-size: 18px;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    box-shadow: 0 0 9px #6763d5;
+    border: 1px solid #6763d5;
+}
+
+input[type="checkbox"]{
+    display: none;
+}
+
+form>input[type="checkbox"]{
+    display: inline;
+}
+
+/**
+* 汎用的なメニュー
+*/
+
+.menu>ul {
+    display: flex;
+    list-style: none;
+    justify-content: space-between;
+    padding: 0;
+}
+
+.menu>ul>li {
+    text-align: center;
+    background-color: rgb(177, 172, 240);
+    border: 3px solid;
+    border-color: #031de2;
+    flex-grow: 1;
+    width: 100%;
+}
+
+.menu>ul>li, .menu>ul>li>*{
+    display: block;
+    text-decoration: none;
+    color: rgb(18, 17, 22);
+}
+
+/*
+* フッター
+*/
+
+footer {
+    background-color: #666766;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 120px;
+    margin: 0;
+
+    position: absolute;
+    /*←絶対位置*/
+    bottom: 0;
+    /*下に固定*/
+}
+
+footer>p {
+    text-align: center;
+    margin: 0 auto;
+    width: auto;
+}
+
+/**
+* ハンバーガーメニュー
+*/
+
+.hamburger_menu_contents_outer{
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 100%;/*leftの値を変更してメニューを画面外へ*/
+    z-index: 80;
+    background-color: #3584bb;
+    transition: all 0.3s linear 0s;/*アニメーション設定*/
+}
+
+.hamburger_menu_contents{
+    width: 100%;
+    height: 100%;
+    background-color: #3584bb;
+}
+
+#hamburger_menu_button:checked ~ .hamburger_menu_contents_outer {
+    left: 0;/*メニューを画面内へ*/
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+}
+
+.hamburger_menu_close_button{
+    text-align: right;
+}
+
+.hamburger_menu_close_button_image{
+    height: 3em;
+    width: 3em;
+    border: #dbe5fa solid 0.5em;
+    border-radius: 1em;
+}
+
+.hamburger_menu_contents>ul{
+    display: block;
+}
+
+.hamburger_menu_contents>li{
+    width: 80%;
+}
+
+/**
+* アコーディオンメニュー
+*/
+
+.acd_menu{
+    position: relative;
+}
+
+.acd_content{
+    display: none;
+}
+
+.acd_menu_label{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.acd_menu_label>div{
+    margin-left: auto;
+    align-self: center;
+    display: inline;
+}
+
+.acd_menu_label>img{
+    display: block;
+    margin-left: auto;
+    width: 1em;
+    height: 1em;
+    margin-top: 0.2em;
+}
+
+.acd_menu_label>.close_img{
+    display: none;
+}
+
+.acd_content>ul{
+    display: block;
+}
+
+.acd_menu>input[type="checkbox"]:checked + .acd_menu_label + .acd_content{
+    display: block;
+}
+
+.acd_menu>input[type="checkbox"]:checked + .acd_menu_label>.close_img{
+    display: block;
+}
+
+.acd_menu>input[type="checkbox"]:checked + .acd_menu_label>.open_img{
+    display: none;
+}
+
+.top_menu>ul>li>.acd_menu>.acd_content>ul{
+    display: block;
+    width: 98%;
+}
+
+.top_menu>ul>li>.acd_menu>input[type="checkbox"]:checked + .acd_menu_label + .acd_content{
+    display: block;
+    z-index: 20;
+    position:absolute;
+    width: 100%;
+}
+
+.hamburger_menu_contents>ul>li>.acd_menu>input[type="checkbox"]:checked + .acd_menu_label + .acd_content>ul>li{
+    background-color: #05acff;
+}
+
+/**
+* 非表示型スクロールバー y
+*/
+.hidden_scroll_y{
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.hidden_scroll_y::-webkit-scrollbar {
+    display:none;
+}
+
+/**
+* 非表示型スクロールバー x
+*/
+.hidden_scroll_x{
+    height: 150px;
+    overflow-x: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.hidden_scroll_x::-webkit-scrollbar {
+    display:none;
+}
+
+/**
+* スマホ向け
+*/
+@media (max-width: 767px) {
+    /**
+    * 全体
+    */
+
+    .pc_mode {
+        display: none !important;
+    }
+
+    .mobile_mode {
+        display: block !important;
+    }
+
+    body {
+        font-size: 1em;
+    }
+
+    /**
+    * main
+    */
+    main {
+        margin: 0;
+        width: 100%;
+    }
+
+    /**
+    * タイトルバー
+    */
+
+    .title_bar{
+        display: block;
+    }
+
+    .title_bar.fixed {
+        left: 0;
+        right: 0%;
+        position: fixed;
+        top: 0;
+        margin: 0;
+    }
+
+    /**
+    * コンテント
+    */
+    .contents {
+        width: 100%;
+    }
+
+    /*
+    * フォーム周り
+    */
+    .mobile_mode>.error {
+        text-align: left;
+        margin: 0;
+        padding: 0;
+    }
+
+    form {
+        display: block;
+    }
+
+    .input_label_core {
+        display: block;
+    }
+
+    input {
+        margin: 0;
+    }
+
+    input[type="submit"] {
+        font-size: 1em;
+        align-items: center;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 0.8em;
+        outline: none;
+        border: 0px solid #6763d5;
+        border-bottom: 2px solid rgb(47, 47, 47);
+        font-size: 18px;
+        background-color: #dbe5fa;
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+        border: 0px solid #6763d5;
+        border-bottom: 2px solid rgb(97, 97, 241);
+        box-shadow: 0 0 0px #6763d5;
+    }
+
+    .input_label {
+        width: 100%;
+        align-items: center;
+    }
+
+    /*
+    * fixedなハンバーガーメニューのボタン
+    */
+    .mobile_menu_button_img{
+        width: 3em;
+        height: 3em;
+    }
+
+    .mobile_menu_button{
+        width: auto;
+        height: auto;
+        display: none !important;
+    }
+
+    .mobile_menu_button.fixed{
+        z-index: 1;
+        position: fixed;
+        bottom: 1em;
+        right: 1em;
+        display: block !important;
+    }
+}

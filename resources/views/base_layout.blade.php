@@ -4,21 +4,24 @@
         <title>@yield('page_name') - プラン子</title>
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
         <meta name="viewport" content="width=device-width, inital-scale=1">
+        <link rel="stylesheet" href="{{ asset('css/base_style.css') }}">
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     </head>
 
     <body>
         <header>
             <h1>プラン子♪</h1>
+            @yield('header')
         </header>
 
         <main>
-            <div class="title_bar">
+            <div id="title_bar" class="title_bar">
                 @yield('title_bar')
             </div>
 
-            <div class="contents">
-                @yield('contents')
+            <div class="outer_contents">
+                @yield('outer_contents')
             </div>
         </main>
 
@@ -26,4 +29,6 @@
             <p>&copy; Towelman. 2021.</p> 
         </footer>
     </body>
+
+    <script src="{{ asset('javascript/base_script.js') }}"></script>
 </html>
