@@ -52,6 +52,27 @@ class UserAPI
     }
 
     /**
+     * 認証用トークンを生成する（ログイン処理ともいえる）
+     *
+     * @param string $refreshToken
+     * @return TokenResponse
+     */
+    public function postNewToken(string $refreshToken): TokenResponse
+    {
+        $url = self::ROOT_URL + "/token";
+
+        //dto
+        $dto = new DtoParamaters();
+        $dto->setRefreshJwtToken($refreshToken);
+
+        //header
+        $header = new BaseHeader();
+
+        $responseArray = $this->restTemplate->post($url, $dto, $header);
+        return TokenResponse::parseTokenResponse($responseArray);
+    }
+
+    /**
      * ユーザーの新規登録
      *
      * @param string $userName

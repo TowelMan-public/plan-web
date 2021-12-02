@@ -10,17 +10,21 @@
 
 @section('contents')
     <form action="/test" method="get">
+        @if (isset($formError))
+            <div class="error">{{ $formError }}</div>
+        @endif
+
         <div class="input_label">
             <div class="input_label_core">
                 <div class="input_name">ユーザー名</div>
-                <input type="text" name="userName" placeholder="ユーザー名" />
+                <input type="text" name="userName" placeholder="ユーザー名" value="{{ old('userName', '') }}" />
             </div>
             <div class="error">{{ $errors->first('userName') }}</div>
         </div>
         <div class="input_label">
             <div class="input_label_core">
                 <div class="input_name">ユーザーのニックネーム</div>
-                <input type="text" name="userNickName" placeholder="ユーザーのニックネーム" />
+                <input type="text" name="userNickName" placeholder="ユーザーのニックネーム" value="{{ old('userNickName', '') }}" />
             </div>
             <div class="error">{{ $errors->first('userNickName') }}</div>
         </div>
