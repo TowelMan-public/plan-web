@@ -9,11 +9,11 @@
 @endsection
 
 @section('contents')
+    @if (isset($formError))
+        <div class="error">{{ $formError }}</div>
+    @endif
     <form action="/sign_up" method="post">
         @csrf
-        @if (isset($formError))
-            <div class="error">{{ $formError }}</div>
-        @endif
 
         <div class="input_label">
             <div class="input_label_core">

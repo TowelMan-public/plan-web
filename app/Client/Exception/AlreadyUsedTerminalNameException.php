@@ -2,12 +2,12 @@
 
 namespace App\Client\Exception;
 
-use Exception;
+use RuntimeException;
 
 /**
  * 既に使われている機種名が指定されたときの例外
  */
-class AlreadyUsedTerminalNameException extends Exception
+class AlreadyUsedTerminalNameException extends RuntimeException
 {
     public function __construct(string $message)
     {

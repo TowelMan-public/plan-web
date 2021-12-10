@@ -2,13 +2,13 @@
 
 namespace App\Client\Exception;
 
-use Exception;
+use RuntimeException;
 
 /**
  * 存在しない値が指定されたときに投げられる例外<br>
  * そのフィールド名と値をセットして投げる
  */
-class NotFoundValueException extends Exception
+class NotFoundValueException extends RuntimeException
 {
     public function __construct(string $message)
     {

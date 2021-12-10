@@ -35,6 +35,7 @@ class SignUpController extends Controller
             $this->userService->insertUser($request->userName, $request->userNickName, $request->password);
             return redirect()->action([LoginController::class, 'show']);
         }catch(AlreadyUsedUserNameException $e){
+            session()->put('_old_input', $request->all());
             return View('sign_up')->with('formError', 'あなたが指定したユーザー名は既に指定されています。');
         }
     }

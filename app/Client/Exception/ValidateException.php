@@ -2,12 +2,12 @@
 
 namespace App\Client\Exception;
 
-use Exception;
+use RuntimeException;
 
 /**
  * サーバ側でバリデーションチェックに引っかかった。
  */
-class ValidateException extends Exception
+class ValidateException extends RuntimeException
 {
     public function __construct(string $message)
     {

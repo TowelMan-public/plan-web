@@ -2,12 +2,12 @@
 
 namespace App\Client\Exception;
 
-use Exception;
+use RuntimeException;
 
 /**
  * 操作をする権限がないプロジェクトを操作しようとしたときに投げられる例外
  */
-class NotHaveAuthorityToOperateProjectException extends Exception
+class NotHaveAuthorityToOperateProjectException extends RuntimeException
 {
     public function __construct(string $message)
     {

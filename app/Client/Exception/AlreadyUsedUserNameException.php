@@ -2,12 +2,12 @@
 
 namespace App\Client\Exception;
 
-use Exception;
+use RuntimeException;
 
 /**
  * 既に使われているユーザー名が指定されたときの例外
  */
-class AlreadyUsedUserNameException extends Exception
+class AlreadyUsedUserNameException extends RuntimeException
 {
     public function __construct(string $message)
     {

@@ -2,12 +2,12 @@
 
 namespace App\Client\Exception;
 
-use Exception;
+use RuntimeException;
 
 /**
  * 既にプロジェクトに加入してるか、勧誘されてるユーザーが指定されたときの例外
  */
-class AlreadyJoinedPublicProjectException extends Exception
+class AlreadyJoinedPublicProjectException extends RuntimeException
 {
     public function __construct(string $message)
     {

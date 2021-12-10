@@ -2,12 +2,12 @@
 
 namespace App\Client\Exception;
 
-use Exception;
+use RuntimeException;
 
 /**
  * 不正なリクエストが来たときの例外
  */
-class BadRequestException extends Exception
+class BadRequestException extends RuntimeException
 {
     public function __construct(string $message)
     {

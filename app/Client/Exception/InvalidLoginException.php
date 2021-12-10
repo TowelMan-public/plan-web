@@ -2,12 +2,12 @@
 
 namespace App\Client\Exception;
 
-use Exception;
+use RuntimeException;
 
 /**
  * 認証エラー（認証用トークンが不正・再ログインが必要）
  */
-class InvalidLoginException extends Exception
+class InvalidLoginException extends RuntimeException
 {
     public function __construct()
     {

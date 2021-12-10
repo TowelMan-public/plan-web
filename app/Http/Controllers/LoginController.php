@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Client\Exception\InvalidLoginException;
+use App\Client\Exception\FailureCreateAuthenticationTokenException;
 use App\Http\Requests\LoginRequest;
 use App\Service\OauthService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -32,7 +32,6 @@ class LoginController extends Controller
 
     public function login(LoginRequest $request)
     {
-        session()->flush();
         try{
             $tokenResponse = $this->oauthService->login($request->userName, $request->password);
             session(['oauthToken' => $tokenResponse->getAuthenticationToken()]);
@@ -40,11 +39,10 @@ class LoginController extends Controller
             session(['refreshToken' => $tokenResponse->getRefreshToken()]);
             session()->save();
 
-            $test = new InvalidLoginException();
-
             return View('test');
         }
-        catch(InvalidLoginException $e){
+        catch(FailureCreateAuthenticationTokenException $e){            
+            session()->put('_old_input', $request->all());
             return View('sign_in')->with('formError', 'ログインに失敗しました。ユーザー名とパスワードをご確認ください。');
         }
     }

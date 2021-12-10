@@ -154,6 +154,11 @@ return [
       |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'userName' => 'ユーザー名',
+        'userNickName' => 'ニックネーム',
+        'password' => 'パスワード',
+        'OneMorePassword' => 'パスワード（確認）',
+    ],
 
 ];

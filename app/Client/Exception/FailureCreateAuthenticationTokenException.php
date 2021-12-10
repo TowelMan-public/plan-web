@@ -2,12 +2,12 @@
 
 namespace App\Client\Exception;
 
-use Exception;
+use RuntimeException;
 
 /**
  * 認証用トークンが不正
  */
-class FailureCreateAuthenticationTokenException extends Exception
+class FailureCreateAuthenticationTokenException extends RuntimeException
 {
     public function __construct(string $message)
     {

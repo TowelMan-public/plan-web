@@ -28,11 +28,8 @@ class RestTemplateErrorHandler
      */
     public function checkErrorAndThrows(int $statusCode, array $resultArray = null)
     {
-        if(isNull($resultArray))
-            return;
-
-        $errorName = $resultArray[0]['error_code'];
-        $message = $resultArray[0]['message'];
+        $errorName = $resultArray['errorCode'];
+        $message = $resultArray['message'];
 
         if(!is_null($errorName)){
             switch($errorName){
