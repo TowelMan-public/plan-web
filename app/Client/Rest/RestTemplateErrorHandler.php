@@ -12,8 +12,6 @@ use App\Client\Exception\InvalidLoginException;
 use App\Client\Exception\NotFoundValueException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-use function PHPUnit\Framework\isNull;
-
 /**
  * 外部APIを呼び出すときに生じたエラーを処理するクラス
  */
@@ -28,8 +26,13 @@ class RestTemplateErrorHandler
      */
     public function checkErrorAndThrows(int $statusCode, array $resultArray = null)
     {
-        $errorName = $resultArray['errorCode'];
-        $message = $resultArray['message'];
+        $errorName = '';
+        $message = '';
+
+        if( isset($resultArray['errorCode']) && isset($resultArray['message']) ){
+            $errorName = $resultArray['errorCode'];
+            $message = $resultArray['message'];
+        }
 
         if(!is_null($errorName)){
             switch($errorName){
