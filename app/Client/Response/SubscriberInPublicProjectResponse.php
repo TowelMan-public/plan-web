@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Client\Response;
+
 class SubscriberInPublicProjectResponse
 {
 
@@ -11,16 +13,11 @@ class SubscriberInPublicProjectResponse
      * SubscriberInPublicProjectResponse単体を生成する
      * 
      * @param array $arrayData UserResponseの連想配列の配列もしくは連想配列
-     * @param boolean $isSingle $arrayDataが連想配列であればtrue、そうでなければfalse。通常はtrue。
      * @return SubscriberInPublicProjectResponse
      */
-    public static function parseSubscriberInPublicProjectResponse(array $arrayData, bool $isSingle = false): SubscriberInPublicProjectResponse
+    public static function parseSubscriberInPublicProjectResponse(array $arrayData): SubscriberInPublicProjectResponse
     {
-        $singleArrayDate = null;
-        if ($isSingle)
-            $singleArrayDate = $arrayData;
-        else
-            $singleArrayDate = $arrayData[0];
+        $singleArrayDate = $arrayData;
 
         $entity = new SubscriberInPublicProjectResponse();
         $entity->setPublicProjectId($singleArrayDate['publicProjectId']);

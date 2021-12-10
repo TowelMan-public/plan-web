@@ -1,11 +1,19 @@
 <?php
 
+namespace App\Client\Api\V1;
+
+use App\Client\Dto\DtoParamaters;
+use App\Client\Header\OauthHeader;
+use App\Client\Response\SubscriberInPublicProjectResponse;
+use App\Client\Rest\RestTemplate;
+use App\Config\Config;
+
 /**
 * パブリックプロジェクトの参画者に関するAPI
 */
 class SubscriberAPI
 {
-    private const ROOT_URL = Config::API_ROOT_URL_V1 + "project";
+    private const ROOT_URL = Config::API_ROOT_URL_V1 . "project";
     private static SubscriberApi $instance;
     private RestTemplate $restTemplate;
 
@@ -20,7 +28,7 @@ class SubscriberAPI
     /**
      * インスタンスを取得する
      *
-     * @return SubscriberApiのインスタンス
+     * @return SubscriberAPI SubscriberApiのインスタンス
      */
     public static function getInstance(): SubscriberApi{
         self::$instance ??= new SubscriberApi();
@@ -37,7 +45,7 @@ class SubscriberAPI
      */
     public function post(string $token, int $publicProjectId, string $userName)
     {
-        $url = self::ROOT_URL + "/$publicProjectId/subscriber";
+        $url = self::ROOT_URL . "/$publicProjectId/subscriber";
         
         //リクエストパラメタ
         $dto = new DtoParamaters();
@@ -58,7 +66,7 @@ class SubscriberAPI
      */
     public function getList(string $token, int $publicProjectId) :array
     {
-        $url = self::ROOT_URL + "/$publicProjectId/subscriber";
+        $url = self::ROOT_URL . "/$publicProjectId/subscriber";
         
         //リクエストパラメタ
         $dto = new DtoParamaters();        
@@ -81,7 +89,7 @@ class SubscriberAPI
      */
     public function put(string $token, int $publicProjectId, string $userName, int $authorityId)
     {
-        $url = self::ROOT_URL + "/$publicProjectId/subscriber";
+        $url = self::ROOT_URL . "/$publicProjectId/subscriber";
         
         //リクエストパラメタ
         $dto = new DtoParamaters();
@@ -104,7 +112,7 @@ class SubscriberAPI
      */
     public function delete(string $token, int $publicProjectId, string $userName)
     {
-        $url = self::ROOT_URL + "/$publicProjectId/subscriber";
+        $url = self::ROOT_URL . "/$publicProjectId/subscriber";
         
         //リクエストパラメタ
         $dto = new DtoParamaters();
@@ -125,7 +133,7 @@ class SubscriberAPI
      */
     public function postAccept(string $token, int $publicProjectId)
     {
-        $url = self::ROOT_URL + "/$publicProjectId/subscriber/accept";
+        $url = self::ROOT_URL . "/$publicProjectId/subscriber/accept";
         
         //リクエストパラメタ
         $dto = new DtoParamaters();
@@ -145,7 +153,7 @@ class SubscriberAPI
      */
     public function postBlock(string $token, int $publicProjectId)
     {
-        $url = self::ROOT_URL + "/$publicProjectId/subscriber/block";
+        $url = self::ROOT_URL . "/$publicProjectId/subscriber/block";
         
         //リクエストパラメタ
         $dto = new DtoParamaters();
@@ -165,7 +173,7 @@ class SubscriberAPI
      */
     public function postExit(string $token, int $publicProjectId)
     {
-        $url = self::ROOT_URL + "/$publicProjectId/subscriber/exit";
+        $url = self::ROOT_URL . "/$publicProjectId/subscriber/exit";
         
         //リクエストパラメタ
         $dto = new DtoParamaters();

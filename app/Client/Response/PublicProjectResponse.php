@@ -1,5 +1,10 @@
 <?php
 
+namespace App\Client\Response;
+
+use App\Utility\DateUtility;
+use DateTime;
+
 class PublicProjectResponse
 {
 
@@ -14,16 +19,11 @@ class PublicProjectResponse
      * PublicProjectResponse単体を生成する
      * 
      * @param array $arrayData UserResponseの連想配列の配列もしくは連想配列
-     * @param boolean $isSingle $arrayDataが連想配列であればtrue、そうでなければfalse。通常はtrue。
      * @return PublicProjectResponse
      */
-    public static function parsePublicProjectResponse(array $arrayData, bool $isSingle = false): PublicProjectResponse
+    public static function parsePublicProjectResponse(array $arrayData): PublicProjectResponse
     {
-        $singleArrayDate = null;
-        if ($isSingle)
-            $singleArrayDate = $arrayData;
-        else
-            $singleArrayDate = $arrayData[0];
+        $singleArrayDate = $arrayData;
 
         $entity = new PublicProjectResponse();
         $entity->setPublicProjectId($singleArrayDate['publicProjectId']);

@@ -1,5 +1,10 @@
 <?php
 
+namespace App\Client\Api\V1;
+
+/**
+ * V1系のAPI
+ */
 class V1 
 {
     private static V1 $instance;

@@ -1,5 +1,12 @@
 <?php
 
+namespace App\Utility;
+
+use App\Config\Config;
+use App\Exception\DateException;
+use DateTime;
+use DateTimeZone;
+
 /**
  * 日付に関するフォーマットクラス
  */

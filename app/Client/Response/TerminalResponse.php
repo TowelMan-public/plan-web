@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Client\Response;
+
 class TerminalResponse
 {
 
@@ -9,16 +11,11 @@ class TerminalResponse
      * TerminalResponse単体を生成する
      * 
      * @param array $arrayData UserResponseの連想配列の配列もしくは連想配列
-     * @param boolean $isSingle $arrayDataが連想配列であればtrue、そうでなければfalse。通常はtrue。
      * @return TerminalResponse
      */
-    public static function parseTerminalResponse(array $arrayData, bool $isSingle = false): TerminalResponse
+    public static function parseTerminalResponse(array $arrayData): TerminalResponse
     {
-        $singleArrayDate = null;
-        if ($isSingle)
-            $singleArrayDate = $arrayData;
-        else
-            $singleArrayDate = $arrayData[0];
+        $singleArrayDate = $arrayData;
 
         $entity = new TerminalResponse();
         $entity->setTerminaName($singleArrayDate['terminaName']);

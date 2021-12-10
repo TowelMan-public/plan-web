@@ -1,11 +1,21 @@
 <?php
 
+namespace App\Client\Api\V1;
+
+use App\Client\Dto\DtoParamaters;
+use App\Client\Header\OauthHeader;
+use App\Client\Response\TodoOnResponsibleResponse;
+use App\Client\Response\UserInTodoOnResponsibleResponse;
+use App\Client\Rest\RestTemplate;
+use App\Config\Config;
+use DateTime;
+
 /**
 * 担当者向け「やること」に関するAPI
 */
 class TodoOnResponsibleAPI
 {
-    private const ROOT_URL = Config::API_ROOT_URL_V1 + "todo";
+    private const ROOT_URL = Config::API_ROOT_URL_V1 . "todo";
     private static TodoOnResponsibleApi $instance;
     private RestTemplate $restTemplate;
 
@@ -20,7 +30,7 @@ class TodoOnResponsibleAPI
     /**
      * インスタンスを取得する
      *
-     * @return TodoOnResponsibleApiのインスタンス
+     * @return TodoOnResponsibleApi TodoOnResponsibleApiのインスタンス
      */
     public static function getInstance(): TodoOnResponsibleApi{
         self::$instance ??= new TodoOnResponsibleApi();
@@ -37,7 +47,7 @@ class TodoOnResponsibleAPI
      */
     public function post(string $token, int $todoOnProjectId, string $userName)
     {
-        $url = self::ROOT_URL + "/$todoOnProjectId/responsible/$userName";
+        $url = self::ROOT_URL . "/$todoOnProjectId/responsible/$userName";
         
         //リクエストパラメタ
         $dto = new DtoParamaters();
@@ -57,7 +67,7 @@ class TodoOnResponsibleAPI
      */
     public function getListInTodo(string $token, int $todoOnProjectId) :array
     {
-        $url = self::ROOT_URL + "/$todoOnProjectId/responsible";
+        $url = self::ROOT_URL . "/$todoOnProjectId/responsible";
         
         //リクエストパラメタ
         $dto = new DtoParamaters();        
@@ -79,7 +89,7 @@ class TodoOnResponsibleAPI
      */
     public function delete(string $token, int $todoOnProjectId, string $userName)
     {
-        $url = self::ROOT_URL + "/$todoOnProjectId/responsible/$userName";
+        $url = self::ROOT_URL . "/$todoOnProjectId/responsible/$userName";
         
         //リクエストパラメタ
         $dto = new DtoParamaters();
@@ -99,7 +109,7 @@ class TodoOnResponsibleAPI
      */
     public function postExit(string $token, int $todoOnProjectId)
     {
-        $url = self::ROOT_URL + "/$todoOnProjectId/responsible";
+        $url = self::ROOT_URL . "/$todoOnProjectId/responsible";
         
         //リクエストパラメタ
         $dto = new DtoParamaters();
@@ -123,7 +133,7 @@ class TodoOnResponsibleAPI
     public function getListByExample(string $token, int $publicProjectId = null,
          DateTime $startDate = null, DateTime $finishDate = null, bool $isIncludeCompleted = null) :array
     {
-        $url = self::ROOT_URL + "/responsible";
+        $url = self::ROOT_URL . "/responsible";
         
         //リクエストパラメタ
         $dto = new DtoParamaters();
@@ -148,7 +158,7 @@ class TodoOnResponsibleAPI
      */
     public function get(string $token, int $todoOnProjectId) :TodoOnResponsibleResponse
     {
-        $url = self::ROOT_URL + "/$todoOnProjectId/responsible";
+        $url = self::ROOT_URL . "/$todoOnProjectId/responsible";
         
         //リクエストパラメタ
         $dto = new DtoParamaters();
@@ -170,14 +180,14 @@ class TodoOnResponsibleAPI
      */
     public function putIsCompleted(string $token, int $todoOnProjectId, string $userName = null)
     {
-        $url = self::ROOT_URL + "/$todoOnProjectId/responsible/isCompleted";
+        $url = self::ROOT_URL . "/$todoOnProjectId/responsible/isCompleted";
         
         //リクエストパラメタ
         $dto = new DtoParamaters();
         
         //$userNameの指定の有無でAPIが変わる
         if(is_null($userName))
-            $url += "/all";
+            $url .= "/all";
         else
             $dto->setUserName($userName);
         

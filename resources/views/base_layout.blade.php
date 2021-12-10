@@ -10,6 +10,7 @@
     </head>
 
     <body>
+        
         <header>
             <h1>プラン子♪</h1>
             @yield('header')

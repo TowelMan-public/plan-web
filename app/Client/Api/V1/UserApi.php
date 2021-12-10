@@ -1,11 +1,21 @@
 <?php
 
+namespace App\Client\Api\V1;
+
+use App\Client\Dto\DtoParamaters;
+use App\Client\Header\BaseHeader;
+use App\Client\Header\OauthHeader;
+use App\Client\Response\TokenResponse;
+use App\Client\Response\UserResponse;
+use App\Client\Rest\RestTemplate;
+use App\Config\Config;
+
 /**
 * ユーザーに関するAPI
 */
 class UserAPI
 {
-    private const ROOT_URL = Config::API_ROOT_URL_V1 + "user";
+    private const ROOT_URL = Config::API_ROOT_URL_V1 . "user";
     private static UserApi $instance;
     private RestTemplate $restTemplate;
 
@@ -20,7 +30,7 @@ class UserAPI
     /**
      * インスタンスを取得する
      *
-     * @return UserApiのインスタンス
+     * @return UserAPI UserApiのインスタンス
      */
     public static function getInstance(): UserApi
     {
@@ -37,7 +47,7 @@ class UserAPI
      */
     public function postToken(string $userName, string $passwrod): TokenResponse
     {
-        $url = self::ROOT_URL + "/token";
+        $url = self::ROOT_URL . "/token";
 
         //dto
         $dto = new DtoParamaters();
@@ -59,7 +69,7 @@ class UserAPI
      */
     public function postNewToken(string $refreshToken): TokenResponse
     {
-        $url = self::ROOT_URL + "/token";
+        $url = self::ROOT_URL . "/token";
 
         //dto
         $dto = new DtoParamaters();

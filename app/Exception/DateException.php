@@ -1,5 +1,9 @@
 <?php
 
+namespace App\Exception;
+
+use Exception;
+
 /**
  * 日付関連のエラー
  */

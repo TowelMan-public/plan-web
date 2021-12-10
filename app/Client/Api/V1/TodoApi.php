@@ -1,11 +1,20 @@
 <?php
 
+namespace App\Client\Api\V1;
+
+use App\Client\Dto\DtoParamaters;
+use App\Client\Header\OauthHeader;
+use App\Client\Response\TodoOnProjectResponse;
+use App\Client\Rest\RestTemplate;
+use App\Config\Config;
+use DateTime;
+
 /**
  * 「やること」に関するAPI
  */
 class TodoAPI
 {
-    private const ROOT_URL = Config::API_ROOT_URL_V1 + "todo";
+    private const ROOT_URL = Config::API_ROOT_URL_V1 . "todo";
     private static TodoApi $instance;
     private RestTemplate $restTemplate;
 
@@ -20,7 +29,7 @@ class TodoAPI
     /**
      * インスタンスを取得する
      *
-     * @return TodoApiのインスタンス
+     * @return TodoApi TodoApiのインスタンス
      */
     public static function getInstance(): TodoApi
     {
@@ -55,7 +64,7 @@ class TodoAPI
         $header = new OauthHeader($token);
 
         $responseArrayOrContents = $this->restTemplate->post($url, $dto, $header);
-        return $responseArrayOrContents;
+        return (int)$responseArrayOrContents[0];
     }
 
     /**
@@ -97,7 +106,7 @@ class TodoAPI
      */
     public function get(string $token, int $todoOnProjectId): TodoOnProjectResponse
     {
-        $url = self::ROOT_URL + "/$todoOnProjectId";
+        $url = self::ROOT_URL . "/$todoOnProjectId";
 
         //リクエストパラメタ
         $dto = new DtoParamaters();
@@ -122,7 +131,7 @@ class TodoAPI
      */
     public function put(string $token, int $todoOnProjectId, string $todoName = null, DateTime $startDate = null, DateTime $finishDate = null, bool $isCopyContentsToResponsible = null)
     {
-        $url = self::ROOT_URL + "/$todoOnProjectId";
+        $url = self::ROOT_URL . "/$todoOnProjectId";
 
         //リクエストパラメタ
         $dto = new DtoParamaters();
@@ -146,7 +155,7 @@ class TodoAPI
      */
     public function delete(string $token, int $todoOnProjectId)
     {
-        $url = self::ROOT_URL + "/$todoOnProjectId";
+        $url = self::ROOT_URL . "/$todoOnProjectId";
 
         //リクエストパラメタ
         $dto = new DtoParamaters();
@@ -167,7 +176,7 @@ class TodoAPI
      */
     public function putIsCompleted(string $token, int $todoOnProjectId, bool $isCompleted)
     {
-        $url = self::ROOT_URL + "/$isCompleted";
+        $url = self::ROOT_URL . "/$isCompleted";
 
         //リクエストパラメタ
         $dto = new DtoParamaters();

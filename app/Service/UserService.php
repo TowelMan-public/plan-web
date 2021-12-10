@@ -1,5 +1,9 @@
 <?php
 
+namespace App\Service;
+
+use App\Client\Api\Api;
+
 /**
  * ユーザーに関するビジネスロジック
  */

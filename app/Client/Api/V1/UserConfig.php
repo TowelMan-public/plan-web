@@ -1,11 +1,19 @@
 <?php
 
+namespace App\Client\Api\V1;
+
+use App\Client\Dto\DtoParamaters;
+use App\Client\Header\OauthHeader;
+use App\Client\Response\UserConfigResponse;
+use App\Client\Rest\RestTemplate;
+use App\Config\Config;
+
 /**
  * ユーザーの設定に関するAPI
  */
 class UserConfigAPI
 {
-    private const ROOT_URL = Config::API_ROOT_URL_V1 + "user/config";
+    private const ROOT_URL = Config::API_ROOT_URL_V1 . "user/config";
     private static UserConfigApi $instance;
     private RestTemplate $restTemplate;
 
@@ -20,7 +28,7 @@ class UserConfigAPI
     /**
      * インスタンスを取得する
      *
-     * @return UserConfigApiのインスタンス
+     * @return UserConfigApi UserConfigApiのインスタンス
      */
     public static function getInstance(): UserConfigApi
     {

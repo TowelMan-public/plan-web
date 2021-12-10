@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Client\Response;
+
 class UserResponse
 {
 
@@ -10,16 +12,11 @@ class UserResponse
      * UserResponse単体を生成する
      * 
      * @param array $arrayData UserResponseの連想配列の配列もしくは連想配列
-     * @param boolean $isSingle $arrayDataが連想配列であればtrue、そうでなければfalse。通常はtrue。
      * @return UserResponse
      */
-    public static function parseUserResponse(array $arrayData, bool $isSingle = false): UserResponse
+    public static function parseUserResponse(array $arrayData): UserResponse
     {
-        $singleArrayDate = null;
-        if ($isSingle)
-            $singleArrayDate = $arrayData;
-        else
-            $singleArrayDate = $arrayData[0];
+        $singleArrayDate = $arrayData;
 
         $entity = new UserResponse();
         $entity->setUserName($singleArrayDate['userName']);

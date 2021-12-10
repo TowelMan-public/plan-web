@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Config;
+
 /**
  * 本アプリの全体的な設定
  */
@@ -10,7 +12,7 @@ class Config
      */
     private function __construct() {}
 
-    public const API_ROOT_URL_V1 = "http://localhost:8080/api/v1/";
+    public const API_ROOT_URL_V1 = "http://localhost:8080/api/V1/";
     public const DATE_FORMAT = "Y-m-d H:i";
     public const TIME_ZONE = "Asia/Tokyo";
     public const NAME_MAX_SIZE = 100;

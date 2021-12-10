@@ -1,5 +1,9 @@
 <?php
 
+namespace App\Client\Api;
+
+use App\Client\Api\V1\V1;
+
 /**
  * 全てのAPIをまとめているクラス
  */

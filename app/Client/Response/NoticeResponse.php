@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Client\Response;
+
 class NoticeResponse 
 {
     private const TODO_NOTICE = "TODO_NOTICE";
@@ -13,16 +15,11 @@ class NoticeResponse
      * NoticeResponse単体を生成する
      * 
      * @param array $arrayData UserResponseの連想配列の配列もしくは連想配列
-     * @param boolean $isSingle $arrayDataが連想配列であればtrue、そうでなければfalse。通常はtrue。
      * @return NoticeResponse
      */
-    public static function parseNoticeResponse(array $arrayData, bool $isSingle = false): NoticeResponse
+    public static function parseNoticeResponse(array $arrayData): NoticeResponse
     {
-        $singleArrayDate = null;
-        if($isSingle)
-            $singleArrayDate = $arrayData;
-        else
-            $singleArrayDate = $arrayData[0];
+        $singleArrayDate = $arrayData;
 
         $entity = new NoticeResponse();
         $entity->setMessage($singleArrayDate['message']);

@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Client\Response;
+
 class ContentResponse 
 {
     
@@ -13,16 +15,11 @@ class ContentResponse
      * ContentResponse単体を生成する
      * 
      * @param array $arrayData UserResponseの連想配列の配列もしくは連想配列
-     * @param boolean $isSingle $arrayDataが連想配列であればtrue、そうでなければfalse。通常はtrue。
      * @return ContentResponse
      */
-    public static function parseContentResponse(array $arrayData, bool $isSingle = false): ContentResponse
+    public static function parseContentResponse(array $arrayData): ContentResponse
     {
-        $singleArrayDate = null;
-        if($isSingle)
-            $singleArrayDate = $arrayData;
-        else
-            $singleArrayDate = $arrayData[0];
+        $singleArrayDate = $arrayData;
 
         $entity = new ContentResponse();
         $entity->setContentId($singleArrayDate['contentId']);
@@ -40,7 +37,7 @@ class ContentResponse
      * @param array $arrayData UserResponseの連想配列の配列
      * @return array ${1:ClassName}の配列
      */
-    public static function parseContentResponseArray(array $arrayData): array
+    public static function parseContentResponseArray(array|string $arrayData): array
     {
         $entityArray = array();
         foreach($arrayData as $valueArray)

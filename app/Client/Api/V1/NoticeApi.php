@@ -1,11 +1,19 @@
 <?php
 
+namespace App\Client\Api\V1;
+
+use App\Client\Dto\DtoParamaters;
+use App\Client\Header\OauthHeader;
+use App\Client\Response\NoticeResponse;
+use App\Client\Rest\RestTemplate;
+use App\Config\Config;
+
 /**
 * 通知に関するAPI
 */
 class NoticeAPI
 {
-    private const ROOT_URL = Config::API_ROOT_URL_V1 + "notice";
+    private const ROOT_URL = Config::API_ROOT_URL_V1 . "notice";
     private static NoticeApi $instance;
     private RestTemplate $restTemplate;
 
@@ -20,7 +28,7 @@ class NoticeAPI
     /**
      * インスタンスを取得する
      *
-     * @return NoticeApiのインスタンス
+     * @return NoticeApi NoticeApiのインスタンス
      */
     public static function getInstance(): NoticeApi{
         self::$instance ??= new NoticeApi();

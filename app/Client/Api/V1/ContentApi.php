@@ -1,11 +1,19 @@
 <?php
 
+namespace App\Client\Api\V1;
+
+use App\Client\Dto\DtoParamaters;
+use App\Client\Header\OauthHeader;
+use App\Client\Response\ContentResponse;
+use App\Client\Rest\RestTemplate;
+use App\Config\Config;
+
 /**
 * 内容に関するAPI
 */
 class ContentAPI
 {
-    private const ROOT_URL = Config::API_ROOT_URL_V1 + "content";
+    private const ROOT_URL = Config::API_ROOT_URL_V1 . "content";
     private static ContentApi $instance;
     private RestTemplate $restTemplate;
 
@@ -20,7 +28,7 @@ class ContentAPI
     /**
      * インスタンスを取得する
      *
-     * @return ContentApiのインスタンス
+     * @return ContentApi ContentApiのインスタンス
      */
     public static function getInstance(): ContentApi{
         self::$instance ??= new ContentApi();
@@ -50,7 +58,7 @@ class ContentAPI
         $header = new OauthHeader($token);
         
         $responseArrayOrContents = $this->restTemplate->post($url, $dto, $header);
-        return $responseArrayOrContents;
+        return (int)$responseArrayOrContents[0];
     }
     
     /**
@@ -84,7 +92,7 @@ class ContentAPI
      */
     public function get(string $token, int $contentId) :ContentResponse
     {
-        $url = self::ROOT_URL + "/$contentId";
+        $url = self::ROOT_URL . "/$contentId";
         
         //リクエストパラメタ
         $dto = new DtoParamaters();        
@@ -107,7 +115,7 @@ class ContentAPI
      */
     public function put(string $token, int $contentId, string $contentTitle = null, string $contentExplanation = null)
     {
-        $url = self::ROOT_URL + "/$contentId";
+        $url = self::ROOT_URL . "/$contentId";
         
         //リクエストパラメタ
         $dto = new DtoParamaters();
@@ -130,7 +138,7 @@ class ContentAPI
      */
     public function delete(string $token, int $contentId)
     {
-        $url = self::ROOT_URL + "/$contentId";
+        $url = self::ROOT_URL . "/$contentId";
         
         //リクエストパラメタ
         $dto = new DtoParamaters();
@@ -152,7 +160,7 @@ class ContentAPI
      */
     public function putIsCompleted(string $token, int $contentId, bool $isCompleted)
     {
-        $url = self::ROOT_URL + "/$contentId/isCompleted";
+        $url = self::ROOT_URL . "/$contentId/isCompleted";
         
         //リクエストパラメタ
         $dto = new DtoParamaters();

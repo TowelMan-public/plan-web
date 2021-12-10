@@ -9,7 +9,8 @@
 @endsection
 
 @section('contents')
-    <form action="/test" method="get">
+    <form action="/sign_in" method="post">
+        @csrf
         @if (isset($formError))
             <div class="error">{{ $formError }}</div>
         @endif
@@ -31,6 +32,6 @@
         
         <div class="input_label"><input type="submit" value="ログイン" class="button"></div>
 
-        <a href="/test">新しくユーザーを作成する</a>
+        <a href="/sign_up">新しくユーザーを作成する</a>
     </form>
 @endsection

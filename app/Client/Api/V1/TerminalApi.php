@@ -1,11 +1,19 @@
 <?php
 
+namespace App\Client\Api\V1;
+
+use App\Client\Dto\DtoParamaters;
+use App\Client\Header\OauthHeader;
+use App\Client\Response\TerminalResponse;
+use App\Client\Rest\RestTemplate;
+use App\Config\Config;
+
 /**
 * 機種に関するAPI
 */
 class TerminalAPI
 {
-    private const ROOT_URL = Config::API_ROOT_URL_V1 + "user/terminal";
+    private const ROOT_URL = Config::API_ROOT_URL_V1 . "user/terminal";
     private static TerminalApi $instance;
     private RestTemplate $restTemplate;
 
@@ -20,7 +28,7 @@ class TerminalAPI
     /**
      * インスタンスを取得する
      *
-     * @return TerminalApiのインスタンス
+     * @return TerminalApi TerminalApiのインスタンス
      */
     public static function getInstance(): TerminalApi{
         self::$instance ??= new TerminalApi();
@@ -36,7 +44,7 @@ class TerminalAPI
      */
     public function post(string $token, string $terminalName)
     {
-        $url = self::ROOT_URL + "url";
+        $url = self::ROOT_URL . "url";
         
         //リクエストパラメタ
         $dto = new DtoParamaters();

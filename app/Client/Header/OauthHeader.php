@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Client\Header;
+
 /**
  * API呼び出すときのヘッダー（Oauth認証付き）
  */

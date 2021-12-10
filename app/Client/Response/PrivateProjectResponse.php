@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Client\Response;
+
 class PrivateProjectResponse
 {
 
@@ -10,16 +12,11 @@ class PrivateProjectResponse
      * PrivateProjectResponse単体を生成する
      * 
      * @param array $arrayData UserResponseの連想配列の配列もしくは連想配列
-     * @param boolean $isSingle $arrayDataが連想配列であればtrue、そうでなければfalse。通常はtrue。
      * @return PrivateProjectResponse
      */
-    public static function parsePrivateProjectResponse(array $arrayData, bool $isSingle = false): PrivateProjectResponse
+    public static function parsePrivateProjectResponse(array $arrayData): PrivateProjectResponse
     {
-        $singleArrayDate = null;
-        if ($isSingle)
-            $singleArrayDate = $arrayData;
-        else
-            $singleArrayDate = $arrayData[0];
+        $singleArrayDate = $arrayData;
 
         $entity = new PrivateProjectResponse();
         $entity->setProjectId($singleArrayDate['projectId']);

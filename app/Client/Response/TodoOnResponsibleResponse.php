@@ -1,5 +1,10 @@
 <?php
 
+namespace App\Client\Response;
+
+use App\Utility\DateUtility;
+use DateTime;
+
 class TodoOnResponsibleResponse
 {
 
@@ -15,16 +20,11 @@ class TodoOnResponsibleResponse
      * TodoOnResponsibleResponse単体を生成する
      * 
      * @param array $arrayData UserResponseの連想配列の配列もしくは連想配列
-     * @param boolean $isSingle $arrayDataが連想配列であればtrue、そうでなければfalse。通常はtrue。
      * @return TodoOnResponsibleResponse
      */
-    public static function parseTodoOnResponsibleResponse(array $arrayData, bool $isSingle = false): TodoOnResponsibleResponse
+    public static function parseTodoOnResponsibleResponse(array $arrayData): TodoOnResponsibleResponse
     {
-        $singleArrayDate = null;
-        if ($isSingle)
-            $singleArrayDate = $arrayData;
-        else
-            $singleArrayDate = $arrayData[0];
+        $singleArrayDate = $arrayData;
 
         $entity = new TodoOnResponsibleResponse();
         $entity->setTodoOnProjectId($singleArrayDate['todoOnProjectId']);

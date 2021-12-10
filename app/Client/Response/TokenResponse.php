@@ -1,29 +1,26 @@
 <?php
 
+namespace App\Client\Response;
+
 class TokenResponse
 {
 
     private string $refreshToken;
-    private string $autenticationToken;
+    private string $authenticationToken;
 
     /**
      * TokenResponse単体を生成する
      * 
      * @param array $arrayData UserResponseの連想配列の配列もしくは連想配列
-     * @param boolean $isSingle $arrayDataが連想配列であればtrue、そうでなければfalse。通常はtrue。
      * @return TokenResponse
      */
-    public static function parseTokenResponse(array $arrayData, bool $isSingle = false): TokenResponse
+    public static function parseTokenResponse(array $arrayData): TokenResponse
     {
-        $singleArrayDate = null;
-        if ($isSingle)
-            $singleArrayDate = $arrayData;
-        else
-            $singleArrayDate = $arrayData[0];
+        $singleArrayDate = $arrayData;
 
         $entity = new TokenResponse();
         $entity->setRefreshToken($singleArrayDate['refreshToken']);
-        $entity->setAutenticationToken($singleArrayDate['autenticationToken']);
+        $entity->setAuthenticationToken($singleArrayDate['authenticationToken']);
 
         return $entity;
     }
@@ -44,24 +41,24 @@ class TokenResponse
     }
 
     /**
-     * autenticationTokenのセット
+     * authenticationTokenのセット
      *
-     * @param string $autenticationToken
+     * @param string $authenticationToken
      * @return void
      */
-    public function setAutenticationToken(string $autenticationToken)
+    public function setAuthenticationToken(string $authenticationToken)
     {
-        $this->autenticationToken = $autenticationToken;
+        $this->authenticationToken = $authenticationToken;
     }
 
     /**
-     * autenticationTokenの取得
+     * authenticationTokenの取得
      *
      * @return string
      */
-    public function getAutenticationToken(): string
+    public function getAuthenticationToken(): string
     {
-        return $this->autenticationToken;
+        return $this->authenticationToken;
     }
 
     /**

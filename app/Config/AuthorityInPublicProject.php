@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Config;
+
 /**
  * パブリックプロジェクト内での権限
  */

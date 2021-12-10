@@ -14,6 +14,7 @@
 
 @section('contents')
     <form action="/test" method="get">
+        @csrf
         @if (isset($loginError))
             <div class="error">{{ $loginError }}</div>
         @endif

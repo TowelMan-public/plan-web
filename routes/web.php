@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\FallbackController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\SignUpController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,8 +20,12 @@ Route::get('/test', function () {
     return view('test');
 });
 
-Route::get('sign_in', 'LoginController@show');
-Route::post('sign_in', 'LoginController@login');
-Route::get('logout', 'LoginController@logout');
-Route::get('sign_up', 'SignUpController@show');
-Route::post('sign_in', 'LoginController@signUp');
+Route::get('sign_in', [LoginController::class, 'show']);
+Route::post('sign_in', [LoginController::class, 'login']);
+Route::get('logout', [LoginController::class, 'logout']);
+Route::get('sign_up', [SignUpController::class, 'show']);
+Route::post('sign_up', [SignUpController::class, 'signUp']);
+
+
+//常に一番下にする
+Route::fallback([FallbackController::class, 'handl']);

@@ -1,5 +1,13 @@
 <?php
 
+namespace App\Service;
+
+use App\Client\Api\Api;
+use App\Client\Response\TokenResponse;
+
+/**
+ * 認証回りのビジネスロジック
+ */
 class OauthService 
 {
     private static OauthService $instance; 

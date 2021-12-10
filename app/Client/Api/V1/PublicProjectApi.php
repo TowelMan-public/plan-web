@@ -1,11 +1,20 @@
 <?php
 
+namespace App\Client\Api\V1;
+
+use App\Client\Dto\DtoParamaters;
+use App\Client\Header\OauthHeader;
+use App\Client\Response\PublicProjectResponse;
+use App\Client\Rest\RestTemplate;
+use App\Config\Config;
+use DateTime;
+
 /**
 * パブリックプロジェクトに関するAPI
 */
 class PublicprojectAPI
 {
-    private const ROOT_URL = Config::API_ROOT_URL_V1 + "project";
+    private const ROOT_URL = Config::API_ROOT_URL_V1 . "project";
     private static PublicprojectApi $instance;
     private RestTemplate $restTemplate;
 
@@ -20,7 +29,7 @@ class PublicprojectAPI
     /**
      * インスタンスを取得する
      *
-     * @return PublicprojectApiのインスタンス
+     * @return PublicprojectApi PublicprojectApiのインスタンス
      */
     public static function getInstance(): PublicprojectApi{
         self::$instance ??= new PublicprojectApi();
@@ -50,7 +59,7 @@ class PublicprojectAPI
         $header = new OauthHeader($token);
         
         $responseArrayOrContents = $this->restTemplate->post($url, $dto, $header);
-        return $responseArrayOrContents;
+        return (int)$responseArrayOrContents[0];
     }
 
     /**
@@ -62,7 +71,7 @@ class PublicprojectAPI
      */
     public function get(string $token, int $publicProjectId) :PublicProjectResponse
     {
-        $url = self::ROOT_URL + "/$publicProjectId";
+        $url = self::ROOT_URL . "/$publicProjectId";
         
         //リクエストパラメタ
         $dto = new DtoParamaters(); 
@@ -80,7 +89,7 @@ class PublicprojectAPI
      * @param string $token
      * @param DateTime|null $startDate
      * @param DateTime $finishDate
-     * @return array　PublicProjectResponse
+     * @return array PublicProjectResponse
      */
     public function getListByExample(string $token) :array
     {
@@ -108,7 +117,7 @@ class PublicprojectAPI
      */
     public function put(string $token, int $publicProjectId, string $projectName = null, DateTime $startDate, DateTime $finishDate)
     {
-        $url = self::ROOT_URL + "/$publicProjectId";
+        $url = self::ROOT_URL . "/$publicProjectId";
         
         //リクエストパラメタ
         $dto = new DtoParamaters();
@@ -131,7 +140,7 @@ class PublicprojectAPI
      */
     public function delete(string $token, int $publicProjectId)
     {
-        $url = self::ROOT_URL + "/$publicProjectId";
+        $url = self::ROOT_URL . "/$publicProjectId";
         
         //リクエストパラメタ
         $dto = new DtoParamaters();
@@ -150,7 +159,7 @@ class PublicprojectAPI
      */
     public function getSolicited(string $token) :array
     {
-        $url = self::ROOT_URL + "/solicited";
+        $url = self::ROOT_URL . "/solicited";
         
         //リクエストパラメタ
         $dto = new DtoParamaters();        

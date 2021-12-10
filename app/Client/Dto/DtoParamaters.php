@@ -1,5 +1,9 @@
 <?php
 
+namespace App\Client\Dto;
+
+use App\Utility\DateUtility;
+use DateTime;
 
 /**
  * リクエストパラメターを扱うクラス
@@ -346,6 +350,6 @@ class DtoParamaters
      * @return array リクエストパラメターの連想配列
      */
     public function toArray(): array{
-        return array();
+        return $this->paramaters;
     }
 }

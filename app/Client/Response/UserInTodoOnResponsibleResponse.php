@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Client\Response;
+
 class UserInTodoOnResponsibleResponse
 {
 
@@ -11,16 +13,11 @@ class UserInTodoOnResponsibleResponse
      * UserInTodoOnResponsibleResponse単体を生成する
      * 
      * @param array $arrayData UserResponseの連想配列の配列もしくは連想配列
-     * @param boolean $isSingle $arrayDataが連想配列であればtrue、そうでなければfalse。通常はtrue。
      * @return UserInTodoOnResponsibleResponse
      */
-    public static function parseUserInTodoOnResponsibleResponse(array $arrayData, bool $isSingle = false): UserInTodoOnResponsibleResponse
+    public static function parseUserInTodoOnResponsibleResponse(array $arrayData): UserInTodoOnResponsibleResponse
     {
-        $singleArrayDate = null;
-        if ($isSingle)
-            $singleArrayDate = $arrayData;
-        else
-            $singleArrayDate = $arrayData[0];
+        $singleArrayDate = $arrayData;
 
         $entity = new UserInTodoOnResponsibleResponse();
         $entity->setTodoOnProjectId($singleArrayDate['todoOnProjectId']);

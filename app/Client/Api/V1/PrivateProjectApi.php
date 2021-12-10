@@ -1,11 +1,19 @@
 <?php
 
+namespace App\Client\Api\V1;
+
+use App\Client\Dto\DtoParamaters;
+use App\Client\Header\OauthHeader;
+use App\Client\Response\PrivateProjectResponse;
+use App\Client\Rest\RestTemplate;
+use App\Config\Config;
+
 /**
 * プライベートプロジェクトに関するAPI
 */
 class PrivateProjectAPI
 {
-    private const ROOT_URL = Config::API_ROOT_URL_V1 + "project/private";
+    private const ROOT_URL = Config::API_ROOT_URL_V1 . "project/private";
     private static PrivateProjectApi $instance;
     private RestTemplate $restTemplate;
 
@@ -20,7 +28,7 @@ class PrivateProjectAPI
     /**
      * インスタンスを取得する
      *
-     * @return PrivateProjectApiのインスタンス
+     * @return PrivateProjectApi PrivateProjectApiのインスタンス
      */
     public static function getInstance(): PrivateProjectApi{
         self::$instance ??= new PrivateProjectApi();
@@ -46,7 +54,7 @@ class PrivateProjectAPI
         $header = new OauthHeader($token);
         
         $responseArrayOrContents = $this->restTemplate->post($url, $dto, $header);
-        return $responseArrayOrContents;
+        return (int)$responseArrayOrContents[0];
     }
     
     /**
@@ -78,7 +86,7 @@ class PrivateProjectAPI
      */
     public function get(string $token, int $privateProjectId) :PrivateProjectResponse
     {
-        $url = self::ROOT_URL + "/$privateProjectId";
+        $url = self::ROOT_URL . "/$privateProjectId";
         
         //リクエストパラメタ
         $dto = new DtoParamaters();
@@ -100,7 +108,7 @@ class PrivateProjectAPI
      */
     public function put(string $token, int $privateProjectId, string $projectName)
     {
-        $url = self::ROOT_URL + "/$privateProjectId";
+        $url = self::ROOT_URL . "/$privateProjectId";
         
         //リクエストパラメタ
         $dto = new DtoParamaters();
@@ -121,7 +129,7 @@ class PrivateProjectAPI
      */
     public function delete(string $token, int $privateProjectId)
     {
-        $url = self::ROOT_URL + "/$privateProjectId";
+        $url = self::ROOT_URL . "/$privateProjectId";
         
         //リクエストパラメタ
         $dto = new DtoParamaters();

@@ -9,7 +9,8 @@
 @endsection
 
 @section('contents')
-    <form action="/test" method="get">
+    <form action="/sign_up" method="post">
+        @csrf
         @if (isset($formError))
             <div class="error">{{ $formError }}</div>
         @endif
@@ -45,6 +46,6 @@
         
         <div class="input_label"><input type="submit" value="アカウント作成" class="button"></div>
 
-        <a href="/test">既存のアカウントでログインする</a>
+        <a href="/sign_in">既存のアカウントでログインする</a>
     </form>
 @endsection

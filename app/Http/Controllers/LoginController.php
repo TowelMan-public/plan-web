@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Client\Exception\InvalidLoginException;
 use App\Http\Requests\LoginRequest;
+use App\Service\OauthService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller as BaseController;
-use InvalidLoginException;
-use OauthService;
 
-class LoginController extends BaseController
+class LoginController extends Controller
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, Request;
-
-    private const HOME_PAGE_CONTROLLER = "";//TODO ホームController
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    
+    private const HOME_PAGE_CONTROLLER = [Controller::class, 'show'];//TODO ホームController
     private OauthService $oauthService;
 
     /**
@@ -23,7 +22,7 @@ class LoginController extends BaseController
     */
     public function __construct()
     {
-        $oauthService = OauthService::getInstance();
+        $this->oauthService = OauthService::getInstance();
     }
 
     public function show(Request $request)
@@ -33,14 +32,17 @@ class LoginController extends BaseController
 
     public function login(LoginRequest $request)
     {
-        session()->invalidate();
+        session()->flush();
         try{
             $tokenResponse = $this->oauthService->login($request->userName, $request->password);
-            session(['oauthToken' => $tokenResponse->getAutenticationToken()]);
+            session(['oauthToken' => $tokenResponse->getAuthenticationToken()]);
             session(['oauthTokenExpiration' => time() + 25 * 60]);
             session(['refreshToken' => $tokenResponse->getRefreshToken()]);
+            session()->save();
 
-            return redirect()->action(self::HOME_PAGE_CONTROLLER);
+            $test = new InvalidLoginException();
+
+            return View('test');
         }
         catch(InvalidLoginException $e){
             return View('sign_in')->with('formError', 'ログインに失敗しました。ユーザー名とパスワードをご確認ください。');
@@ -49,7 +51,7 @@ class LoginController extends BaseController
 
     public function logout(Request $request)
     {
-        session()->invalidate();
-        return redirect()->action('LoginController@show');
+        session()->flush();
+        return redirect()->action([LoginController::class, 'show']);
     }
 }

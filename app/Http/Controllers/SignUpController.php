@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use AlreadyUsedUserNameException;
+use App\Client\Exception\AlreadyUsedUserNameException;
 use App\Http\Requests\SignUpRequest;
+use App\Service\UserService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller as BaseController;
-use UserService;
 
-class SignUpController extends BaseController
+class SignUpController extends Controller
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, Request;
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
     private UserService $userService;
 
@@ -22,7 +21,7 @@ class SignUpController extends BaseController
     */
     public function __construct()
     {
-        $userService = UserService::getInstance();
+        $this->userService = UserService::getInstance();
     }
 
     public function show(Request $request)
@@ -34,7 +33,7 @@ class SignUpController extends BaseController
     {
         try{
             $this->userService->insertUser($request->userName, $request->userNickName, $request->password);
-            return redirect()->action('LoginController@show');
+            return redirect()->action([LoginController::class, 'show']);
         }catch(AlreadyUsedUserNameException $e){
             return View('sign_up')->with('formError', 'あなたが指定したユーザー名は既に指定されています。');
         }

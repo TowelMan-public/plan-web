@@ -1,8 +1,10 @@
 <?php
 
+namespace App\Client\Rest;
+
+use App\Client\Dto\DtoParamaters;
+use App\Client\Header\BaseHeader;
 use GuzzleHttp\Client;
-use BaseHeader;
-use DtoParamaters;
 
 /**
  * 外部APIを呼ぶ為の便利クラス。内部にguzzleを使っている
@@ -40,9 +42,9 @@ class RestTemplate
      * @param DtoParamaters $dtoParamaters リクエスト内容（パラメタ）
      * @param BaseHeader $header リクエストヘッダ
      * @param bool $isJson JSONとして取得するか否か。通常ではtrue。
-     * @return リクエスト結果（連想配列）
+     * @return array|null リクエスト結果（連想配列）
      */
-    public function get(string $url, DtoParamaters $dtoParamaters, BaseHeader $header, bool $isJson = true): array
+    public function get(string $url, DtoParamaters $dtoParamaters, BaseHeader $header, bool $isJson = true): ?array
     {
         $result = $this->client->get($url, 
             [
@@ -54,13 +56,13 @@ class RestTemplate
         
         $statusCode = $result->getStatusCode();
         $resultContents = $result->getBody()->getContents();
-        $resultArray = json_decode($resultContents);
+        $resultArray = json_decode($resultContents, true);
 
         $this->checkErrorAndThrows($statusCode, $resultArray);
         if($isJson)
             return $resultArray;
         else
-            return $resultContents;
+            return [$resultContents];
     }
 
     /**
@@ -70,9 +72,9 @@ class RestTemplate
      * @param DtoParamaters $dtoParamaters リクエスト内容（パラメタ）
      * @param BaseHeader $header リクエストヘッダ
      * @param bool $isJson JSONとして取得するか否か。通常ではtrue。
-     * @return リクエスト結果（連想配列）
+     * @return array|null リクエスト結果（連想配列）
      */
-    public function post(string $url, DtoParamaters $dtoParamaters, BaseHeader $header, bool $isJson = true): array
+    public function post(string $url, DtoParamaters $dtoParamaters, BaseHeader $header, bool $isJson = true): ?array
     {
         $result = $this->client->post($url, 
         [
@@ -84,13 +86,13 @@ class RestTemplate
         
         $statusCode = $result->getStatusCode();
         $resultContents = $result->getBody()->getContents();
-        $resultArray = json_decode($resultContents);
+        $resultArray = json_decode($resultContents, true);
 
         $this->checkErrorAndThrows($statusCode, $resultArray);
         if($isJson)
             return $resultArray;
         else
-            return $resultContents;
+            return [$resultContents];
     }
 
     /**
@@ -100,9 +102,9 @@ class RestTemplate
      * @param DtoParamaters $dtoParamaters リクエスト内容（パラメタ）
      * @param BaseHeader $header リクエストヘッダ
      * @param bool $isJson JSONとして取得するか否か。通常ではtrue。
-     * @return リクエスト結果（連想配列）
+     * @return array|null リクエスト結果（連想配列）
      */
-    public function put(string $url, DtoParamaters $dtoParamaters, BaseHeader $header, bool $isJson = true): array
+    public function put(string $url, DtoParamaters $dtoParamaters, BaseHeader $header, bool $isJson = true): ?array
     {
         $result = $this->client->put($url, 
         [
@@ -114,13 +116,13 @@ class RestTemplate
         
         $statusCode = $result->getStatusCode();
         $resultContents = $result->getBody()->getContents();
-        $resultArray = json_decode($resultContents);
+        $resultArray = json_decode($resultContents, true);
 
         $this->checkErrorAndThrows($statusCode, $resultArray);
         if($isJson)
             return $resultArray;
         else
-            return $resultContents;
+            return [$resultContents];;
     }
 
     /**
@@ -130,9 +132,9 @@ class RestTemplate
      * @param DtoParamaters $dtoParamaters リクエスト内容（パラメタ）
      * @param BaseHeader $header リクエストヘッダ
      * @param bool $isJson JSONとして取得するか否か。通常ではtrue。
-     * @return リクエスト結果（連想配列）
+     * @return array|null リクエスト結果（連想配列）
      */
-    public function delete(string $url, DtoParamaters $dtoParamaters, BaseHeader $header, bool $isJson = true): array
+    public function delete(string $url, DtoParamaters $dtoParamaters, BaseHeader $header, bool $isJson = true): ?array
     {
         $result = $this->client->delete($url, 
         [
@@ -144,23 +146,23 @@ class RestTemplate
         
         $statusCode = $result->getStatusCode();
         $resultContents = $result->getBody()->getContents();
-        $resultArray = json_decode($resultContents);
+        $resultArray = json_decode($resultContents, true);
 
         $this->checkErrorAndThrows($statusCode, $resultArray);
         if($isJson)
             return $resultArray;
         else
-            return $resultContents;
+            return [$resultContents];;
     }
 
     /**
      * HTTPリクエストで、何かエラーがあれば例外を投げる
      *
-     * @param integer $statusCode　HTMPステータスコード
-     * @param array $resultArray HTTPの結果のボディーの連想配列
+     * @param integer $statusCode HTMPステータスコード
+     * @param array|null $resultArray HTTPの結果のボディーの連想配列
      * @return void
      */
-    private function checkErrorAndThrows(int $statusCode, array $resultArray)
+    private function checkErrorAndThrows(int $statusCode, array $resultArray = null)
     {
         $this->errorHandler->checkErrorAndThrows($statusCode, $resultArray);
     }

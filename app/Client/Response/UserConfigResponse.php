@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Client\Response;
+
 class UserConfigResponse
 {
 
@@ -12,16 +14,11 @@ class UserConfigResponse
      * UserConfigResponse単体を生成する
      * 
      * @param array $arrayData UserResponseの連想配列の配列もしくは連想配列
-     * @param boolean $isSingle $arrayDataが連想配列であればtrue、そうでなければfalse。通常はtrue。
      * @return UserConfigResponse
      */
-    public static function parseUserConfigResponse(array $arrayData, bool $isSingle = false): UserConfigResponse
+    public static function parseUserConfigResponse(array $arrayData): UserConfigResponse
     {
-        $singleArrayDate = null;
-        if ($isSingle)
-            $singleArrayDate = $arrayData;
-        else
-            $singleArrayDate = $arrayData[0];
+        $singleArrayDate = $arrayData;
 
         $entity = new UserConfigResponse();
         $entity->setBeforeDeadlineForTodoNotice($singleArrayDate['beforeDeadlineForTodoNotice']);
