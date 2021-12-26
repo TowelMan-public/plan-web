@@ -10,4 +10,14 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    /**
+     * 認証用トークンを取得する
+     *
+     * @return string
+     */
+    protected function getOauthToken(): string
+    {
+        return session('oauthToken');
+    }
 }

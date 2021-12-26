@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\TodoInDayController;
 use App\Service\OauthService;
 use Closure;
 use Illuminate\Http\Request;
@@ -14,14 +15,14 @@ class SesstionOauth
 {
     private OauthService $oauthService;
 
-    private const HOME_PAGE_CONTROLLER = [Controller::class, 'show'];//TODO ホームController
+    private const HOME_PAGE_CONTROLLER = [TodoInDayController::class, 'showDefault'];
 
     /**
     * コンストラクタ
     */
     public function __construct()
     {
-        $oauthService = OauthService::getInstance();
+        $this->oauthService = OauthService::getInstance();
     }
 
     /**
@@ -40,7 +41,7 @@ class SesstionOauth
 
             //tokenの再生成
             if(session('oauthTokenExpiration') < time()){
-                $tokenResponse = $this->oauthService->updateToken(session('refreshTooken'));
+                $tokenResponse = $this->oauthService->updateToken(session('refreshToken'));
                 session(['oauthToken' => $tokenResponse->getAuthenticationToken()]);
                 session(['oauthTokenExpiration' => time() + 25 * 60]);
                 session(['refreshToken' => $tokenResponse->getRefreshToken()]);

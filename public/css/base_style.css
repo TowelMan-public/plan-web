@@ -15,6 +15,14 @@ html*{
     display: none !important;
 }
 
+.hidden{
+    visibility: hidden !important;
+}
+
+.none{
+    display: none !important;
+}
+
 body {
     color: rgb(26, 29, 27);
     background-color: #dbe5fa;
@@ -114,6 +122,11 @@ main {
     align-self: center;
 }
 
+.title_bar_contents{
+    text-align: center;
+    align-self: center;
+}
+
 .title_bar_menu{
     margin-left: auto;
 }
@@ -137,6 +150,8 @@ main {
     align-self: flex-start;
     padding-top: 2em;
     padding-bottom: 2em;
+    padding-left: 1%;
+    padding-right: 1%;
     align-items: center;
     text-align: center;
     flex-grow: 1;
@@ -156,6 +171,10 @@ main {
 
 .second_menu>ul{
     flex-flow: column;    
+}
+
+.second_menu>ul>.hidden{
+    font-size: 0.5em;
 }
 
 /*
@@ -499,6 +518,8 @@ footer>p {
     */
     .contents {
         width: 100%;
+        padding-left: 0;
+        padding-right: 0;
     }
 
     /*

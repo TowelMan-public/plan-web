@@ -11,7 +11,7 @@ use App\Config\Config;
 /**
  * ユーザーの設定に関するAPI
  */
-class UserConfigAPI
+class UserConfigApi
 {
     private const ROOT_URL = Config::API_ROOT_URL_V1 . "user/config";
     private static UserConfigApi $instance;

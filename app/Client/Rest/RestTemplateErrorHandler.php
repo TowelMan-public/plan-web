@@ -6,11 +6,15 @@ use App\Client\Exception\AlreadyJoinedPublicProjectException;
 use App\Client\Exception\AlreadySelectedAsTodoResponsibleException;
 use App\Client\Exception\AlreadyUsedTerminalNameException;
 use App\Client\Exception\AlreadyUsedUserNameException;
+use App\Client\Exception\ApiHttpException;
 use App\Client\Exception\BadRequestException;
 use App\Client\Exception\FailureCreateAuthenticationTokenException;
 use App\Client\Exception\InvalidLoginException;
 use App\Client\Exception\NotFoundValueException;
-use Symfony\Component\HttpKernel\Exception\HttpException;
+use App\Client\Exception\NotHaveAuthorityToOperateProjectException;
+use App\Client\Exception\NotJoinedPublicProjectException;
+use App\Client\Exception\NotSelectedAsTodoResponsibleException;
+use App\Client\Exception\ValidateException;
 
 /**
  * 外部APIを呼び出すときに生じたエラーを処理するクラス
@@ -34,36 +38,36 @@ class RestTemplateErrorHandler
             $message = $resultArray['message'];
         }
 
-        if(!is_null($errorName)){
-            switch($errorName){
-                case 'AlreadyJoinedPublicProjectException':
-                    throw new AlreadyJoinedPublicProjectException($message);
-                case 'AlreadySelectedAsTodoResponsibleException':
-                    throw new AlreadySelectedAsTodoResponsibleException($message);
-                case 'AlreadyUsedTerminalNameException':
-                    throw new AlreadyUsedTerminalNameException($message);
-                case 'AlreadyUsedUserNameException':
-                    throw new AlreadyUsedUserNameException($message);
-                case 'BadRequestException':
-                    throw new BadRequestException($message);
-                case 'FailureCreateAuthenticationTokenException':
-                    throw new FailureCreateAuthenticationTokenException($message);
-                case 'NotFoundValueException':
-                    throw new NotFoundValueException($message);
-                case 'NotHaveAuthorityToOperateProjectException':
-                    throw new AlreadyJoinedPublicProjectException($message);
-                case 'NotJoinedPublicProjectException':
-                    throw new AlreadyJoinedPublicProjectException($message);
-                case 'NotSelectedAsTodoResponsibleException':
-                    throw new NotFoundValueException($message);
-                case 'ValidateException':
-                    throw new AlreadyJoinedPublicProjectException($message);
-                
-            }
-        }else if($statusCode === 401){
+        switch($errorName){
+            case 'AlreadyJoinedPublicProjectException':
+                throw new AlreadyJoinedPublicProjectException($message);
+            case 'AlreadySelectedAsTodoResponsibleException':
+                throw new AlreadySelectedAsTodoResponsibleException($message);
+            case 'AlreadyUsedTerminalNameException':
+                throw new AlreadyUsedTerminalNameException($message);
+            case 'AlreadyUsedUserNameException':
+                throw new AlreadyUsedUserNameException($message);
+            case 'BadRequestException':
+                throw new BadRequestException($message);
+            case 'FailureCreateAuthenticationTokenException':
+                throw new FailureCreateAuthenticationTokenException($message);
+            case 'NotFoundValueException':
+                throw new NotFoundValueException($message);
+            case 'NotHaveAuthorityToOperateProjectException':
+                throw new NotHaveAuthorityToOperateProjectException($message);
+            case 'NotJoinedPublicProjectException':
+                throw new NotJoinedPublicProjectException($message);
+            case 'NotSelectedAsTodoResponsibleException':
+                throw new NotSelectedAsTodoResponsibleException($message);
+            case 'ValidateException':
+                throw new ValidateException($message);
+            
+        }
+
+        if($statusCode === 401){
             throw new InvalidLoginException();
         }else if($statusCode >= 400){
-            throw new HttpException($statusCode);
+            throw new ApiHttpException($statusCode, $resultArray);
         }
     }
 }

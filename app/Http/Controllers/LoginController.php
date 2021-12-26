@@ -14,7 +14,7 @@ class LoginController extends Controller
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     
-    private const HOME_PAGE_CONTROLLER = [Controller::class, 'show'];//TODO ホームController
+    private const HOME_PAGE_CONTROLLER = [TodoInDayController::class, 'showDefault'];
     private OauthService $oauthService;
 
     /**
@@ -39,7 +39,7 @@ class LoginController extends Controller
             session(['refreshToken' => $tokenResponse->getRefreshToken()]);
             session()->save();
 
-            return View('test');
+            return redirect()->action(self::HOME_PAGE_CONTROLLER);
         }
         catch(FailureCreateAuthenticationTokenException $e){            
             session()->put('_old_input', $request->all());

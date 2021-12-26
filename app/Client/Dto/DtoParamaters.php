@@ -12,7 +12,7 @@ class DtoParamaters
 {
     private array $paramaters = array();
 
-    public function setProjectId(int $projectId)
+    public function setProjectId(int|null $projectId)
     {
         if(!is_null($projectId)){
             $this->paramaters['projectId'] = (string)$projectId;
@@ -22,10 +22,10 @@ class DtoParamaters
     /**
      * 「やること」のIDをセットする
      *
-     * @param integer $todoId nullが指定されたら何もしない
+     * @param integer|null $todoId nullが指定されたら何もしない
      * @return void
      */
-    public function setTodoId(int $todoId)
+    public function setTodoId(int|null $todoId)
     {
         if(!is_null($todoId)){
             $this->paramaters['todoId'] = (string)$todoId;
@@ -35,10 +35,10 @@ class DtoParamaters
     /**
      * プロジェクト向けの「やること」IDをセットする
      *
-     * @param integer $todoOnProjectId nullが指定されたら何もしない
+     * @param integer|null $todoOnProjectId nullが指定されたら何もしない
      * @return void
      */
-    public function setTodoOnProjectId(int $todoOnProjectId)
+    public function setTodoOnProjectId(int|null $todoOnProjectId)
     {
         if(!is_null($todoOnProjectId)){
             $this->paramaters['todoOnProjectId'] = (string)$todoOnProjectId;
@@ -48,10 +48,10 @@ class DtoParamaters
     /**
      * 内容のタイトルをセットする
      *
-     * @param string $contentTitle nullが指定されたら何もしない
+     * @param string|null $contentTitle nullが指定されたら何もしない
      * @return void
      */
-    public function setContentTitle(string $contentTitle)
+    public function setContentTitle(string|null $contentTitle)
     {
         if(!is_null($contentTitle)){
             $this->paramaters['contentTitle'] = $contentTitle;
@@ -61,10 +61,10 @@ class DtoParamaters
     /**
      * 内容の説明をセットする
      *
-     * @param string $contentExplanation nullが指定されたら何もしない
+     * @param string|null $contentExplanation nullが指定されたら何もしない
      * @return void
      */
-    public function setContentExplanation(string $contentExplanation)
+    public function setContentExplanation(string|null $contentExplanation)
     {
         if(!is_null($contentExplanation)){
             $this->paramaters['contentExplanation'] = $contentExplanation;
@@ -87,10 +87,10 @@ class DtoParamaters
     /**
      * 機種名をセットする
      *
-     * @param string $terminalName nullが指定されたら何もしない
+     * @param string|null $terminalName nullが指定されたら何もしない
      * @return void
      */
-    public function setTerminalName(string $terminalName)
+    public function setTerminalName(string|null $terminalName)
     {
         if(!is_null($terminalName)){
             $this->paramaters['terminalName'] = $terminalName;
@@ -100,10 +100,10 @@ class DtoParamaters
     /**
      * プロジェクト名をセットする
      *
-     * @param string $projectName nullが指定されたら何もしない
+     * @param string|null $projectName nullが指定されたら何もしない
      * @return void
      */
-    public function setProjectName(string $projectName)
+    public function setProjectName(string|null $projectName)
     {
         if(!is_null($projectName)){
             $this->paramaters['projectName'] = $projectName;
@@ -113,10 +113,10 @@ class DtoParamaters
     /**
      * 締め切り日時をセットする
      *
-     * @param DateTime $finishDate nullが指定されたら何もしない
+     * @param DateTime|null $finishDate nullが指定されたら何もしない
      * @return void
      */
-    public function setFinishDate(DateTime $finishDate)
+    public function setFinishDate(DateTime|null $finishDate)
     {
         if(!is_null($finishDate)){
             $this->paramaters['finishDate'] = DateUtility::dateToString($finishDate);
@@ -126,10 +126,10 @@ class DtoParamaters
     /**
      * 開始日時をセットする
      *
-     * @param DateTime $startDate nullが指定されたら何もしない
+     * @param DateTime|null $startDate nullが指定されたら何もしない
      * @return void
      */
-    public function setStartDate(DateTime $startDate)
+    public function setStartDate(DateTime|null $startDate)
     {
         if(!is_null($startDate)){
             $this->paramaters['startDate'] = DateUtility::dateToString($startDate);
@@ -139,10 +139,10 @@ class DtoParamaters
     /**
      * パブリックプロジェクトIDをセットする
      *
-     * @param integer $publicProjectId nullが指定されたら何もしない
+     * @param integer|null $publicProjectId nullが指定されたら何もしない
      * @return void
      */
-    public function setPublicProjectId(int $publicProjectId)
+    public function setPublicProjectId(int|null $publicProjectId)
     {
         if(!is_null($publicProjectId)){
             $this->paramaters['publicProjectId'] = (string)$publicProjectId;
@@ -152,10 +152,10 @@ class DtoParamaters
     /**
      * ユーザー名をセットする
      *
-     * @param string $userName nullが指定されたら何もしない
+     * @param string|null $userName nullが指定されたら何もしない
      * @return void
      */
-    public function setUserName(string $userName)
+    public function setUserName(string|null $userName)
     {
         if(!is_null($userName)){
             $this->paramaters['userName'] = $userName;
@@ -165,10 +165,10 @@ class DtoParamaters
     /**
      * 完了済み「やること」を含めるかをセットする
      *
-     * @param boolean $isInclideCompletedTodo nullが指定されたら何もしない
+     * @param boolean|null $isInclideCompletedTodo nullが指定されたら何もしない
      * @return void
      */
-    public function setIsInclideCompletedTodo(bool $isInclideCompletedTodo)
+    public function setIsInclideCompletedTodo(bool|null $isInclideCompletedTodo)
     {
         if(!is_null($isInclideCompletedTodo)){
             $this->paramaters['isInclideCompletedTodo'] = (string)$isInclideCompletedTodo;
@@ -178,10 +178,10 @@ class DtoParamaters
     /**
      * 権限IDをセットする
      *
-     * @param integer $authorityId nullが指定されたら何もしない
+     * @param integer|null $authorityId nullが指定されたら何もしない
      * @return void
      */
-    public function setAuthorityId(int $authorityId)
+    public function setAuthorityId(int|null $authorityId)
     {
         if(!is_null($authorityId)){
             $this->paramaters['authorityId'] = (string)$authorityId;
@@ -191,10 +191,10 @@ class DtoParamaters
     /**
      * 「やること」名をセットする
      *
-     * @param String $todoName nullが指定されたら何もしない
+     * @param String|null $todoName nullが指定されたら何もしない
      * @return void
      */
-    public function setTodoName(String $todoName)
+    public function setTodoName(String|null $todoName)
     {
         if(!is_null($todoName)){
             $this->paramaters['todoName'] = $todoName;
@@ -204,10 +204,10 @@ class DtoParamaters
     /**
      * 担当者向け「やること」にも内容を引き継がせるかどうかをセットする
      *
-     * @param boolean $isCopyContentsToResponsible nullが指定されたら何もしない
+     * @param boolean|null $isCopyContentsToResponsible nullが指定されたら何もしない
      * @return void
      */
-    public function setIsCopyContentsToResponsible(bool $isCopyContentsToResponsible)
+    public function setIsCopyContentsToResponsible(bool|null $isCopyContentsToResponsible)
     {
         if(!is_null($isCopyContentsToResponsible)){
             $this->paramaters['isCopyContentsToResponsible'] = (string)$isCopyContentsToResponsible;
@@ -217,10 +217,10 @@ class DtoParamaters
     /**
      * プライベートプロジェクトに限定して取得するかどうかをセットする
      *
-     * @param boolean $isInPrivateProjectOnly nullが指定されたら何もしない
+     * @param boolean|null $isInPrivateProjectOnly nullが指定されたら何もしない
      * @return void
      */
-    public function setIsInPrivateProjectOnly(bool $isInPrivateProjectOnly)
+    public function setIsInPrivateProjectOnly(bool|null $isInPrivateProjectOnly)
     {
         if(!is_null($isInPrivateProjectOnly)){
             $this->paramaters['isInPrivateProjectOnly'] = (string)$isInPrivateProjectOnly;
@@ -230,10 +230,10 @@ class DtoParamaters
     /**
      * 「やること」の締め切り何秒以内になったら通知を生成するかをセットする
      *
-     * @param integer $beforeDeadlineForTodoNotice nullが指定されたら何もしない
+     * @param integer|null $beforeDeadlineForTodoNotice nullが指定されたら何もしない
      * @return void
      */
-    public function setBeforeDeadlineForTodoNotice(int $beforeDeadlineForTodoNotice)
+    public function setBeforeDeadlineForTodoNotice(int|null $beforeDeadlineForTodoNotice)
     {
         if(!is_null($beforeDeadlineForTodoNotice)){
             $this->paramaters['beforeDeadlineForTodoNotice'] = (string)$beforeDeadlineForTodoNotice;
@@ -243,10 +243,10 @@ class DtoParamaters
     /**
      *パブリックプロジェクトの締め切り何秒以内になったら通知を生成するかをセットする
      *
-     * @param integer $beforeDeadlineForProjectNotice nullが指定されたら何もしない
+     * @param integer|null $beforeDeadlineForProjectNotice nullが指定されたら何もしない
      * @return void
      */
-    public function setBeforeDeadlineForProjectNotice(int $beforeDeadlineForProjectNotice)
+    public function setBeforeDeadlineForProjectNotice(int|null $beforeDeadlineForProjectNotice)
     {
         if(!is_null($beforeDeadlineForProjectNotice)){
             $this->paramaters['beforeDeadlineForProjectNotice'] = (string)$beforeDeadlineForProjectNotice;
@@ -269,10 +269,10 @@ class DtoParamaters
     /**
      * 「やること」が始まったら通知を生成するかをセットする
      *
-     * @param boolean $isPushSatrtedTodoNotice nullが指定されたら何もしない
+     * @param boolean|null $isPushSatrtedTodoNotice nullが指定されたら何もしない
      * @return void
      */
-    public function setIsPushSatrtedTodoNotice(bool $isPushSatrtedTodoNotice)
+    public function setIsPushSatrtedTodoNotice(bool|null $isPushSatrtedTodoNotice)
     {
         if(!is_null($isPushSatrtedTodoNotice)){
             $this->paramaters['isPushSatrtedTodoNotice'] = (string)$isPushSatrtedTodoNotice;
@@ -282,10 +282,10 @@ class DtoParamaters
     /**
      * ユーザーニックネームをセットする
      *
-     * @param String $userNickName nullが指定されたら何もしない
+     * @param String|null $userNickName nullが指定されたら何もしない
      * @return void
      */
-    public function setUserNickName(String $userNickName)
+    public function setUserNickName(String|null $userNickName)
     {
         if(!is_null($userNickName)){
             $this->paramaters['userNickName'] = $userNickName;
@@ -295,10 +295,10 @@ class DtoParamaters
     /**
      * パスワードをセットする
      *
-     * @param String $password nullが指定されたら何もしない
+     * @param String|null $password nullが指定されたら何もしない
      * @return void
      */
-    public function setPassword(String $password)
+    public function setPassword(String|null $password)
     {
         if(!is_null($password)){
             $this->paramaters['password'] = $password;
@@ -308,10 +308,10 @@ class DtoParamaters
     /**
      * リフレッシュトークンをセットする
      *
-     * @param String $refreshJwtToken nullが指定されたら何もしない
+     * @param String|null $refreshJwtToken nullが指定されたら何もしない
      * @return void
      */
-    public function setRefreshJwtToken(String $refreshJwtToken)
+    public function setRefreshJwtToken(String|null $refreshJwtToken)
     {
         if(!is_null($refreshJwtToken)){
             $this->paramaters['refreshJwtToken'] = $refreshJwtToken;
@@ -321,10 +321,10 @@ class DtoParamaters
     /**
      * 元の機種名を指定する
      *
-     * @param String $oldTerminalName nullが指定されたら何もしない
+     * @param String|null $oldTerminalName nullが指定されたら何もしない
      * @return void
      */
-    public function setOldTerminalName(String $oldTerminalName)
+    public function setOldTerminalName(String|null $oldTerminalName)
     {
         if(!is_null($oldTerminalName)){
             $this->paramaters['oldTerminalName'] = $oldTerminalName;
@@ -334,10 +334,10 @@ class DtoParamaters
     /**
      * 新しい機種名を指定する
      *
-     * @param String $newTerminalName nullが指定されたら何もしない
+     * @param String|null $newTerminalName nullが指定されたら何もしない
      * @return void
      */
-    public function setNewTerminalName(String $newTerminalName)
+    public function setNewTerminalName(String|null $newTerminalName)
     {
         if(!is_null($newTerminalName)){
             $this->paramaters['newTerminalName'] = $newTerminalName;

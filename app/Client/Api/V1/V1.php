@@ -30,9 +30,9 @@ class V1
         return UserAPI::getInstance();
     }
 
-    public function userConfig() :UserConfigAPI
+    public function userConfig() :UserConfigApi
     {
-        return UserConfigAPI::getInstance();
+        return UserConfigApi::getInstance();
     }
 
     public function terminal() :TerminalAPI

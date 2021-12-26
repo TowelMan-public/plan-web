@@ -71,14 +71,14 @@ class TodoAPI
      * 検索条件から「やること」リストを取得する
      *
      * @param string $token
-     * @param integer $projectId
-     * @param DateTime $startDate
-     * @param DateTime $finishDate
+     * @param integer|null $projectId
+     * @param DateTime|null $startDate
+     * @param DateTime|null $finishDate
      * @param boolean $isInPrivateProjectOnly
      * @param boolean $isIncludeCompletedTodo
      * @return array TodoOnProjectResponse
      */
-    public function getListByExample(string $token, int $projectId, DateTime $startDate, DateTime $finishDate, bool $isInPrivateProjectOnly, bool $isIncludeCompletedTodo): array
+    public function getListByExample(string $token, int|null $projectId, DateTime|null $startDate, DateTime|null $finishDate, bool $isInPrivateProjectOnly, bool $isIncludeCompletedTodo): array
     {
         $url = self::ROOT_URL;
 

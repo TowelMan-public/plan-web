@@ -10,7 +10,7 @@ class FallbackController extends Controller
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    private const HOME_PAGE_CONTROLLER = [Controller::class, 'show'];//TODO ホームController
+    private const HOME_PAGE_CONTROLLER = [TodoInDayController::class, 'showDefault'];
 
     public function handl()
     {

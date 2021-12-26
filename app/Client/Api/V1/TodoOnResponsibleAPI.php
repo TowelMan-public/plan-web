@@ -133,7 +133,7 @@ class TodoOnResponsibleAPI
     public function getListByExample(string $token, int $publicProjectId = null,
          DateTime $startDate = null, DateTime $finishDate = null, bool $isIncludeCompleted = null) :array
     {
-        $url = self::ROOT_URL . "/responsible";
+        $url = self::ROOT_URL . "/responsible_todo";
         
         //リクエストパラメタ
         $dto = new DtoParamaters();

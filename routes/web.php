@@ -3,6 +3,7 @@
 use App\Http\Controllers\FallbackController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SignUpController;
+use App\Http\Controllers\TodoInDayController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,6 +26,7 @@ Route::post('sign_in', [LoginController::class, 'login']);
 Route::get('logout', [LoginController::class, 'logout']);
 Route::get('sign_up', [SignUpController::class, 'show']);
 Route::post('sign_up', [SignUpController::class, 'signUp']);
+Route::get('me/todo/day', [TodoInDayController::class, 'showDefault']);
 
 
 //常に一番下にする

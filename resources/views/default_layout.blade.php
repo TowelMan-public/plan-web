@@ -34,7 +34,7 @@
                 </label>
                 <div class="acd_content menu">
                     <ul>
-                        <li><a href="#">今日</a></li>
+                        <li><a href="/me/todo/day">今日</a></li>
                         <li><a href="#">今月</a></li>
                     </ul>
                 </div>
@@ -42,7 +42,7 @@
         </ul>
     </div>
     <div class="top_icons">
-        <img class="top_icons_img" src="img/notice.png" alt="" href="#">
+        <img class="top_icons_img" src="{{ asset('img/notice.png') }}" alt="" href="#">
         <label for="hamburger_menu_button" class="mobile_mode"><span><img class="top_icons_img" src="{{ asset('img/menu.png') }}"></span></label>
     </div>
 @endsection
@@ -68,6 +68,7 @@
     @if ($__env->yieldContent('contents_menu') !== '')
         <div class="second_menu menu pc_mode">
             <ul>
+                <li class="hidden">margin</li>
                 @yield('contents_menu')
             </ul>
         </div>
@@ -119,13 +120,13 @@
                         </label>
                         <div class="acd_content menu">
                             <ul>
-                                <li><a href="#">今日</a></li>
+                                <li><a href="/me/todo/day">今日</a></li>
                                 <li><a href="#">今月</a></li>
                             </ul>
                         </div>
                     </div></li>
 
-                    <li><a href="#">ログアウト</a></li>
+                    <li><a href="/logout">ログアウト</a></li>
                 </ul>
             </div>
         </div>

@@ -13,71 +13,28 @@
 @endsection
 
 @section('contents')
-    <form action="/test" method="get">
-        @csrf
-        @if (isset($loginError))
-            <div class="error">{{ $loginError }}</div>
-        @endif
-        
-        <div class="input_label">
-            <div class="input_label_core">
-                <div class="input_name">ユーザー名</div>
-                <input type="text" name="userName" placeholder="ユーザー名" />
-            </div>
-            <div class="error">{{ $errors->first('userName') }}</div>
-        </div>
-        <div class="input_label">
-            <div class="input_label_core">
-                <div class="input_name">パスワード</div>
-                <input type="password" name="password" placeholder="パスワード" />
-            </div>
-            <div class="error">{{ $errors->first('password') }}</div>
-        </div>
-        <div class="input_label">
-            <div class="input_label_core">
-                <div class="input_name">ユーザー名</div>
-                <input type="text" name="userName" placeholder="ユーザー名" />
-            </div>
-            <div class="error">{{ $errors->first('userName') }}</div>
-        </div>
-        <div class="input_label">
-            <div class="input_label_core">
-                <div class="input_name">パスワード</div>
-                <input type="password" name="password" placeholder="パスワード" />
-            </div>
-            <div class="error">{{ $errors->first('password') }}</div>
-        </div>
-        <div class="input_label">
-            <div class="input_label_core">
-                <div class="input_name">ユーザー名</div>
-                <input type="text" name="userName" placeholder="ユーザー名" />
-            </div>
-            <div class="error">{{ $errors->first('userName') }}</div>
-        </div>
-        <div class="input_label">
-            <div class="input_label_core">
-                <div class="input_name">パスワード</div>
-                <input type="password" name="password" placeholder="パスワード" />
-            </div>
-            <div class="error">{{ $errors->first('password') }}</div>
-        </div>
-        <div class="input_label">
-            <div class="input_label_core">
-                <div class="input_name">ユーザー名</div>
-                <input type="text" name="userName" placeholder="ユーザー名" />
-            </div>
-            <div class="error">{{ $errors->first('userName') }}</div>
-        </div>
-        <div class="input_label">
-            <div class="input_label_core">
-                <div class="input_name">パスワード</div>
-                <input type="password" name="password" placeholder="パスワード" />
-            </div>
-            <div class="error">{{ $errors->first('password') }}</div>
-        </div>
-        
-        <div class="input_label"><input type="submit" value="ログイン" class="button"></div>
+    <div class="todo">
+        <div class="inner">
+            <div class="name">todo1</div>
 
-        <a href="/test">新しくユーザーを作成する</a>
-    </form>
+            <div class="hamburger_img">
+                <img src="{{ asset('img/plus.png') }}">
+                <img class="none" src="{{ asset('img/close.png') }}">
+            </div>
+
+            <div class="is_completed">
+                <img src="{{ asset('img/check.png') }}">
+            </div>
+        </div>
+
+        <div class="contents none">
+            <div class="content">
+                <div class="name">・content1</div>
+
+                <div class="is_completed">
+                    <img src="{{ asset('img/check.png') }}">
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
