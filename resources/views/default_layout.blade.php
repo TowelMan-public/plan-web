@@ -20,7 +20,7 @@
                 <div class="acd_content menu">
                     <ul>
                         <li><a href="#">作成</a></li>
-                        <li><a href="#">一覧</a></li>
+                        <li><a href="/me/project/list">一覧</a></li>
                     </ul>
                 </div>
             </div></li>
@@ -106,7 +106,7 @@
                         <div class="acd_content menu">
                             <ul>
                                 <li><a href="#">作成</a></li>
-                                <li><a href="#">一覧</a></li>
+                                <li><a href="/me/project/list">一覧</a></li>
                             </ul>
                         </div>
                     </div></li>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Client\Api\Api;
+use App\Http\Data\TodoData;
 use App\Service\TodoService;
 use App\Utility\DateUtility;
 use DateTime;
@@ -37,7 +38,7 @@ class TodoInDayController extends Controller
             $finishDate = $after5HourDate;
         
         $todoInDay = $this->todoService->getMyTodoInDayData($this->getOauthToken(), $nowDate, $finishDate);
-        
+
         return View('todo_in_day_layout')
             ->with('todoInDay', $todoInDay)
             ->with('dateAssociativeArray', $nowDateArray);

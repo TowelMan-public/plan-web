@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Logic;
+
 use App\Client\Response\ContentResponse;
 use App\Http\Data\ContentData;
 

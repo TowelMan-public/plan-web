@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\FallbackController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ProjecListController;
 use App\Http\Controllers\SignUpController;
 use App\Http\Controllers\TodoInDayController;
 use App\Http\Controllers\TodoInMonthController;
@@ -31,6 +32,8 @@ Route::post('sign_up', [SignUpController::class, 'signUp']);
 Route::get('me/todo/day', [TodoInDayController::class, 'showDefault']);
 
 Route::get('me/todo/month', [TodoInMonthController::class, 'showDefault']);
+
+Route::get('me/project/list', [ProjecListController::class, 'showDefaultList']);
 
 
 //常に一番下にする

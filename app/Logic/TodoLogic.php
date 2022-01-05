@@ -48,14 +48,18 @@ class TodoLogic{
         $otherTodoDataArray = [];
 
         foreach ($sortedTodoDataArray as $todoData) {
-            if($todoData->getFinishDate()->getTimestamp() <= $expiredDate->getTimestamp())
-                $expiredTodoDataArray[] = $todoData;
-            else if($todoData->getFinishDate()->getTimestamp() <= $approaching->getTimestamp())
-                $approachTodoDataArray[] = $todoData;
-            else if($todoData->getFinishDate()->getTimestamp() <= $todayDate->getTimestamp())
-                $todayTodoDataArray[] = $todoData;
-            else
+            if($todoData->getIsCompleted())
                 $otherTodoDataArray[] = $todoData;
+            else{
+                if($todoData->getFinishDate()->getTimestamp() <= $expiredDate->getTimestamp())
+                    $expiredTodoDataArray[] = $todoData;
+                else if($todoData->getFinishDate()->getTimestamp() <= $approaching->getTimestamp())
+                    $approachTodoDataArray[] = $todoData;
+                else if($todoData->getFinishDate()->getTimestamp() <= $todayDate->getTimestamp())
+                    $todayTodoDataArray[] = $todoData;
+                else
+                    $otherTodoDataArray[] = $todoData;
+            }
         }
 
         $todoInDay = new TodoInDayData();

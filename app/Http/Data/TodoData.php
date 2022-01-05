@@ -2,6 +2,7 @@
 
 namespace App\Http\Data;
 
+use App\Utility\DateUtility;
 use DateTime;
 
 /**
@@ -22,6 +23,17 @@ class TodoData
     private DateTime $startDate;
 
     private bool $isOnProject;
+
+    /**
+     * finishDateのintの日付情報が入った連想配列を取得する。
+     * この連想配列は、DateUtilityの定数をキーとして使うと使える。
+     *
+     * @return array intの日付情報が入った連想配列
+     */
+    public function getFinishDateAssociativeArray()
+    {
+        return DateUtility::getDateAssociativeArrayByDateTime($this->finishDate);
+    }
 
     /**
      * isOnProjectのセット

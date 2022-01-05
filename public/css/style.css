@@ -38,10 +38,19 @@
     justify-content: right;
     height: auto;
 }
-.todo>.inner>.name{
-    font-size: 1.5em;
+
+.todo>.inner>.text{
     margin-right: auto;
     margin-left: auto;
+}
+
+.name{
+    font-size: 1.5em;    
+    text-align: center;
+}
+
+.date_string{
+    font-size: 0.75em;
     text-align: center;
 }
 
@@ -101,12 +110,12 @@
     text-align: center;
 }
 
-.content>.is_completed{
+.is_completed{
     width: 0.8em;
     height: 0.8em;
 }
 
-.content>.is_completed>img{
+.is_completed>img{
     display: block;
     width: 0.8em;
     height: 0.8em;
@@ -154,6 +163,39 @@
 
 .todo_in_month{
     border-radius: 0.4em;
+}
+
+.project{
+    border-radius: 1em;
+    display: flex;
+    margin-bottom: 1em;
+}
+
+.project>.text{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.project>.is_completed{
+    width: 2em;
+    height: 2em;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.project>.is_completed>img{
+    width: 2em;
+    height: 2em;
+}
+
+.is_private{
+    text-align: left;
+    margin-left: -0.25em;
+    margin-right: -7em;
+    margin-top: -0.5em;
+    background-color: #e98675;
+    height: 1.5em;
+    border-radius: 1.5em;
 }
 
 /**

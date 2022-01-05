@@ -31,7 +31,11 @@
                 background-color: rgb(255, 0, 0);">
                 
             <div class="inner">
-                <div class="name">{{ $todo->getName() }}</div>
+                <div class="text">
+                    <div class="name">{{ $todo->getName() }}</div>
+                    <div class="date_string">{{ '締め切り：'.$todo->getFinishDateAssociativeArray()['year'].'-'.$todo->getFinishDateAssociativeArray()['month'].'-'.$todo->getFinishDateAssociativeArray()['day'].' ' 
+                        .$todo->getFinishDateAssociativeArray()['hour'].':'.$todo->getFinishDateAssociativeArray()['minute'] }}</div>
+                </div>
 
                 <div class="hamburger_img">
                     <img src="{{ asset('img/plus.png') }}">
@@ -66,11 +70,14 @@
         
         <div class="todo"
             style="
-                border-color: rgb(160, 72, 21);
-                background-color: rgb(160, 72, 21);">
+                border-color: rgb(255, 111, 0);
+                background-color: rgb(255, 111, 0);">
                 
             <div class="inner">
-                <div class="name">{{ $todo->getName() }}</div>
+                <div class="text">
+                    <div class="name">{{ $todo->getName() }}</div>
+                    <div class="date_string">{{ '締め切り：'.$todo->getFinishDateAssociativeArray()['hour'].':'.$todo->getFinishDateAssociativeArray()['minute'] }}</div>
+                </div>                
 
                 <div class="hamburger_img">
                     <img src="{{ asset('img/plus.png') }}">
@@ -109,7 +116,10 @@
                 background-color: rgb(67, 193, 4);">
                 
             <div class="inner">
-                <div class="name">{{ $todo->getName() }}</div>
+                <div class="text">
+                    <div class="name">{{ $todo->getName() }}</div>
+                    <div class="date_string">{{ '締め切り：'.$todo->getFinishDateAssociativeArray()['hour'].':'.$todo->getFinishDateAssociativeArray()['minute'] }}</div>
+                </div>
 
                 <div class="hamburger_img">
                     <img src="{{ asset('img/plus.png') }}">
@@ -148,7 +158,9 @@
                 background-color: rgb(81, 80, 101);">
                 
             <div class="inner">
-                <div class="name">{{ $todo->getName() }}</div>
+                <div class="text">
+                    <div class="name">{{ $todo->getName() }}</div>
+                </div>   
 
                 <div class="hamburger_img">
                     <img src="{{ asset('img/plus.png') }}">
