@@ -35,7 +35,7 @@
                 <div class="acd_content menu">
                     <ul>
                         <li><a href="/me/todo/day">今日</a></li>
-                        <li><a href="#">今月</a></li>
+                        <li><a href="/me/todo/month">今月</a></li>
                     </ul>
                 </div>
             </div></li>      
@@ -121,7 +121,7 @@
                         <div class="acd_content menu">
                             <ul>
                                 <li><a href="/me/todo/day">今日</a></li>
-                                <li><a href="#">今月</a></li>
+                                <li><a href="/me/todo/month">今月</a></li>
                             </ul>
                         </div>
                     </div></li>

@@ -4,7 +4,9 @@ namespace App\Service;
 
 use App\Client\Api\Api;
 use App\Http\Data\TodoInDayData;
+use App\Http\Data\TodoInMonthData;
 use App\Logic\TodoLogic;
+use App\Utility\DateUtility;
 use ContentLogic;
 use DateTime;
 
@@ -51,5 +53,26 @@ class TodoService
         }
 
         return TodoLogic::createTodoInDayData($todoDataArray, $nowDate);
+    }
+
+    
+    static public function getMyTodoInMonth(string $oauthToken, int $year, int $month, bool $isIncludeCompleted = false): TodoInMonthData
+    {
+        $startDate = DateUtility::createDateByDateAssociativeArray([
+            DateUtility::YEAR => $year,
+            DateUtility::MONTH => $month,
+            DateUtility::DAY => 1,
+            DateUtility::HOUR => 0,
+            DateUtility::MINUTE => 0
+        ]);
+        $finishDate = DateUtility::addDate(
+            DateUtility::addDate($startDate, [DateUtility::MONTH => 1]),
+            [DateUtility::MINUTE => -1]
+        );
+        
+        $todoOnProjectArray = Api::last()->todo()->getListByExample($oauthToken, null, $startDate, $finishDate, true, $isIncludeCompleted);
+        $todoOnResponsibleArray = Api::last()->todoOnResoinsible()->getListByExample($oauthToken, null, $startDate, $finishDate, $isIncludeCompleted);
+
+        return TodoLogic::createTodoInMonth($todoOnProjectArray, $todoOnResponsibleArray, $finishDate);
     }
 }

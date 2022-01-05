@@ -5,7 +5,7 @@ namespace Tests\Unit;
 use App\Client\Response\TodoOnProjectResponse;
 use App\Client\Response\TodoOnResponsibleResponse;
 use App\Http\Data\TodoData;
-use App\Http\Data\TodoInDayData;
+use App\Http\Data\TodoDataNode;
 use App\Logic\TodoLogic;
 use App\Utility\DateUtility;
 use DateTime;
@@ -197,10 +197,158 @@ class TodoLogicTest extends TestCase
         $result = TodoLogic::createTodoInDayData($todoDataArray, $nowDate);
 
         //検証
-        //dd($result->getExpiredTodoList());
         $this->assertEqualsTodoDataArray($result->getExpiredTodoList(), $expiredTodoList);
         $this->assertEqualsTodoDataArray($result->getApproachingTodoList(), $approachingTodoList);
         $this->assertEqualsTodoDataArray($result->getTodaysTodoList(), $todaysTodoList);
         $this->assertEqualsTodoDataArray($result->getOtherTodoList(), $otherTodoList);
+    }
+
+    public function testCreateTodoInMonth_1()
+    {
+        //テストケース
+        $finishDate = DateUtility::createDate(2022, 1, 31, 0, 0);
+        $todoOnProjectArray = [];
+        $todoOnResponsibleArray = [];
+
+        $todoOnProject = new TodoOnProjectResponse();
+        $todoOnProject->setTodoOnProjectId(1);
+        $todoOnProject->setTodoName('1');
+        $todoOnProject->setStartDate(DateUtility::createDateString(2022, 1, 3, 20, 20));
+        $todoOnProject->setFinishDate(DateUtility::createDateString(2022, 1, 5, 20, 20));
+        $todoOnProject->setIsCompleted(true);
+        $todoOnProjectArray[] = $todoOnProject;
+
+        $todoOnProject = new TodoOnProjectResponse();
+        $todoOnProject->setTodoOnProjectId(3);
+        $todoOnProject->setTodoName('3');
+        $todoOnProject->setStartDate(DateUtility::createDateString(2022, 1, 5, 20, 20));
+        $todoOnProject->setFinishDate(DateUtility::createDateString(2022, 1, 5, 20, 20));
+        $todoOnProject->setIsCompleted(true);
+        $todoOnProjectArray[] = $todoOnProject;
+
+        $todoOnResponsible = new TodoOnResponsibleResponse();
+        $todoOnResponsible->setTodoOnResponsibleId(2);
+        $todoOnResponsible->setTodoName('2');
+        $todoOnResponsible->setIsCompleted(true);
+        $todoOnResponsible->setStartDate(DateUtility::createDateString(2022, 1, 1, 20, 20));
+        $todoOnResponsible->setFinishDate(DateUtility::createDateString(2022, 1, 4, 20, 20));
+        $todoOnResponsibleArray[] = $todoOnResponsible;
+
+        $todoOnResponsible = new TodoOnResponsibleResponse();
+        $todoOnResponsible->setTodoOnResponsibleId(4);
+        $todoOnResponsible->setTodoName('4');
+        $todoOnResponsible->setIsCompleted(true);
+        $todoOnResponsible->setStartDate(DateUtility::createDateString(2021, 12, 19, 20, 20));
+        $todoOnResponsible->setFinishDate(DateUtility::createDateString(2022, 2, 2, 20, 20));
+        $todoOnResponsibleArray[] = $todoOnResponsible;
+
+
+        //期待値
+        $year = 2022;
+        $month = 1;
+        $startWeek = 6;
+        $finishDay = 31;
+
+        $todoDataNodeArray = [];
+
+        $node = new TodoDataNode(1, 0);
+        $todoDataNodeArray[] = $node;
+
+        $nextNode = new TodoDataNode();
+        $nextNode->setIsEmpty(false);
+        $nextNode->setId(4);
+        $nextNode->setName('4');
+        $nextNode->setIsCompleted(true);
+        $nextNode->setIsOnProject(false);
+        $nextNode->setStartDay(1);
+        $nextNode->setDayLength(31);
+        $nextNode->setBackNode($node);
+        $node->setNextNode($nextNode);
+
+        $node = new TodoDataNode(1, 0);
+        $todoDataNodeArray[] = $node;
+
+        $nextNode = new TodoDataNode();
+        $nextNode->setIsEmpty(false);
+        $nextNode->setId(2);
+        $nextNode->setName('2');
+        $nextNode->setIsCompleted(true);
+        $nextNode->setIsOnProject(false);
+        $nextNode->setStartDay(1);
+        $nextNode->setDayLength(4);
+        $nextNode->setBackNode($node);
+        $node->setNextNode($nextNode);
+        $node = $nextNode;
+
+        $nextNode = new TodoDataNode();
+        $nextNode->setIsEmpty(false);
+        $nextNode->setId(3);
+        $nextNode->setName('3');
+        $nextNode->setIsCompleted(true);
+        $nextNode->setIsOnProject(true);
+        $nextNode->setStartDay(5);
+        $nextNode->setDayLength(1);
+        $nextNode->setBackNode($node);
+        $node->setNextNode($nextNode);
+        $node = $nextNode;
+
+        $nextNode = new TodoDataNode(6, 26);
+        $nextNode->setBackNode($node);
+        $node->setNextNode($nextNode);
+
+        $node = new TodoDataNode(1, 2);
+        $todoDataNodeArray[] = $node;
+
+        $nextNode = new TodoDataNode();
+        $nextNode->setIsEmpty(false);
+        $nextNode->setId(1);
+        $nextNode->setName('1');
+        $nextNode->setIsCompleted(true);
+        $nextNode->setIsOnProject(true);
+        $nextNode->setStartDay(3);
+        $nextNode->setDayLength(3);
+        $nextNode->setBackNode($node);
+        $node->setNextNode($nextNode);
+        $node = $nextNode;
+
+        $nextNode = new TodoDataNode(6, 26);
+        $nextNode->setBackNode($node);
+        $node->setNextNode($nextNode);
+        
+        //実行
+        $result = TodoLogic::createTodoInMonth($todoOnProjectArray, $todoOnResponsibleArray, $finishDate);
+
+        //検証
+        $this->assertSame($year, $result->getYear());
+        $this->assertSame($month, $result->getMonth());
+        $this->assertSame($finishDay, $result->getFinishDay());
+        $this->assertSame($startWeek, $result->getStartWeek());
+        $this->assertSameSize($todoDataNodeArray, $result->getTodoDataNodeArray());
+
+        for($i = 0; $i < count($todoDataNodeArray); $i++){
+            dump($i);
+            $resultNode = $result->getTodoDataNodeArray()[$i];
+            $expectedNode = $todoDataNodeArray[$i];
+
+            while ($resultNode !== null) {
+                dump($expectedNode, $resultNode);
+
+                //比較              
+                $this->assertSame($expectedNode->getIsEmpty(), $resultNode->getIsEmpty());
+                $this->assertSame($expectedNode->getStartDay(), $resultNode->getStartDay());
+                $this->assertSame($expectedNode->getDayLength(), $resultNode->getDayLength());
+                
+                if(!$resultNode->getIsEmpty()){
+                    $this->assertSame($expectedNode->getIsCompleted(), $resultNode->getIsCompleted());
+                    $this->assertSame($expectedNode->getIsOnProject(), $resultNode->getIsOnProject());
+                    $this->assertSame($expectedNode->getName(), $resultNode->getName());
+                    $this->assertSame($expectedNode->getId(), $resultNode->getId());  
+                }
+
+                //next
+                $resultNode = $resultNode->getNextNode();
+                $expectedNode = $expectedNode->getNextNode();
+            }
+        }
     }
 }
