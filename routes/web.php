@@ -38,6 +38,8 @@ Route::get('me/project/list', [ProjecListController::class, 'showDefaultList']);
 Route::get('me/project/month', [ProjecListController::class, 'showDefaultListInMonth']);
 
 Route::get('user/config', [UserConfigController::class, 'show']);
+Route::post('user/config/core', [UserConfigController::class, 'updateUser']);
+Route::post('user/config/notice', [UserConfigController::class, 'updateUserConfig']);
 
 
 //常に一番下にする

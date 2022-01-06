@@ -54,9 +54,6 @@
     </form>
 
     <h3 id="point_notice_config">通知の設定</h3>
-    @if (isset($noticeConfigErrorString))
-        <div class="error">{{ $noticeConfigErrorString }}</div>
-    @endif
 
     <form action="/user/config/notice" method="post">
         @csrf
@@ -104,7 +101,8 @@
 
         <div class="input_label">
             <input type="checkbox" id="isPushInsertedTodoNotice" name="isPushInsertedTodoNotice" 
-                value="{{ isset($userConfig)? $userConfig->getIsPushInsertedTodoNotice() : old('isPushInsertedTodoNotice', '') }}"/>
+                value="1"
+                {{ $userConfig->getIsPushInsertedTodoNotice()? 'checked' : '' }}/>
             <label for="isPushInsertedTodoNotice" class="switch_label">
                 <div class="input_name">やることの担当者に抜擢されたときに通知する</div>
                 <div class="switch">
@@ -116,7 +114,8 @@
 
         <div class="input_label">
             <input type="checkbox" id="isPushStartedTodoNotice" name="isPushStartedTodoNotice" 
-                value="{{ isset($userConfig)? $userConfig->getIsPushStartedTodoNotice() : old('isPushStartedTodoNotice', '') }}"/>
+                value="1"
+                {{ $userConfig->getIsPushStartedTodoNotice()? 'checked' : '' }}/>
             <label for="isPushStartedTodoNotice" class="switch_label">
                 <div class="input_name">やることが始まったときに通知する</div>
                 <div class="switch">

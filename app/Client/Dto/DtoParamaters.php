@@ -171,7 +171,7 @@ class DtoParamaters
     public function setIsInclideCompletedTodo(bool|null $isInclideCompletedTodo)
     {
         if(!is_null($isInclideCompletedTodo)){
-            $this->paramaters['isInclideCompletedTodo'] = (string)$isInclideCompletedTodo;
+            $this->paramaters['isInclideCompletedTodo'] = $isInclideCompletedTodo;
         }
     }
 
@@ -210,7 +210,7 @@ class DtoParamaters
     public function setIsCopyContentsToResponsible(bool|null $isCopyContentsToResponsible)
     {
         if(!is_null($isCopyContentsToResponsible)){
-            $this->paramaters['isCopyContentsToResponsible'] = (string)$isCopyContentsToResponsible;
+            $this->paramaters['isCopyContentsToResponsible'] = $isCopyContentsToResponsible;
         }
     }
 
@@ -223,7 +223,7 @@ class DtoParamaters
     public function setIsInPrivateProjectOnly(bool|null $isInPrivateProjectOnly)
     {
         if(!is_null($isInPrivateProjectOnly)){
-            $this->paramaters['isInPrivateProjectOnly'] = (string)$isInPrivateProjectOnly;
+            $this->paramaters['isInPrivateProjectOnly'] = $isInPrivateProjectOnly;
         }
     }
 
@@ -262,7 +262,7 @@ class DtoParamaters
     public function setPushInsertedTodoNotice(bool $pushInsertedTodoNotice)
     {
         if(!is_null($pushInsertedTodoNotice)){
-            $this->paramaters['pushInsertedTodoNotice'] = (string)$pushInsertedTodoNotice;
+            $this->paramaters['pushInsertedTodoNotice'] = $pushInsertedTodoNotice;
         }
     }
 
@@ -275,7 +275,7 @@ class DtoParamaters
     public function setIsPushSatrtedTodoNotice(bool|null $isPushSatrtedTodoNotice)
     {
         if(!is_null($isPushSatrtedTodoNotice)){
-            $this->paramaters['isPushSatrtedTodoNotice'] = (string)$isPushSatrtedTodoNotice;
+            $this->paramaters['isPushSatrtedTodoNotice'] = $isPushSatrtedTodoNotice;
         }
     }
 

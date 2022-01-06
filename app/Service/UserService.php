@@ -54,4 +54,21 @@ class UserService
         $response = Api::last()->userConfig()->get($oauthToken);
         return UserLogic::createUserConfigData($response);
     }
+
+    public function updateUser(string $oauthToken, string $userName, string $userNickName, string|null $password)
+    {
+        $beforeUserName = Api::last()->user()->get($oauthToken)->getUserName();
+
+        if($beforeUserName === $userName)
+            Api::last()->user()->put($oauthToken, null, $userNickName, $password);
+        else
+            Api::last()->user()->put($oauthToken, $userName, $userNickName, $password);
+    }
+
+    public function updateUserConfig(string $oauthToken, bool $isPushStartedTodoNotice, bool $isPushInsertedTodoNotice,
+            int $beforeDeadlineForProjectNotice, int $beforeDeadlineForTodoNotice)
+    {
+        Api::last()->userConfig()->put($oauthToken, $beforeDeadlineForTodoNotice, $beforeDeadlineForProjectNotice,
+            $isPushInsertedTodoNotice, $isPushStartedTodoNotice);
+    }
 }
