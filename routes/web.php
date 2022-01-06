@@ -4,6 +4,7 @@ use App\Http\Controllers\FallbackController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProjecListController;
 use App\Http\Controllers\SignUpController;
+use App\Http\Controllers\TerminalController;
 use App\Http\Controllers\TodoInDayController;
 use App\Http\Controllers\TodoInMonthController;
 use App\Http\Controllers\UserConfigController;
@@ -44,6 +45,9 @@ Route::post('user/config/notice', [UserConfigController::class, 'updateUserConfi
 
 Route::get('withdrawal', [WithdrawalController::class, 'show']);
 Route::post('withdrawal', [WithdrawalController::class, 'withdrawal']);
+
+Route::get('/terminal', [TerminalController::class, 'showList']);
+Route::post('/terminal/delete', [TerminalController::class, 'deleteTerminal']);
 
 //常に一番下にする
 Route::fallback([FallbackController::class, 'handl']);

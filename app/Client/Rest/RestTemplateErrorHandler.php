@@ -30,6 +30,7 @@ class RestTemplateErrorHandler
      */
     public function checkErrorAndThrows(int $statusCode, array $resultArray = null)
     {
+        //dd($statusCode, $resultArray); #検証用
         $errorName = '';
         $message = '';
 

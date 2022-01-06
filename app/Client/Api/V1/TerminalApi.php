@@ -44,7 +44,7 @@ class TerminalAPI
      */
     public function post(string $token, string $terminalName)
     {
-        $url = self::ROOT_URL . "url";
+        $url = self::ROOT_URL;
         
         //リクエストパラメタ
         $dto = new DtoParamaters();

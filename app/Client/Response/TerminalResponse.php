@@ -18,7 +18,7 @@ class TerminalResponse
         $singleArrayDate = $arrayData;
 
         $entity = new TerminalResponse();
-        $entity->setTerminaName($singleArrayDate['terminaName']);
+        $entity->setTerminaName($singleArrayDate['terminalName']);
 
         return $entity;
     }

@@ -198,6 +198,17 @@
     border-radius: 1.5em;
 }
 
+.terminal{
+    display: flex;
+    background-color: aqua;
+    margin-bottom: 1.5em;
+    padding: 0.5em 0.2em;
+}
+
+.terminal>.delete_button{
+    margin-left: auto;
+}
+
 /**
 * スマホ向け
 */
