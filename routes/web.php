@@ -6,6 +6,7 @@ use App\Http\Controllers\ProjecListController;
 use App\Http\Controllers\SignUpController;
 use App\Http\Controllers\TodoInDayController;
 use App\Http\Controllers\TodoInMonthController;
+use App\Http\Controllers\UserConfigController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,6 +35,9 @@ Route::get('me/todo/day', [TodoInDayController::class, 'showDefault']);
 Route::get('me/todo/month', [TodoInMonthController::class, 'showDefault']);
 
 Route::get('me/project/list', [ProjecListController::class, 'showDefaultList']);
+Route::get('me/project/month', [ProjecListController::class, 'showDefaultListInMonth']);
+
+Route::get('user/config', [UserConfigController::class, 'show']);
 
 
 //常に一番下にする

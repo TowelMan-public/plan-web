@@ -7,8 +7,8 @@
 @section('header')
     <div class="top_menu menu pc_mode">
         <ul>
-            <li><a href="#">HOME</a></li>
-            <li><a href="#">ユーザー設定</a></li>
+            <li><a href="/me/todo/day">HOME</a></li>
+            <li><a href="/user/config">設定</a></li>
 
             <li><div class="acd_menu">
                 <input id="acd_top_menu_project" type="checkbox">
@@ -92,9 +92,9 @@
                     @yield('contents_menu')
                 </ul>
                 <ul>
-                    <li><a href="#">HOME</a></li>
+                    <li><a href="/me/todo/day">HOME</a></li>
                     <li><a href="#">通知</a></li>
-                    <li><a href="#">ユーザー設定</a></li>
+                    <li><a href="/user/config">設定</a></li>
                     
                     <li><div class="acd_menu">
                         <input id="acd_hamburger_menu_project" type="checkbox">

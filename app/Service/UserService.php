@@ -3,6 +3,9 @@
 namespace App\Service;
 
 use App\Client\Api\Api;
+use App\Http\Data\UserConfigData;
+use App\Http\Data\UserData;
+use App\Logic\UserLogic;
 
 /**
  * ユーザーに関するビジネスロジック
@@ -38,5 +41,17 @@ class UserService
     public function insertUser(string $userName, string $userNickName, string $password)
     {
         Api::last()->user()->post($userName, $userNickName, $password);
+    }
+
+    public function getUserData(string $oauthToken): UserData
+    {
+        $userResponse = Api::last()->user()->get($oauthToken);
+        return UserLogic::createUserData($userResponse);
+    }
+
+    public function getUserConfig(string $oauthToken): UserConfigData
+    {
+        $response = Api::last()->userConfig()->get($oauthToken);
+        return UserLogic::createUserConfigData($response);
     }
 }

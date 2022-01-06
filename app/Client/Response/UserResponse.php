@@ -20,7 +20,7 @@ class UserResponse
 
         $entity = new UserResponse();
         $entity->setUserName($singleArrayDate['userName']);
-        $entity->setUserNickName($singleArrayDate['userNickName']);
+        $entity->setUserNickName($singleArrayDate['userNickname']);
 
         return $entity;
     }

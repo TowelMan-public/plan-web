@@ -13,7 +13,7 @@ use App\Config\Config;
 /**
 * ユーザーに関するAPI
 */
-class UserAPI
+class UserApi
 {
     private const ROOT_URL = Config::API_ROOT_URL_V1 . "user";
     private static UserApi $instance;
