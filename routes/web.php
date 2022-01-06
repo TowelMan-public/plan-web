@@ -7,6 +7,7 @@ use App\Http\Controllers\SignUpController;
 use App\Http\Controllers\TodoInDayController;
 use App\Http\Controllers\TodoInMonthController;
 use App\Http\Controllers\UserConfigController;
+use App\Http\Controllers\WithdrawalController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,6 +42,8 @@ Route::get('user/config', [UserConfigController::class, 'show']);
 Route::post('user/config/core', [UserConfigController::class, 'updateUser']);
 Route::post('user/config/notice', [UserConfigController::class, 'updateUserConfig']);
 
+Route::get('withdrawal', [WithdrawalController::class, 'show']);
+Route::post('withdrawal', [WithdrawalController::class, 'withdrawal']);
 
 //常に一番下にする
 Route::fallback([FallbackController::class, 'handl']);

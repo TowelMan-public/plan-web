@@ -71,4 +71,9 @@ class UserService
         Api::last()->userConfig()->put($oauthToken, $beforeDeadlineForTodoNotice, $beforeDeadlineForProjectNotice,
             $isPushInsertedTodoNotice, $isPushStartedTodoNotice);
     }
+
+    public function deleteUser(string $oauthToken)
+    {
+        Api::last()->user()->delete($oauthToken);
+    }
 }

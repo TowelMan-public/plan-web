@@ -10,7 +10,7 @@
 
 @section('contents_menu')
     <li><a href="#">機種名一覧</a></li>
-    <li><a href="#">退会する</a></li>
+    <li><a href="/withdrawal">退会する</a></li>
 @endsection
 
 @section('contents')
