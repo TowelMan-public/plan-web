@@ -10,8 +10,8 @@
 
 @section('contents_menu')
     <li><a href="#">完了を表示</a></li>
-    <li><a href="#">プライベート非表示</a></li>
-    <li><a href="#">月ごとに表示</a></li>
+    <li><a href="#">プライベート表示</a></li>
+    <li><a href="/me/project/month">月ごとに表示</a></li>
 @endsection
 
 @section('contents')

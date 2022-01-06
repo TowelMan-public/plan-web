@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Service\ProjectService;
+use App\Utility\DateUtility;
 use DateTime;
 use Facade\FlareClient\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -29,4 +30,14 @@ class ProjecListController extends Controller
         return View('project_list_layout')
             ->with('projectListData', $projectListData);
     }
+
+   public function showDefaultListInMonth()
+   {
+        $nowDateArray = DateUtility::getDateAssociativeArrayByDateTime(new DateTime());
+        $projectInMonth = $this->projectService->getProjectInMonthData($this->getOauthToken(), $nowDateArray[DateUtility::YEAR], $nowDateArray[DateUtility::MONTH]);
+
+        return View('project_in_month_layout')
+            ->with('projectInMonth', $projectInMonth)
+            ->with('dateAssociativeArray', $nowDateArray);
+   }
 }
