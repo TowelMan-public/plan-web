@@ -5,9 +5,9 @@ namespace App\Service;
 use App\Client\Api\Api;
 use App\Http\Data\TodoInDayData;
 use App\Http\Data\TodoInMonthData;
+use App\Logic\ContentLogic;
 use App\Logic\TodoLogic;
 use App\Utility\DateUtility;
-use ContentLogic;
 use DateTime;
 
 class TodoService 

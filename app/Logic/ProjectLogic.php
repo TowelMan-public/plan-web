@@ -97,7 +97,7 @@ class ProjectLogic
                 !($response->getFinishDate()->getTimestamp() >= $startDate->getTimestamp() &&
                 $response->getStartDate()->getTimestamp() <= $finishDate->getTimestamp()))
             {
-                break;
+                continue;
             }
             
             $projectNodeArray[] = self::createProjectDataNode($response, $year, $month, $dayLengthInMonth);
