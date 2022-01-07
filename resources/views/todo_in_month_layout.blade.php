@@ -43,37 +43,41 @@
 
             @foreach ($todoInMonth->getTodoDataNodeArray() as $node)
                 <tr class="todo_list">
-
-                    @for ($nowDay = 7*$i - 6 - $todoInMonth->getStartWeek(), $finishDay = 7*$i - $todoInMonth->getStartWeek(); $nowDay <= $finishDay; $nowDay++)
-                        @if ($nowDay <= $todoInMonth->getFinishDay() && $nowDay <= 0)
-                            @if ($node->getDayLength() <= 0)
-                                @php
-                                    $nowDay--;
-                                    $todoInMonth->getTodoDataNodeArray()[$loop->index] = $node->getNextNode();
-                                @endphp
+                    @php
+                        $finishDay = 7*$i - $projectInMonth->getStartWeek();
+                    @endphp
+                    @for ($nowDay = 7*$i - 6 - $todoInMonth->getStartWeek(); $nowDay <= $finishDay; $nowDay++)
+                        @if ($nowDay <= $todoInMonth->getFinishDay() && $nowDay > 0 && $node !== null)
+                            @if ($node->getDayLength() <= 0 || $node->getStartDay() < $nowDay)
+                            @php
+                                $nowDay--;
+                                $node = $node->getNextNode();
+                            @endphp
                             @elseif ($node->isEmpty())
-                                <td class="single"></td>
+                                <td class="single">&nbsp;</td>
                                 @php
                                     $node->setDayLength($node->getDayLength() - 1);
+                                    $node->setStartDay($node->getStartDay() + 1);
                                 @endphp
                             @else
                                 @php
                                     $dayLength = 0;
-                                    if($finishDay - $nowday > $node->getDayLength())
+                                    if($finishDay - $nowday + 1 > $node->getDayLength())
                                         $dayLength = $node->getDayLength();
                                     else
-                                        $dayLength = $finishDay - $nowday;
+                                        $dayLength = $finishDay - $nowday + 1;
                                     
-                                    $nowday += $dayLength - 1;
-                                    $node->setDayLength( $node->getDayLength() -  $dayLength);
+                                    $nowDay += $dayLength - 1;
+                                    $node->setDayLength( $node->getDayLength() - $dayLength);
+                                    $node->setStartDay( $node->getStartDay() + $dayLength);
                                 @endphp
-                                <td class="todo_in_month {{ $dayLength === 0 ? 'single' : '' }}" align="left" colspan="$dayLength"
+                                <td class="todo_in_month {{ $dayLength === 0 ? 'single' : '' }}" align="left" colspan="{{ $dayLength }}"
                                     style="background-color: {{ $todoInMonth->getBackGroundCollor($loop->index) }};">
                                     {{ $node->getName() }}
                                 </td>
                             @endif
                         @else
-                            <td class="single"></td>
+                            <td class="single">&nbsp;</td>
                         @endif
                     @endfor
 

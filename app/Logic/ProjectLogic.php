@@ -94,8 +94,8 @@ class ProjectLogic
         $projectNodeArray = [];
         foreach ($projectResponseArray as $response) {
             if($response->getIsCompleted() && !$isIncludeCompleted ||
-                $response->getStartDate()->getTimestamp() < $startDate->getTimestamp() ||
-                $response->getFinishDate()->getTimestamp() > $finishDate->getTimestamp())
+                !($response->getFinishDate()->getTimestamp() >= $startDate->getTimestamp() &&
+                $response->getStartDate()->getTimestamp() <= $finishDate->getTimestamp()))
             {
                 break;
             }
@@ -111,12 +111,14 @@ class ProjectLogic
         foreach ($projectNodeArray as $node) {
             $isSetted = false;
 
-            foreach ($projectNodeArray as $nodeInMonth) {
+            foreach ($projectNodeArrayForProjectInMonth as $nodeInMonth) {
                 $nowNode = $nodeInMonth;
 
                 while (!$isSetted && $nowNode !== null) {
                     if($nowNode->getStartDay() <= $node->getStartDay()){
-                        if($nowNode->getIsEmpty() && $nowNode->getDayLength() >= $node->getDayLength()){
+                        if($nowNode->getIsEmpty() && 
+                            $nowNode->getDayLength() + $nowNode->getStartDay() - 1 >= $node->getDayLength() + $node->getStartDay() - 1)
+                        {
                             $isSetted = true;
                             self::insertTodoDataNode($nowNode, $node);
                         }else {
@@ -134,7 +136,7 @@ class ProjectLogic
             if(!$isSetted){
                 $newNode = new ProjectDataNode(1, $dayLengthInMonth);
                 self::insertTodoDataNode($newNode, $node);
-                $todoNodeForTodoInMonth[] = $newNode;
+                $projectNodeArrayForProjectInMonth[] = $newNode;
             }
         }
 

@@ -40,6 +40,10 @@ Route::get('me/todo/month', [TodoInMonthController::class, 'showDefault']);
 
 Route::get('me/project/list', [ProjecController::class, 'showDefaultList']);
 Route::get('me/project/month', [ProjecController::class, 'showDefaultListInMonth']);
+Route::get('me/project/month/{year}/{month}', [ProjecController::class, 'showListInMonth'])
+    ->name("ProjecController@showListInMonth");
+Route::get('me/project/month/{year}/{month}/next', [ProjecController::class, 'nextMonthForListInMonth']);
+Route::get('me/project/month/{year}/{month}/back', [ProjecController::class, 'backMonthForListInMonth']);
 
 Route::get('user/config', [UserConfigController::class, 'show']);
 Route::post('user/config/core', [UserConfigController::class, 'updateUser']);

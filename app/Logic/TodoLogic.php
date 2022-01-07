@@ -166,7 +166,9 @@ class TodoLogic{
 
                 while (!$isSetted && $nowNode !== null) {
                     if($nowNode->getStartDay() <= $node->getStartDay()){
-                        if($nowNode->getIsEmpty() && $nowNode->getDayLength() >= $node->getDayLength()){
+                        if($nowNode->getIsEmpty() && 
+                            $nowNode->getDayLength() + $nowNode->getStartDay() - 1 >= $node->getDayLength() + $node->getStartDay() - 1)
+                        {
                             $isSetted = true;
                             self::insertTodoDataNode($nowNode, $node);
                         }else {

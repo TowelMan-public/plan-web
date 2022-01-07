@@ -9,8 +9,18 @@
 @endsection
 
 @section('contents_menu')
-    <li><a href="#">完了を表示</a></li>
-    <li><a href="#">プライベート表示</a></li>
+    @if($includeCompleted !==null)
+        <li><a href="/me/project/list }}">完了を非表示</a></li>
+    @else
+        <li><a href="/me/project/list?includeCompleted=1">完了を表示</a></li>
+    @endif
+
+    @if($unIncludePrivate !== null)
+        <li><a href="/me/project/list{{ $includeCompleted !==null? '?includeCompleted=1' : '' }}">プライベート表示</a></li>        
+    @else
+        <li><a href="/me/project/list?unIncludePrivate=1{{ $includeCompleted !==null? '&includeCompleted=1' : '' }}">プライベート非表示</a></li>
+    @endif
+
     <li><a href="/me/project/month">月ごとに表示</a></li>
 @endsection
 

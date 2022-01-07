@@ -10,16 +10,29 @@
 
 @section('title_bar_contents')
     <div class="dateStringBar">
-        <img src="{{ asset('img/triangle.png') }}">
+        <img id="back_month" src="{{ asset('img/triangle.png') }}">
         <div class="dateString">{{ $dateAssociativeArray['year'].'-'.$dateAssociativeArray['month'] }}</div>
-        <img src="{{ asset('img/triangle.png') }}"
+        <img id="next_month" src="{{ asset('img/triangle.png') }}"
             style="transform: rotate(180deg);">
     </div>
+    <script>
+        $('#back_month').click(function(){
+            window.location.href = "{{ '/me/project/month/'.$dateAssociativeArray['year'].'/'.$dateAssociativeArray['month'].'/back'.($includeCompleted === null ? '' : '?includeCompleted=1') }}";
+        });
+
+        $('#next_month').click(function(){
+            window.location.href = "{{ '/me/project/month/'. $dateAssociativeArray['year'].'/'.$dateAssociativeArray['month'].'/next'.($includeCompleted === null ? '' : '?includeCompleted=1') }}";
+        });
+    </script>
 @endsection
 
 @section('contents_menu')
-    <li><a href="/me/project/month">リストで表示</a></li>
-    <li><a href="#">完了を表示</a></li>
+    <li><a href="/me/project/list">リストで表示</a></li>
+    @if($includeCompleted !== null)
+        <li><a href="/me/project/month/{{ $dateAssociativeArray['year'].'/'.$dateAssociativeArray['month'] }}">完了を非表示</a></li>
+    @else
+        <li><a href="/me/project/month/{{ $dateAssociativeArray['year'].'/'.$dateAssociativeArray['month'] }}?includeCompleted=1">完了を表示</a></li>
+    @endif
 @endsection
 
 @section('contents')
@@ -41,40 +54,48 @@
                     <td>{{ ($nowDay <= $projectInMonth->getFinishDay() && $nowDay > 0) ? $nowDay : ''}}</td>
                 @endfor
             </tr>
-
             @foreach ($projectInMonth->getProjectDataNodeArray() as $node)
                 <tr class="todo_list">
-
-                    @for ($nowDay = 7*$i - 6 - $projectInMonth->getStartWeek(), $finishDay = 7*$i - $projectInMonth->getStartWeek(); $nowDay <= $finishDay; $nowDay++)
-                        @if ($nowDay <= $projectInMonth->getFinishDay() && $nowDay <= 0)
-                            @if ($node->getDayLength() <= 0)
+                    @php
+                        $finishDay = 7*$i - $projectInMonth->getStartWeek();
+                    @endphp
+                    @for ($nowDay = 7*$i - 6 - $projectInMonth->getStartWeek(); $nowDay <= $finishDay; $nowDay++)
+                        @if ($nowDay <= $projectInMonth->getFinishDay() && $nowDay > 0 && $node !== null)                            
+                            @if ($node->getDayLength() <= 0 || $node->getStartDay() < $nowDay)
                                 @php
                                     $nowDay--;
-                                    $projectInMonth->getProjectDataNodeArray()[$loop->index] = $node->getNextNode();
+                                    $node = $node->getNextNode();
                                 @endphp
-                            @elseif ($node->isEmpty())
-                                <td class="single"></td>
+                                
+                            @elseif ($node->getIsEmpty())
+                                <td class="single">&nbsp;</td>
                                 @php
                                     $node->setDayLength($node->getDayLength() - 1);
+                                    $node->setStartDay($node->getStartDay() + 1);
                                 @endphp
                             @else
                                 @php
                                     $dayLength = 0;
-                                    if($finishDay - $nowday > $node->getDayLength())
+                                    if($finishDay - $nowDay + 1 >= $node->getDayLength())
                                         $dayLength = $node->getDayLength();
                                     else
-                                        $dayLength = $finishDay - $nowday;
+                                        $dayLength = $finishDay - $nowDay + 1;
                                     
-                                    $nowday += $dayLength - 1;
-                                    $node->setDayLength( $node->getDayLength() -  $dayLength);
+                                    $nowDay += $dayLength - 1;
+                                    $node->setDayLength( $node->getDayLength() - $dayLength);
+                                    $node->setStartDay( $node->getStartDay() + $dayLength);
                                 @endphp
-                                <td class="todo_in_month {{ $dayLength === 0 ? 'single' : '' }}" align="left" colspan="$dayLength"
+                                <td class="todo_in_month {{ $dayLength === 0 ? 'single' : '' }}" align="left" colspan="{{ $dayLength }}"
                                     style="background-color: {{ $projectInMonth->getBackGroundCollor($loop->index) }};">
                                     {{ $node->getName() }}
                                 </td>
+                                @php
+                                    $node = $node->getNextNode();
+                                @endphp
                             @endif
                         @else
-                            <td class="single"></td>
+                            <td class="single">&nbsp;</td>
+                            
                         @endif
                     @endfor
 
