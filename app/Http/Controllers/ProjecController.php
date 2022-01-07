@@ -8,16 +8,17 @@ use DateTime;
 use Facade\FlareClient\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 
-class ProjecListController extends Controller
+class ProjecController extends Controller
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     private ProjectService $projectService;
 
     /**
-    * コンストラクタ
-    */
+     * コンストラクタ
+     */
     public function __construct()
     {
         $this->projectService = ProjectService::getInstance();
@@ -31,13 +32,18 @@ class ProjecListController extends Controller
             ->with('projectListData', $projectListData);
     }
 
-   public function showDefaultListInMonth()
-   {
+    public function showDefaultListInMonth()
+    {
         $nowDateArray = DateUtility::getDateAssociativeArrayByDateTime(new DateTime());
         $projectInMonth = $this->projectService->getProjectInMonthData($this->getOauthToken(), $nowDateArray[DateUtility::YEAR], $nowDateArray[DateUtility::MONTH]);
 
         return View('project_in_month_layout')
             ->with('projectInMonth', $projectInMonth)
             ->with('dateAssociativeArray', $nowDateArray);
-   }
+    }
+
+    public function showInsertPage()
+    {
+        return View('insert_project_layout');
+    }
 }

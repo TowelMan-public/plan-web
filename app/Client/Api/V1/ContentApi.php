@@ -57,7 +57,7 @@ class ContentAPI
         //ヘッダー
         $header = new OauthHeader($token);
         
-        $responseArrayOrContents = $this->restTemplate->post($url, $dto, $header);
+        $responseArrayOrContents = $this->restTemplate->post($url, $dto, $header, false);
         return (int)$responseArrayOrContents[0];
     }
     

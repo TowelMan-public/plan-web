@@ -76,7 +76,7 @@
                     <div style="margin-top: auto;">分前</div>
                 </div>
             </div>
-            <div class="error">{{ $errors->first('beforeDeadlineForProjectNoticeDay').$errors->first('beforeDeadlineForProjectNoticeHour').$errors->first('beforeDeadlineForProjectNoticeMinute') }}</div>
+            <div class="error">{{ $errors->first('beforeDeadlineForProjectNoticeDay')?:$errors->first('beforeDeadlineForProjectNoticeHour')?:$errors->first('beforeDeadlineForProjectNoticeMinute') }}</div>
         </div>
         <div class="input_label">
             <div class="input_label_core">
@@ -96,7 +96,7 @@
                     <div style="margin-top: auto;">分前</div>
                 </div>
             </div>
-            <div class="error">{{ $errors->first('beforeDeadlineForTodoNoticeDay').$errors->first('beforeDeadlineForTodoNoticeHour').$errors->first('beforeDeadlineForTodoNoticeMinute') }}</div>
+            <div class="error">{{ $errors->first('beforeDeadlineForTodoNoticeDay')?:$errors->first('beforeDeadlineForTodoNoticeHour')?:$errors->first('beforeDeadlineForTodoNoticeMinute') }}</div>
         </div>
 
         <div class="input_label">

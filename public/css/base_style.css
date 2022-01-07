@@ -259,6 +259,17 @@ form>a {
 .inputs{
     display: flex;
     justify-content: space-between;
+    max-height: 3.5em;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.inputs>input:not(:focus){    
+    font-size: 0.6em;
+}
+
+.inputs>input:not(:focus) + div{
+    font-size: 0.6em;
 }
 
 input[type="submit"] {
@@ -299,7 +310,8 @@ input[type="submit"]:hover {
 
 input[type="text"],
 input[type="password"],
-input[type="number"]{
+input[type="number"],
+select{
     padding: 0.8em;
     outline: none;
     border: 1px solid #DDD;
@@ -311,7 +323,8 @@ input[type="number"]{
 
 input[type="text"]:focus,
 input[type="password"]:focus ,
-input[type="number"]:focus{
+input[type="number"]:focus, select:focus,
+option{
     box-shadow: 0 0 9px #6763d5;
     border: 1px solid #6763d5;
 }
@@ -528,13 +541,20 @@ footer>p {
     padding: 0 !important;
     width: 0 !important;
     height: 0 !important;
+    transition: 1s !important;    
+}
+
+/**
+* 動的に画面に映す
+*/
+.visabled{
+    opacity: 100 !important;    
     transition: 1s !important;
 }
 
 /**
 * 削除用のボタン
 */
-
 .delete_button {
     border-radius: 5%;
     /* 角丸       */
@@ -648,6 +668,14 @@ footer>p {
         border-bottom: 2px solid rgb(47, 47, 47);
     }
 
+    .inputs>input:not(:focus){    
+        font-size: 0.7em;
+    }
+    
+    .inputs>input:not(:focus) + div{
+        font-size: 0.7em;
+    }
+
     input {
         margin: 0;
     }
@@ -658,7 +686,8 @@ footer>p {
     }
 
     input[type="text"],
-    input[type="password"] {
+    input[type="password"],
+    select {
         box-sizing: border-box;
         width: 100%;
         padding: 0.8em;
@@ -670,7 +699,8 @@ footer>p {
     }
 
     input[type="text"]:focus,
-    input[type="password"]:focus {
+    input[type="password"]:focus,
+    select:focus, option{
         border: 0px solid #6763d5;
         border-bottom: 2px solid rgb(97, 97, 241);
         box-shadow: 0 0 0px #6763d5;

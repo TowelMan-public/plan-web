@@ -159,12 +159,15 @@ class RestTemplate
      * HTTPリクエストで、何かエラーがあれば例外を投げる
      *
      * @param integer $statusCode HTMPステータスコード
-     * @param array|null $resultArray HTTPの結果のボディーの連想配列
+     * @param any $resultArray HTTPの結果のボディーの連想配列
      * @return void
      */
-    private function checkErrorAndThrows(int $statusCode, array $resultArray = null)
+    private function checkErrorAndThrows(int $statusCode, $resultArray = null)
     {
-        $this->errorHandler->checkErrorAndThrows($statusCode, $resultArray);
+        if(is_array($resultArray))
+            $this->errorHandler->checkErrorAndThrows($statusCode, $resultArray);
+        else
+            $this->errorHandler->checkErrorAndThrows($statusCode);
     }
 }
 

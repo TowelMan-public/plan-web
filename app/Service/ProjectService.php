@@ -44,4 +44,14 @@ class ProjectService
 
         return ProjectLogic::createProjectInMonthData($projectResponseArray, $year, $month, $isIncludeCompleted);
     }
+
+    public function insertPrivateProject(string $oauthToken, string $projectName)
+    {
+        Api::last()->privateProject()->post($oauthToken, $projectName);
+    }
+
+    public function insertPublicProject(string $oauthToken, string $projectName, DateTime $startDate, DateTime $finishDate)
+    {
+        Api::last()->publicProject()->post($oauthToken, $projectName, $startDate, $finishDate);
+    }
 }

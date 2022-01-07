@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\FallbackController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\ProjecListController;
+use App\Http\Controllers\PrivateProjectController;
+use App\Http\Controllers\ProjecController;
+use App\Http\Controllers\PublicProjectController;
 use App\Http\Controllers\SignUpController;
 use App\Http\Controllers\TerminalController;
 use App\Http\Controllers\TodoInDayController;
@@ -36,8 +38,8 @@ Route::get('me/todo/day', [TodoInDayController::class, 'showDefault']);
 
 Route::get('me/todo/month', [TodoInMonthController::class, 'showDefault']);
 
-Route::get('me/project/list', [ProjecListController::class, 'showDefaultList']);
-Route::get('me/project/month', [ProjecListController::class, 'showDefaultListInMonth']);
+Route::get('me/project/list', [ProjecController::class, 'showDefaultList']);
+Route::get('me/project/month', [ProjecController::class, 'showDefaultListInMonth']);
 
 Route::get('user/config', [UserConfigController::class, 'show']);
 Route::post('user/config/core', [UserConfigController::class, 'updateUser']);
@@ -48,6 +50,11 @@ Route::post('withdrawal', [WithdrawalController::class, 'withdrawal']);
 
 Route::get('/terminal', [TerminalController::class, 'showList']);
 Route::post('/terminal/delete', [TerminalController::class, 'deleteTerminal']);
+
+Route::get('/project/insert', [ProjecController::class, 'showInsertPage']);
+
+Route::post('/project/public/insert', [PublicProjectController::class, 'insert']);
+Route::post('/project/private/insert', [PrivateProjectController::class, 'insert']);
 
 //常に一番下にする
 Route::fallback([FallbackController::class, 'handl']);
