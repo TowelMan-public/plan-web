@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exception\DateException;
+use App\Http\Data\ProjectListData;
 use App\Service\ProjectService;
 use App\Utility\DateUtility;
 use DateTime;
@@ -103,5 +104,22 @@ class ProjectController extends Controller
     {
         return View('insert_project_layout')
             ->with('dateTimeError', $request->old('dateTime'));
+    }
+
+    public function showInvitationList(Request $request)
+    {
+        $projectListDataArray = $this->projectService->getInvitationProjectDataArray($this->getOauthToken(), new DateTime());
+
+        $dateList = new ProjectListData();
+        $dateList->setPrivateProjectList([]);
+        $dateList->setApproachingProjectList([]);
+        $dateList->setExpiredProjectList([]);
+        $dateList->setOtherProjectList($projectListDataArray);
+
+        return View('project_list_layout')
+            ->with('projectListData', $dateList)
+            ->with('isInvitation', 1)
+            ->with('unIncludePrivate', $request->unIncludePrivate??null)
+            ->with('includeCompleted', $request->includeCompleted??null);
     }
 }

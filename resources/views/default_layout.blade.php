@@ -19,6 +19,7 @@
                 </label>
                 <div class="acd_content menu">
                     <ul>
+                        <li><a href="/me/project/list/invitation">勧誘一覧</a></li>
                         <li><a href="/project/insert">作成</a></li>
                         <li><a href="/me/project/list">一覧</a></li>
                     </ul>
@@ -105,6 +106,7 @@
                         </label>
                         <div class="acd_content menu">
                             <ul>
+                                <li><a href="/me/project/list/invitation">勧誘一覧</a></li>
                                 <li><a href="/project/insert">作成</a></li>
                                 <li><a href="/me/project/list">一覧</a></li>
                             </ul>

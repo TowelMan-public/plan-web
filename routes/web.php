@@ -39,6 +39,7 @@ Route::get('me/todo/day', [TodoInDayController::class, 'showDefault']);
 Route::get('me/todo/month', [TodoInMonthController::class, 'showDefault']);
 
 Route::get('me/project/list', [ProjectController::class, 'showDefaultList']);
+Route::get('me/project/list/invitation', [ProjectController::class, 'showInvitationList']);
 Route::get('me/project/month', [ProjectController::class, 'showDefaultListInMonth']);
 Route::get('me/project/month/{year}/{month}', [ProjectController::class, 'showListInMonth'])
     ->name("ProjectController@showListInMonth");

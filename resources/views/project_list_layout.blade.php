@@ -1,16 +1,27 @@
 @extends('default_layout')
 
 @section('page_name') 
-    今日のやること
+    @if (isset($isInvitation))
+        勧誘されているプロジェクト一覧
+    @else
+        プロジェクト一覧
+    @endif
 @endsection
 
 @section('title_name')
-    <div>プロジェクト一覧</div>
+    <div>
+        @if (isset($isInvitation))
+            勧誘されているプロジェクト一覧
+        @else
+            プロジェクト一覧
+        @endif
+    </div>
 @endsection
 
 @section('contents_menu')
+    <li><a href="/me/project/list/invitation">勧誘一覧</a></li>
     @if($includeCompleted !==null)
-        <li><a href="/me/project/list">完了を非表示</a></li>
+        <li><a href="/me/project/list/invitation">完了を非表示</a></li>
     @else
         <li><a href="/me/project/list?includeCompleted=1">完了を表示</a></li>
     @endif
@@ -73,12 +84,12 @@
         <script>
             $('#public_project_{{ $data->getId() }}').click(function () {
                 window.location.href = "/project/public/{{ $data->getId() }}";
-            })
+            }
         </script>
     @endforeach
 
     @foreach ($projectListData->getApproachingProjectList() as $data)
-        <div class="project" id="public_project_{{ $data->getId() }}" style="background-color: rgb(255, 111, 0);">
+        <div class="project" id="public_project_$data->getId() }}" style="background-color: rgb(255, 111, 0);">
 
             <div class="text">
                 <div class="name">

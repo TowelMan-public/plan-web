@@ -93,4 +93,15 @@ class ProjectService
     {
         Api::last()->publicProject()->delete($oauthToken, $projectId);
     }
+
+    public function getInvitationProjectDataArray(string $oauthToken): array
+    {
+        $responseArray = Api::last()->publicProject()->getSolicited($oauthToken);
+        $dataArray = [];
+
+        foreach ($responseArray as $response)
+            $dataArray[] = ProjectLogic::createProjectData($response);
+        
+        return $dataArray;
+    }
 }
