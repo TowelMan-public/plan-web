@@ -3,6 +3,7 @@
 namespace App\Http\Data;
 
 use App\Exception\LllegalException;
+use App\Utility\DateUtility;
 
 class ProjectData
 {
@@ -24,6 +25,16 @@ class ProjectData
     public function __construct()
     {
         $this->isPrivate = true;
+    }
+
+    public function getStartDateAssociativeArray(): array
+    {
+        return DateUtility::getDateAssociativeArrayByString($this->startDateString);
+    }
+
+    public function getFinishDateAssociativeArray(): array
+    {
+        return DateUtility::getDateAssociativeArrayByString($this->finishDateString);
     }
 
     /**

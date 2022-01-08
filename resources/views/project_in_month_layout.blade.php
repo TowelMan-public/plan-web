@@ -90,7 +90,7 @@
                                     {{ $node->getName() }}
                                 </td>
                                 <script>
-                                    $('\'#project_td_'.$node->getId().'-'.$dayLength.'\'').click(function () {
+                                    $("#project_td_{{ $node->getId() }}-{{ $dayLength }}").click(function () {
                                         window.location.href = "/project/public/{{ $node->getId() }}";
                                     })
                                 </script>

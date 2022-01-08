@@ -71,4 +71,26 @@ class ProjectService
     {
         Api::last()->privateProject()->delete($oauthToken, $projectId);
     }
+
+    public function getProjectDataByPublicProject(string $oauthToken, int $projectId): ProjectData
+    {
+        $response = Api::last()->publicProject()->get($oauthToken, $projectId);
+        return ProjectLogic::createProjectData($response);
+    }
+
+    public function updatePublicProject(string $oauthToken, int $projectId, string $projectName,
+            DateTime $startDate, DateTime $finishDate)
+    {
+        Api::last()->publicProject()->put($oauthToken, $projectId, $projectName, $startDate, $finishDate);
+    }
+
+    public function setIsCompletedToPublicProject(string $oauthToken, int $projectId, bool $isCompleted)
+    {
+        Api::last()->publicProject()->postIsCompleted($oauthToken, $projectId, $isCompleted);
+    }
+
+    public function deletePublicProject(string $oauthToken, int $projectId)
+    {
+        Api::last()->publicProject()->delete($oauthToken, $projectId);
+    }
 }

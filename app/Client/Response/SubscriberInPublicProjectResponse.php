@@ -7,7 +7,7 @@ class SubscriberInPublicProjectResponse
 
     private int $publicProjectId;
     private string $userName;
-    private string $projectAuthority;
+    private int $projectAuthority;
 
     /**
      * SubscriberInPublicProjectResponse単体を生成する
@@ -48,7 +48,7 @@ class SubscriberInPublicProjectResponse
      * @param string $projectAuthority
      * @return void
      */
-    public function setProjectAuthority(string $projectAuthority)
+    public function setProjectAuthority(int $projectAuthority)
     {
         $this->projectAuthority = $projectAuthority;
     }
@@ -56,9 +56,9 @@ class SubscriberInPublicProjectResponse
     /**
      * projectAuthorityの取得
      *
-     * @return string
+     * @return int
      */
-    public function getProjectAuthority(): string
+    public function getProjectAuthority(): int
     {
         return $this->projectAuthority;
     }

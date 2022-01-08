@@ -46,7 +46,7 @@
     @endforeach
     
     @foreach ($projectListData->getExpiredProjectList() as $data)
-        <div class="project" 
+        <div class="project"  id="public_project_{{ $data->getId() }}"
             style="
                 border-color: rgb(189, 15, 15);
                 background-color: rgb(255, 0, 0);">
@@ -70,10 +70,15 @@
             </div>
 
         </div>
+        <script>
+            $('#public_project_{{ $data->getId() }}').click(function () {
+                window.location.href = "/project/public/{{ $data->getId() }}";
+            })
+        </script>
     @endforeach
 
     @foreach ($projectListData->getApproachingProjectList() as $data)
-        <div class="project" style="background-color: rgb(255, 111, 0);">
+        <div class="project" id="public_project_{{ $data->getId() }}" style="background-color: rgb(255, 111, 0);">
 
             <div class="text">
                 <div class="name">
@@ -94,10 +99,15 @@
             </div>
 
         </div>
+        <script>
+            $('#public_project_{{ $data->getId() }}').click(function () {
+                window.location.href = "/project/public/{{ $data->getId() }}";
+            })
+        </script>
     @endforeach
 
     @foreach ($projectListData->getOtherProjectList() as $data)
-        <div class="project" style="background-color: rgb(67, 193, 4);">
+        <div class="project" id="public_project_{{ $data->getId() }}" style="background-color: rgb(67, 193, 4);">
 
             <div class="text">
                 <div class="name">
@@ -118,6 +128,11 @@
             </div>
 
         </div>
+        <script>
+            $('#public_project_{{ $data->getId() }}').click(function () {
+                window.location.href = "/project/public/{{ $data->getId() }}";
+            })
+        </script>
     @endforeach
 
 @endsection

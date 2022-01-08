@@ -58,6 +58,13 @@ Route::post('/terminal/delete', [TerminalController::class, 'deleteTerminal']);
 Route::get('/project/insert', [ProjectController::class, 'showInsertPage']);
 
 Route::post('/project/public/insert', [PublicProjectController::class, 'insert']);
+Route::get('/project/public/{projectId}', [PublicProjectController::class, 'show'])
+    ->name('PublicProjectController@show');
+Route::post('/project/public/{projectId}/update', [PublicProjectController::class, 'update']);
+Route::post('/project/public/{projectId}/delete', [PublicProjectController::class, 'delete']);
+Route::post('/project/public/{projectId}/isCompleted', [PublicProjectController::class, 'setIsCompleted']);
+Route::post('/project/public/{projectId}/accept', [PublicProjectController::class, 'accept']);
+Route::post('/project/public/{projectId}/block', [PublicProjectController::class, 'block']);
 
 Route::post('/project/private/insert', [PrivateProjectController::class, 'insert']);
 Route::get('/project/private/{projectId}', [PrivateProjectController::class, 'show'])
