@@ -1,40 +1,53 @@
 @extends('default_layout')
 
 @section('page_name') 
-    骨組み
+    パブリックプロジェクト
 @endsection
 
 @section('title_name')
-    骨組み
+    パブリックプロジェクト
 @endsection
 
 @section('contents_menu')
-    <li><a href="#">HOGE</a></li>
+    <li><a href="#">やること系</a></li>
 @endsection
 
 @section('contents')
-    <div class="todo">
-        <div class="inner">
-            <div class="name">todo1</div>
-
-            <div class="hamburger_img">
-                <img src="{{ asset('img/plus.png') }}">
-                <img class="none" src="{{ asset('img/close.png') }}">
-            </div>
-
-            <div class="is_completed">
-                <img src="{{ asset('img/check.png') }}">
-            </div>
-        </div>
-
-        <div class="contents none">
-            <div class="content">
-                <div class="name">・content1</div>
-
-                <div class="is_completed">
-                    <img src="{{ asset('img/check.png') }}">
-                </div>
-            </div>
-        </div>
-    </div>
+    
 @endsection
+
+//メモ
+<div class="input_label">
+    <input type="checkbox" id="is_completed" name="isCompleted" 
+        value="1"
+        {{ (isset($projectData)? $projectData->isCompleted : old('isCompleted', false))? 'checked' : '' }}/>
+    <label for="is_completed" class="switch_label">
+        <div id="is_completed_input_name" class="input_name">{{ (isset($projectData)? $projectData->isCompleted : old('isCompleted', false))? '完了済み' : '完了していない' }}</div>
+        <div class="switch">
+            <div class="circle"></div>
+            <div class="base"></div>
+        </div>
+    </label>
+    <script>
+        $('#is_completed').change(function () {
+            let newIsCompleted = typeof attr !== 'undefined' && attr !== false;
+            
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "/project/private/{{ $projectId }}/isCompleted",
+                type: "post",
+                data : {
+                    isCompleted : newIsCompleted,
+                },
+            })
+            .done((res)=>{
+                $("#is_completed_input_name").text(newIsCompleted? '完了済み' : '完了していない');
+            })
+            .fail((error)=>{
+                console.log(error.statusText)
+            })
+        });
+    </script>
+</div>

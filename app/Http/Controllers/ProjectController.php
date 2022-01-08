@@ -12,7 +12,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 
-class ProjecController extends Controller
+class ProjectController extends Controller
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     private ProjectService $projectService;
@@ -41,7 +41,7 @@ class ProjecController extends Controller
     {
         $nowDateArray = DateUtility::getDateAssociativeArrayByDateTime(new DateTime());
 
-        return redirect(route("ProjecController@showListInMonth",$request->all() + [
+        return redirect(route("ProjectController@showListInMonth",$request->all() + [
                 'year' => $nowDateArray[DateUtility::YEAR],
                 'month' => $nowDateArray[DateUtility::MONTH],
             ]));
@@ -72,7 +72,7 @@ class ProjecController extends Controller
                 DateUtility::addDate((DateUtility::createDate($year, $month, 1, 0, 0)), [DateUtility::MONTH => 1])
             );
 
-            return redirect(route("ProjecController@showListInMonth",$request->all() + [
+            return redirect(route("ProjectController@showListInMonth",$request->all() + [
                 'year' => $nextDateArray[DateUtility::YEAR],
                 'month' => $nextDateArray[DateUtility::MONTH],
             ]));
@@ -89,13 +89,13 @@ class ProjecController extends Controller
                 DateUtility::addDate((DateUtility::createDate($year, $month, 1, 0, 0)), [DateUtility::MONTH => -1])
             );
 
-            return redirect(route("ProjecController@showListInMonth",$request->all() + [
+            return redirect(route("ProjectController@showListInMonth",$request->all() + [
                 'year' => $backDateArray[DateUtility::YEAR],
                 'month' => $backDateArray[DateUtility::MONTH],
             ]));
         }
         catch(DateException){
-            return redirect()->action([ProjecController::class, 'showDefaultListInMonth'], $request->all());
+            return redirect()->action([ProjectController::class, 'showDefaultListInMonth'], $request->all());
         }
     }
 

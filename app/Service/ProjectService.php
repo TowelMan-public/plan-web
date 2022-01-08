@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Client\Api\Api;
+use App\Http\Data\ProjectData;
 use App\Http\Data\ProjectInMonthData;
 use App\Http\Data\ProjectListData;
 use App\Logic\ProjectLogic;
@@ -53,5 +54,21 @@ class ProjectService
     public function insertPublicProject(string $oauthToken, string $projectName, DateTime $startDate, DateTime $finishDate)
     {
         Api::last()->publicProject()->post($oauthToken, $projectName, $startDate, $finishDate);
+    }
+
+    public function getProjectDataByPrivateProject(string $oauthToken, int $projectId): ProjectData
+    {
+        $response = Api::last()->privateProject()->get($oauthToken, $projectId);
+        return ProjectLogic::createProjectData($response);
+    }
+
+    public function updatePrivateProject(string $oauthToken, int $projectId, string $projectName)
+    {
+        Api::last()->privateProject()->put($oauthToken, $projectId, $projectName);
+    }
+
+    public function deletePrivateProject(string $oauthToken, int $projectId)
+    {
+        Api::last()->privateProject()->delete($oauthToken, $projectId);
     }
 }

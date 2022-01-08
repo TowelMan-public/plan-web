@@ -3,7 +3,7 @@
 use App\Http\Controllers\FallbackController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PrivateProjectController;
-use App\Http\Controllers\ProjecController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PublicProjectController;
 use App\Http\Controllers\SignUpController;
 use App\Http\Controllers\TerminalController;
@@ -38,12 +38,12 @@ Route::get('me/todo/day', [TodoInDayController::class, 'showDefault']);
 
 Route::get('me/todo/month', [TodoInMonthController::class, 'showDefault']);
 
-Route::get('me/project/list', [ProjecController::class, 'showDefaultList']);
-Route::get('me/project/month', [ProjecController::class, 'showDefaultListInMonth']);
-Route::get('me/project/month/{year}/{month}', [ProjecController::class, 'showListInMonth'])
-    ->name("ProjecController@showListInMonth");
-Route::get('me/project/month/{year}/{month}/next', [ProjecController::class, 'nextMonthForListInMonth']);
-Route::get('me/project/month/{year}/{month}/back', [ProjecController::class, 'backMonthForListInMonth']);
+Route::get('me/project/list', [ProjectController::class, 'showDefaultList']);
+Route::get('me/project/month', [ProjectController::class, 'showDefaultListInMonth']);
+Route::get('me/project/month/{year}/{month}', [ProjectController::class, 'showListInMonth'])
+    ->name("ProjectController@showListInMonth");
+Route::get('me/project/month/{year}/{month}/next', [ProjectController::class, 'nextMonthForListInMonth']);
+Route::get('me/project/month/{year}/{month}/back', [ProjectController::class, 'backMonthForListInMonth']);
 
 Route::get('user/config', [UserConfigController::class, 'show']);
 Route::post('user/config/core', [UserConfigController::class, 'updateUser']);
@@ -55,10 +55,15 @@ Route::post('withdrawal', [WithdrawalController::class, 'withdrawal']);
 Route::get('/terminal', [TerminalController::class, 'showList']);
 Route::post('/terminal/delete', [TerminalController::class, 'deleteTerminal']);
 
-Route::get('/project/insert', [ProjecController::class, 'showInsertPage']);
+Route::get('/project/insert', [ProjectController::class, 'showInsertPage']);
 
 Route::post('/project/public/insert', [PublicProjectController::class, 'insert']);
+
 Route::post('/project/private/insert', [PrivateProjectController::class, 'insert']);
+Route::get('/project/private/{projectId}', [PrivateProjectController::class, 'show'])
+    ->name('PrivateProjectController@show');
+Route::post('/project/private/{projectId}/update', [PrivateProjectController::class, 'update']);
+Route::post('/project/private/{projectId}/delete', [PrivateProjectController::class, 'delete']);
 
 //常に一番下にする
 Route::fallback([FallbackController::class, 'handl']);

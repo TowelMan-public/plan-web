@@ -209,6 +209,11 @@
     margin-left: auto;
 }
 
+.a_in_contents{
+    color: rgb(3, 3, 133);
+    border-bottom: 2px solid rgb(3, 3, 133);
+}
+
 /**
 * スマホ向け
 */

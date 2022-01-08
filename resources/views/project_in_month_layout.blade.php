@@ -85,10 +85,15 @@
                                     $node->setDayLength( $node->getDayLength() - $dayLength);
                                     $node->setStartDay( $node->getStartDay() + $dayLength);
                                 @endphp
-                                <td class="todo_in_month {{ $dayLength === 0 ? 'single' : '' }}" align="left" colspan="{{ $dayLength }}"
+                                <td id="{{ 'project_td_'.$node->getId().'-'.$dayLength }}" class="todo_in_month {{ $dayLength === 0 ? 'single' : '' }}" align="left" colspan="{{ $dayLength }}"
                                     style="background-color: {{ $projectInMonth->getBackGroundCollor($loop->index) }};">
                                     {{ $node->getName() }}
                                 </td>
+                                <script>
+                                    $('\'#project_td_'.$node->getId().'-'.$dayLength.'\'').click(function () {
+                                        window.location.href = "/project/public/{{ $node->getId() }}";
+                                    })
+                                </script>
                                 @php
                                     $node = $node->getNextNode();
                                 @endphp

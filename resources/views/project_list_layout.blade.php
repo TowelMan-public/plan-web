@@ -10,7 +10,7 @@
 
 @section('contents_menu')
     @if($includeCompleted !==null)
-        <li><a href="/me/project/list }}">完了を非表示</a></li>
+        <li><a href="/me/project/list">完了を非表示</a></li>
     @else
         <li><a href="/me/project/list?includeCompleted=1">完了を表示</a></li>
     @endif
@@ -27,7 +27,7 @@
 @section('contents')
 
     @foreach ($projectListData->getPrivateProjectList() as $data)
-        <div class="project" style="background-color: aqua;">
+        <div id="private_project_{{ $data->getId() }}" class="project" style="background-color: aqua;">
             
             <div class="is_private">プライベート</div>
 
@@ -38,6 +38,11 @@
             </div>
 
         </div>
+        <script>
+            $('#private_project_{{ $data->getId() }}').click(function () {
+                window.location.href = "/project/private/{{ $data->getId() }}";
+            })
+        </script>
     @endforeach
     
     @foreach ($projectListData->getExpiredProjectList() as $data)
