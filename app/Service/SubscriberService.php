@@ -48,4 +48,37 @@ class SubscriberService
     {
         Api::last()->subscriber()->postBlock($oauthToken, $publicProjectId);
     }
+
+    public function getSubscriberDataArray(string $oauthToken, int $publicProjectId): array
+    {
+        $subscriberArray = Api::last()->subscriber()->getList($oauthToken, $publicProjectId);
+        $dataArray = [];
+
+        foreach ($subscriberArray as $subscriberResponse) {
+            $userResponse = Api::last()->user()->get($oauthToken, $subscriberResponse->getUserName());
+            $dataArray[] = SubscriberLogic::createSubscriberData($subscriberResponse, $userResponse);
+        }
+
+        return $dataArray;
+    }
+
+    public function invitationUser(string $oauthToken, int $publicProjectId, string $usreName)
+    {
+        Api::last()->subscriber()->post($oauthToken, $publicProjectId, $usreName);
+    }
+
+    public function updateSubscriber(string $oauthToken, int $publicProjectId, string $usreName, int $authorityId)
+    {
+        Api::last()->subscriber()->put($oauthToken, $publicProjectId, $usreName, $authorityId);
+    }
+
+    public function deleteSubscriber(string $oauthToken, int $publicProjectId, string $usreName)
+    {
+        Api::last()->subscriber()->delete($oauthToken, $publicProjectId, $usreName);
+    }
+
+    public function exitProject(string $oauthToken, int $publicProjectId)
+    {
+        Api::last()->subscriber()->postExit($oauthToken, $publicProjectId);
+    }
 }

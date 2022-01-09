@@ -27,7 +27,7 @@
 
 @section('contents_menu')
     <li><a href="#">やること系</a></li>
-    <li><a href="/project/pablick/{{ $projectData->getId() }}/subscriber">加入者一覧</a></li>
+    <li><a href="/project/public/{{ $projectData->getId() }}/subscriber">加入者一覧</a></li>
 @endsection
 
 @section('contents')
@@ -180,6 +180,6 @@
 
     <br>
     <div>
-        <a class="a_in_contents" href="/project/pablick/{{ $projectData->getId() }}/subscriber">加入者一覧を見る</a>
+        <a href="/project/public/{{ $projectData->getId() }}/subscriber">加入者一覧を見る</a>
     </div>
 @endsection

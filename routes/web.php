@@ -6,6 +6,7 @@ use App\Http\Controllers\PrivateProjectController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PublicProjectController;
 use App\Http\Controllers\SignUpController;
+use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\TerminalController;
 use App\Http\Controllers\TodoInDayController;
 use App\Http\Controllers\TodoInMonthController;
@@ -72,6 +73,13 @@ Route::get('/project/private/{projectId}', [PrivateProjectController::class, 'sh
     ->name('PrivateProjectController@show');
 Route::post('/project/private/{projectId}/update', [PrivateProjectController::class, 'update']);
 Route::post('/project/private/{projectId}/delete', [PrivateProjectController::class, 'delete']);
+
+Route::get('/project/public/{projectId}/subscriber', [SubscriberController::class, 'show'])
+    ->name('SubscriberController@show');
+Route::post('/project/public/{projectId}/subscriber/invitation', [SubscriberController::class, 'invitation']);
+Route::post('/project/public/{projectId}/subscriber/update', [SubscriberController::class, 'update']);
+Route::post('/project/public/{projectId}/subscriber/delete', [SubscriberController::class, 'delete']);
+Route::post('/project/public/{projectId}/exit', [SubscriberController::class, 'exit']);
 
 //常に一番下にする
 Route::fallback([FallbackController::class, 'handl']);

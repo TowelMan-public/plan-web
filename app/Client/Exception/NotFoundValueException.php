@@ -14,6 +14,4 @@ class NotFoundValueException extends RuntimeException
     {
         parent::__construct($message);
     }
-
-    //TODO その都度作っていく
 }

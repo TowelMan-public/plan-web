@@ -52,7 +52,7 @@
         <script>
             $('#private_project_{{ $data->getId() }}').click(function () {
                 window.location.href = "/project/private/{{ $data->getId() }}";
-            })
+            });
         </script>
     @endforeach
     
@@ -84,7 +84,7 @@
         <script>
             $('#public_project_{{ $data->getId() }}').click(function () {
                 window.location.href = "/project/public/{{ $data->getId() }}";
-            }
+            });
         </script>
     @endforeach
 
@@ -113,7 +113,7 @@
         <script>
             $('#public_project_{{ $data->getId() }}').click(function () {
                 window.location.href = "/project/public/{{ $data->getId() }}";
-            })
+            });
         </script>
     @endforeach
 
@@ -142,7 +142,7 @@
         <script>
             $('#public_project_{{ $data->getId() }}').click(function () {
                 window.location.href = "/project/public/{{ $data->getId() }}";
-            })
+            });
         </script>
     @endforeach
 

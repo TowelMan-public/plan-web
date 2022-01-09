@@ -34,7 +34,7 @@ class PublicProjectController extends Controller
     public function insert(InsertProjectRequest $request)
     {
         $this->projectServer->insertPublicProject($this->getOauthToken(), $request->name, $request->startDate, $request->finishData);
-        return redirect()->action([TodoInMonthController::class, 'showDefault']);
+        return redirect()->action([PublicProjectController::class, 'show']);
     }
 
     public function show(Request $request, int $projectId)
@@ -102,9 +102,7 @@ class PublicProjectController extends Controller
         try{
             $this->subscriberService->blockProject($this->getOauthToken(), $projectId);
             
-            return redirect(route('PublicProjectController@show', [
-                'projectId' => $projectId,
-            ]));
+            return redirect()->action([ProjectController::class, 'invitation']);
         }catch(BadRequestException){
             //TODO
         }
