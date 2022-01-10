@@ -33,8 +33,10 @@ class PublicProjectController extends Controller
 
     public function insert(InsertProjectRequest $request)
     {
-        $this->projectServer->insertPublicProject($this->getOauthToken(), $request->name, $request->startDate, $request->finishData);
-        return redirect()->action([PublicProjectController::class, 'show']);
+        $projectId = $this->projectServer->insertPublicProject($this->getOauthToken(), $request->name, $request->startDate, $request->finishData);
+        return redirect(route('PublicProjectController@show', [
+            'projectId' => $projectId,
+        ]));
     }
 
     public function show(Request $request, int $projectId)

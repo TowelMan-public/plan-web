@@ -14,7 +14,7 @@ class LoginController extends Controller
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     
-    private const HOME_PAGE_CONTROLLER = [TodoInDayController::class, 'showDefault'];
+    private const HOME_PAGE_CONTROLLER = [TodoController::class, 'showDefaultInDay'];
     private OauthService $oauthService;
 
     /**

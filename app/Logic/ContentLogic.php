@@ -37,9 +37,10 @@ class ContentLogic
      * ContentDataの配列の作成
      *
      * @param array $responseArray ContentResponseの配列
+     * @param bool $isIncludeCompleted
      * @return array ContentDataの配列
      */
-    static public function createContentdataArray(array $responseArray): array
+    static public function createContentdataArray(array $responseArray, bool $isIncludeCompleted): array
     {
         $dataArray = [];
 

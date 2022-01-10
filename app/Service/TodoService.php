@@ -40,7 +40,7 @@ class TodoService
             $todoData = TodoLogic::createTodoData($response);
             $todoData->setContentList(
                 ContentLogic::createContentdataArray(
-                    Api::last()->content()->getList($oauthToken, $response->getTodoOnProjectId())));
+                    Api::last()->content()->getList($oauthToken, $response->getTodoOnProjectId()), $isIncludeCompleted));
             $todoDataArray[] = $todoData;
         }
 
@@ -48,7 +48,7 @@ class TodoService
             $todoData = TodoLogic::createTodoData($response);
             $todoData->setContentList(
                 ContentLogic::createContentdataArray(
-                    Api::last()->content()->getList($oauthToken, $response->getTodoOnResponsibleId())));
+                    Api::last()->content()->getList($oauthToken, $response->getTodoOnResponsibleId()), $isIncludeCompleted));
             $todoDataArray[] = $todoData;
         }
 

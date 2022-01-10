@@ -51,9 +51,9 @@ class ProjectService
         Api::last()->privateProject()->post($oauthToken, $projectName);
     }
 
-    public function insertPublicProject(string $oauthToken, string $projectName, DateTime $startDate, DateTime $finishDate)
+    public function insertPublicProject(string $oauthToken, string $projectName, DateTime $startDate, DateTime $finishDate): int
     {
-        Api::last()->publicProject()->post($oauthToken, $projectName, $startDate, $finishDate);
+        return Api::last()->publicProject()->post($oauthToken, $projectName, $startDate, $finishDate);
     }
 
     public function getProjectDataByPrivateProject(string $oauthToken, int $projectId): ProjectData

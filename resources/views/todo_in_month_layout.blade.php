@@ -1,24 +1,72 @@
 @extends('default_layout')
 
 @section('page_name') 
-    今月のやること
+    @if ($projectData === null)
+        一月の自分のやること
+    @else
+        一月の{{ $projectData->getName() }}のやること
+    @endif
 @endsection
 
 @section('title_name')
-    <div>今月のやること</div>
+    <div>
+        @if ($projectData === null)
+            一月の自分のやること
+        @else
+            一月の{{ $projectData->getName() }}のやること
+        @endif
+    </div>
 @endsection
 
 @section('title_bar_contents')
     <div class="dateStringBar">
-        <img src="{{ asset('img/triangle.png') }}">
+        <img src="{{ asset('img/triangle.png') }}" id="back_month">
         <div class="dateString">{{ $dateAssociativeArray['year'].'-'.$dateAssociativeArray['month'] }}</div>
-        <img src="{{ asset('img/triangle.png') }}"
+        <img src="{{ asset('img/triangle.png') }}" id="next_month"
             style="transform: rotate(180deg);">
     </div>
+
+    @if ($projectData === null)
+        <script>
+            $('#back_month').click(function(){
+                window.location.href = "/me/todo/month/{{ $dateAssociativeArray['year'] }}/{{ $dateAssociativeArray['month'] }}/back{{ $includeCompleted === null ? '' : '?includeCompleted=1' }}";
+            });
+
+            $('#next_month').click(function(){
+                window.location.href = "/me/todo/month/{{ $dateAssociativeArray['year'] }}/{{ $dateAssociativeArray['month'] }}/next{{ $includeCompleted === null ? '' : '?includeCompleted=1' }}";
+            });
+        </script>
+    @else
+        <script>
+            $('#back_month').click(function(){
+                window.location.href = "/project/{{ $projectData->getIsPrivate()? 'private' : 'public' }}/todo/" + 
+                    "{{ $projectData->getIsPrivate() || $mySubscriberData !== null ? 'onProject' : 'onResponsible' }}/month/{{ $dateAssociativeArray['year'] }}/{{ $dateAssociativeArray['month'] }}/back{{ $includeCompleted === null ? '' : '?includeCompleted=1' }}";
+            });
+
+            $('#next_month').click(function(){
+                window.location.href = "/project/{{ $projectData->getIsPrivate()? 'private' : 'public' }}/todo" + 
+                    "{{ $projectData->getIsPrivate() || $mySubscriberData !== null ? 'onProject' : 'onResponsible' }}/month/{{ $dateAssociativeArray['year'] }}/{{ $dateAssociativeArray['month'] }}/next{{ $includeCompleted === null ? '' : '?includeCompleted=1' }}";
+            });
+        </script>
+    @endif
 @endsection
 
 @section('contents_menu')
-    <li><a href="#">完了を非表示</a></li>
+    @if ($projectData === null)
+        <li><a href="/me/todo/month/{{ $dateAssociativeArray['year'] }}/{{ $dateAssociativeArray['month'] }}?{{ $includeCompleted === null ? 'includeCompleted=1' : '' }}">
+            {{ $includeCompleted === null ? '完了を表示' : '完了を非表示' }}
+        </a></li>
+    @else        
+        <li><a href="/me/todo/month/{{ $dateAssociativeArray['year'] }}/{{ $dateAssociativeArray['month'] }}?{{ $includeCompleted === null ? 'includeCompleted=1' : '' }}">
+            {{ $includeCompleted === null ? '完了を表示' : '完了を非表示' }}
+        </a></li>
+        <li><a href="/project/{{ $projectData->getIsPrivate()? 'private' : 'public' }}/todo/{{ $projectData->getIsPrivate() || $mySubscriberData !== null ? 'onProject' : 'onResponsible' }}/day/{{ $dateAssociativeArray['year'] }}/{{ $dateAssociativeArray['month'] }}?{{ $includeCompleted === null ? '' : '?includeCompleted=1' }}">
+            日間表示に
+        </a></li>
+        <li><a href="/project/{{ $projectData->getIsPrivate()? 'private' : 'public' }}/$projectData->getId()">
+            プロジェクトへ
+        </a></li>
+    @endif
 @endsection
 
 @section('contents')
@@ -71,10 +119,16 @@
                                     $node->setDayLength( $node->getDayLength() - $dayLength);
                                     $node->setStartDay( $node->getStartDay() + $dayLength);
                                 @endphp
-                                <td class="todo_in_month {{ $dayLength === 0 ? 'single' : '' }}" align="left" colspan="{{ $dayLength }}"
+                                <td class="todo_in_month {{ $dayLength === 0 ? 'single' : '' }}" id="todo_{{ $todo->getId() }}"
+                                    align="left" colspan="{{ $dayLength }}"
                                     style="background-color: {{ $todoInMonth->getBackGroundCollor($loop->index) }};">
                                     {{ $node->getName() }}
                                 </td>
+                                <script>
+                                    $('#todo_{{ $todo->getId() }}').click(function () {
+                                        window.location.href = "/todo/{{ $todo->getIsOnProject? 'onProject' : 'onPrivate' }}/{{ $todo->getId() }}";
+                                    });
+                                </script>
                             @endif
                         @else
                             <td class="single">&nbsp;</td>

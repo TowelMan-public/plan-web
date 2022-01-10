@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\TodoInDayController;
+use App\Http\Controllers\TodoController;
 use App\Service\OauthService;
 use Closure;
 use Illuminate\Http\Request;
@@ -15,7 +15,7 @@ class SesstionOauth
 {
     private OauthService $oauthService;
 
-    private const HOME_PAGE_CONTROLLER = [TodoInDayController::class, 'showDefault'];
+    private const HOME_PAGE_CONTROLLER = [TodoController::class, 'showDefaultInDay'];
 
     /**
     * コンストラクタ

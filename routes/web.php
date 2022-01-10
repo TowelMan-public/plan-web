@@ -8,8 +8,7 @@ use App\Http\Controllers\PublicProjectController;
 use App\Http\Controllers\SignUpController;
 use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\TerminalController;
-use App\Http\Controllers\TodoInDayController;
-use App\Http\Controllers\TodoInMonthController;
+use App\Http\Controllers\TodoController;
 use App\Http\Controllers\UserConfigController;
 use App\Http\Controllers\WithdrawalController;
 use Illuminate\Support\Facades\Route;
@@ -35,9 +34,17 @@ Route::get('logout', [LoginController::class, 'logout']);
 Route::get('sign_up', [SignUpController::class, 'show']);
 Route::post('sign_up', [SignUpController::class, 'signUp']);
 
-Route::get('me/todo/day', [TodoInDayController::class, 'showDefault']);
+Route::get('me/todo/day', [TodoController::class, 'showDefaultInDay']);
+Route::get('me/todo/day/{year}/{month}/{day}', [TodoController::class, 'showInDay'])
+    ->name("TodoController@showInDay");
+Route::get('me/todo/day/{year}/{month}/{day}/next', [TodoController::class, 'showNextInDay']);
+Route::get('me/todo/day/{year}/{month}/{day}/back', [TodoController::class, 'showBackInDay']);
 
-Route::get('me/todo/month', [TodoInMonthController::class, 'showDefault']);
+Route::get('me/todo/month', [TodoController::class, 'showDefaultInMonth']);
+Route::get('me/todo/month/{year}/{month}', [TodoController::class, 'showInMonth'])
+    ->name("TodoController@showInMonth");
+Route::get('me/todo/month/{year}/{month}/next', [TodoController::class, 'showNextInMonth']);
+Route::get('me/todo/month/{year}/{month}/back', [TodoController::class, 'showBackInMonth']);
 
 Route::get('me/project/list', [ProjectController::class, 'showDefaultList']);
 Route::get('me/project/list/invitation', [ProjectController::class, 'showInvitationList']);

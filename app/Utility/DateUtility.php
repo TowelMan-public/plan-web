@@ -194,7 +194,7 @@ class DateUtility
             self::YEAR => intval($date->format('Y')),
             self::MONTH => intval($date->format('m')),
             self::DAY => intval($date->format('d')),
-            self::HOUR => intval($date->format('h')),
+            self::HOUR => intval($date->format('H')),
             self::MINUTE => intval($date->format('i')),
         ];
     }
