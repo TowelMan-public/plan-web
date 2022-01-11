@@ -23,3 +23,16 @@ jQuery( window ).on( 'scroll', function() {
 });
 
 scrollBy(1, 1);
+
+$(function(){
+  $(document).on('change keyup keydown paste cut', 
+    'textarea', function()
+  {
+    if ($(this).outerHeight() > this.scrollHeight){
+      $(this).height(1)
+    }
+    while ($(this).outerHeight() < this.scrollHeight){
+      $(this).height($(this).height() + 1)
+    }
+  });
+});

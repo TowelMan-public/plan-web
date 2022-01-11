@@ -92,7 +92,7 @@
             @foreach ($todoInMonth->getTodoDataNodeArray() as $node)
                 <tr class="todo_list">
                     @php
-                        $finishDay = 7*$i - $projectInMonth->getStartWeek();
+                        $finishDay = 7*$i - $todoInMonth->getStartWeek();
                     @endphp
                     @for ($nowDay = 7*$i - 6 - $todoInMonth->getStartWeek(); $nowDay <= $finishDay; $nowDay++)
                         @if ($nowDay <= $todoInMonth->getFinishDay() && $nowDay > 0 && $node !== null)
@@ -101,7 +101,7 @@
                                 $nowDay--;
                                 $node = $node->getNextNode();
                             @endphp
-                            @elseif ($node->isEmpty())
+                            @elseif ($node->getIsEmpty())
                                 <td class="single">&nbsp;</td>
                                 @php
                                     $node->setDayLength($node->getDayLength() - 1);
@@ -110,23 +110,23 @@
                             @else
                                 @php
                                     $dayLength = 0;
-                                    if($finishDay - $nowday + 1 > $node->getDayLength())
+                                    if($finishDay - $nowDay + 1 > $node->getDayLength())
                                         $dayLength = $node->getDayLength();
                                     else
-                                        $dayLength = $finishDay - $nowday + 1;
+                                        $dayLength = $finishDay - $nowDay + 1;
                                     
                                     $nowDay += $dayLength - 1;
                                     $node->setDayLength( $node->getDayLength() - $dayLength);
                                     $node->setStartDay( $node->getStartDay() + $dayLength);
                                 @endphp
-                                <td class="todo_in_month {{ $dayLength === 0 ? 'single' : '' }}" id="todo_{{ $todo->getId() }}"
+                                <td class="todo_in_month {{ $dayLength === 0 ? 'single' : '' }}" id="todo_{{ $node->getId() }}"
                                     align="left" colspan="{{ $dayLength }}"
                                     style="background-color: {{ $todoInMonth->getBackGroundCollor($loop->index) }};">
                                     {{ $node->getName() }}
                                 </td>
                                 <script>
-                                    $('#todo_{{ $todo->getId() }}').click(function () {
-                                        window.location.href = "/todo/{{ $todo->getIsOnProject? 'onProject' : 'onPrivate' }}/{{ $todo->getId() }}";
+                                    $('#todo_{{ $node->getId() }}').click(function () {
+                                        window.location.href = "/todo/{{ $node->getIsOnProject()? 'onProject' : 'onPrivate' }}/{{ $node->getId() }}";
                                     });
                                 </script>
                             @endif

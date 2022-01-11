@@ -28,6 +28,7 @@
 @section('contents_menu')
     <li><a href="/project/public/{{ $projectData->getId() }}/todo/onResponsible/month">担当していやること</a></li>
     <li><a href="/project/public/{{ $projectData->getId() }}/todo/onProject/month">全体のやること</a></li>
+    <li><a href="/project/public/{{ $projectData->getId() }}/todo/insert">やること作成</a></li>
     <li><a href="/project/public/{{ $projectData->getId() }}/subscriber">加入者一覧</a></li>
 @endsection
 

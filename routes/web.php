@@ -125,5 +125,13 @@ Route::get('project/public/{projectId}/todo/onResponsible/month/{year}/{month}',
 Route::get('project/public/{projectId}/todo/onResponsible/month/{year}/{month}/next', [TodoInProjectController::class, 'showResponsibleTodoInPublicProjectInMonthNext']);
 Route::get('project/public/{projectId}/todo/onResponsible/month/{year}/{month}/back', [TodoInProjectController::class, 'showResponsibleTodoInPublicProjectInMonthBack']);
 
+Route::get('project/private/{projectId}/todo/insert', [TodoInProjectController::class, 'showInsertTodoToPrivateProject'])
+    ->name("TodoInProjectController@showInsertTodoToPrivateProject");
+Route::post('project/private/{projectId}/todo/insert', [TodoInProjectController::class, 'insertTodoToPrivateProject']);
+
+Route::get('project/public/{projectId}/todo/insert', [TodoInProjectController::class, 'showInsertTodoToPublicProject'])
+    ->name("TodoInProjectController@showInsertTodoToPublicProject");
+Route::post('project/public/{projectId}/todo/insert', [TodoInProjectController::class, 'insertTodoToPublicProject']);
+
 //常に一番下にする
 Route::fallback([FallbackController::class, 'handl']);

@@ -28,7 +28,7 @@ class TodoController extends Controller
     {
         $nowDateArray = DateUtility::getDateAssociativeArrayByDateTime(new DateTime());
 
-        return redirect(route('TodoInProjectController@showTodoInPrivateProjectInDay', $request->all() + [
+        return redirect(route('TodoController@showInDay', $request->all() + [
             'year' => $nowDateArray[DateUtility::YEAR],
             'month' => $nowDateArray[DateUtility::MONTH],
             'day' => $nowDateArray[DateUtility::DAY],

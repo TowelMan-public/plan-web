@@ -56,7 +56,7 @@ class TodoService
     }
 
     
-    static public function getMyTodoInMonth(string $oauthToken, int $year, int $month, bool $isIncludeCompleted = false): TodoInMonthData
+    public function getMyTodoInMonth(string $oauthToken, int $year, int $month, bool $isIncludeCompleted = false): TodoInMonthData
     {
         $startDate = DateUtility::createDateByDateAssociativeArray([
             DateUtility::YEAR => $year,
@@ -76,7 +76,7 @@ class TodoService
         return TodoLogic::createTodoInMonth($todoOnProjectArray, $todoOnResponsibleArray, $finishDate);
     }
 
-    static public function getTodoInProjectInDayData(string $oauthToken, int $projectId, DateTime $nowDate, DateTime $finishDate, bool $isIncludeCompleted): TodoInDayData
+    public function getTodoInProjectInDayData(string $oauthToken, int $projectId, DateTime $nowDate, DateTime $finishDate, bool $isIncludeCompleted): TodoInDayData
     {
         $todoOnProjectArray = Api::last()->todo()->getListByExample($oauthToken, $projectId, null, $finishDate, true, $isIncludeCompleted);
         $todoDataArray = [];
@@ -92,7 +92,7 @@ class TodoService
         return TodoLogic::createTodoInDayData($todoDataArray, $nowDate);
     }
 
-    static public function getTodoInProjectInMonthData(string $oauthToken, int $projectId, int $year, int $month, bool $isIncludeCompleted): TodoInMonthData
+    public function getTodoInProjectInMonthData(string $oauthToken, int $projectId, int $year, int $month, bool $isIncludeCompleted): TodoInMonthData
     {
         $startDate = DateUtility::createDateByDateAssociativeArray([
             DateUtility::YEAR => $year,
@@ -111,7 +111,7 @@ class TodoService
         return TodoLogic::createTodoInMonth($todoOnProjectArray, [], $finishDate);
     }
 
-    static public function getResponsibleTodoInProjectInDayData(string $oauthToken, int $projectId, DateTime $nowDate, DateTime $finishDate, bool $isIncludeCompleted): TodoInDayData
+    public function getResponsibleTodoInProjectInDayData(string $oauthToken, int $projectId, DateTime $nowDate, DateTime $finishDate, bool $isIncludeCompleted): TodoInDayData
     {
         $todoOnResponsibleArray = Api::last()->todoOnResoinsible()->getListByExample($oauthToken, $projectId, null, $finishDate, true, $isIncludeCompleted);
         $todoDataArray = [];
@@ -127,7 +127,7 @@ class TodoService
         return TodoLogic::createTodoInDayData($todoDataArray, $nowDate);
     }
 
-    static public function getResponsibleTodoInProjectInMonthData(string $oauthToken, int $projectId, int $year, int $month, bool $isIncludeCompleted): TodoInMonthData
+    public function getResponsibleTodoInProjectInMonthData(string $oauthToken, int $projectId, int $year, int $month, bool $isIncludeCompleted): TodoInMonthData
     {
         $startDate = DateUtility::createDateByDateAssociativeArray([
             DateUtility::YEAR => $year,
@@ -144,5 +144,10 @@ class TodoService
         $todoOnResponsibleArray = Api::last()->todoOnResoinsible()->getListByExample($oauthToken, $projectId, null, $finishDate, true, $isIncludeCompleted);
 
         return TodoLogic::createTodoInMonth([], $todoOnResponsibleArray, $finishDate);
+    }
+
+    public function insertTodoOnProject(string $oauthToken, int $projectId, string $todoName, DateTime $startDate, DateTime $finishDate, bool $isCopyToResponsible): int
+    {
+        return Api::last()->todo()->post($oauthToken, $projectId, $todoName, $startDate, $finishDate, $isCopyToResponsible);
     }
 }

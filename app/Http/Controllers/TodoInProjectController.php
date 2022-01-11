@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Client\Exception\BadRequestException;
+use App\Client\Exception\NotHaveAuthorityToOperateProjectException;
+use App\Http\Requests\InsertTodoOnProjectRequest;
+use App\Service\ContentService;
 use App\Service\ProjectService;
 use App\Service\SubscriberService;
 use App\Service\TodoService;
@@ -19,6 +23,7 @@ class TodoInProjectController extends Controller
     private ProjectService $projectServer;
     private SubscriberService $subscriberService;
     private TodoService $todoService;
+    private ContentService $contentService;
 
 
     /**
@@ -29,6 +34,7 @@ class TodoInProjectController extends Controller
         $this->projectServer = ProjectService::getInstance();
         $this->subscriberService = SubscriberService::getInstance();
         $this->todoService = TodoService::getInstance();
+        $this->contentService = ContentService::getInstance();
     }
 
     public function showDefaultTodoInPrivateProjectInDay(Request $request, int $projectId)
@@ -52,10 +58,11 @@ class TodoInProjectController extends Controller
         $dateArray = DateUtility::getDateAssociativeArrayByDateTime($date);
         $finishDate = DateUtility::getNextDaysTopDateTime($date);
 
-        if($dateArray[DateUtility::YEAR] === $nowDateArray[DateUtility::YEAR] &&
+        if (
+            $dateArray[DateUtility::YEAR] === $nowDateArray[DateUtility::YEAR] &&
             $dateArray[DateUtility::MONTH] === $nowDateArray[DateUtility::MONTH] &&
-            $dateArray[DateUtility::DAY] === $nowDateArray[DateUtility::DAY])
-        {
+            $dateArray[DateUtility::DAY] === $nowDateArray[DateUtility::DAY]
+        ) {
             $isToday = true;
             $date = $nowDate;
 
@@ -69,7 +76,7 @@ class TodoInProjectController extends Controller
 
         $projectData = $this->projectServer->getProjectDataByPrivateProject($this->getOauthToken(), $projectId);
         $todoInDay = $this->todoService->getTodoInProjectInDayData($this->getOauthToken(), $projectId, $nowDate, $finishDate, $request->includeCompleted !== null);
-        if($isToday)
+        if ($isToday)
             $todoInDay->setExpiredTodoList([]);
 
         return View('todo_in_day_layout')
@@ -196,10 +203,11 @@ class TodoInProjectController extends Controller
         $dateArray = DateUtility::getDateAssociativeArrayByDateTime($date);
         $finishDate = DateUtility::getNextDaysTopDateTime($date);
 
-        if($dateArray[DateUtility::YEAR] === $nowDateArray[DateUtility::YEAR] &&
+        if (
+            $dateArray[DateUtility::YEAR] === $nowDateArray[DateUtility::YEAR] &&
             $dateArray[DateUtility::MONTH] === $nowDateArray[DateUtility::MONTH] &&
-            $dateArray[DateUtility::DAY] === $nowDateArray[DateUtility::DAY])
-        {
+            $dateArray[DateUtility::DAY] === $nowDateArray[DateUtility::DAY]
+        ) {
             $isToday = true;
             $date = $nowDate;
 
@@ -215,7 +223,7 @@ class TodoInProjectController extends Controller
         $mySubscriber = $this->subscriberService->getMySubscriberData($this->getOauthToken(), $projectId);
         $todoInDay = $this->todoService->getTodoInProjectInDayData($this->getOauthToken(), $projectId, $nowDate, $finishDate, $request->includeCompleted !== null);
 
-        if($isToday)
+        if ($isToday)
             $todoInDay->setExpiredTodoList([]);
 
         return View('todo_in_day_layout')
@@ -345,10 +353,11 @@ class TodoInProjectController extends Controller
         $dateArray = DateUtility::getDateAssociativeArrayByDateTime($date);
         $finishDate = DateUtility::getNextDaysTopDateTime($date);
 
-        if($dateArray[DateUtility::YEAR] === $nowDateArray[DateUtility::YEAR] &&
+        if (
+            $dateArray[DateUtility::YEAR] === $nowDateArray[DateUtility::YEAR] &&
             $dateArray[DateUtility::MONTH] === $nowDateArray[DateUtility::MONTH] &&
-            $dateArray[DateUtility::DAY] === $nowDateArray[DateUtility::DAY])
-        {
+            $dateArray[DateUtility::DAY] === $nowDateArray[DateUtility::DAY]
+        ) {
             $isToday = true;
             $date = $nowDate;
 
@@ -362,7 +371,7 @@ class TodoInProjectController extends Controller
 
         $projectData = $this->projectServer->getProjectDataByPrivateProject($this->getOauthToken(), $projectId);
         $todoInDay = $this->todoService->getResponsibleTodoInProjectInDayData($this->getOauthToken(), $projectId, $nowDate, $finishDate, $request->includeCompleted !== null);
-        if($isToday)
+        if ($isToday)
             $todoInDay->setExpiredTodoList([]);
 
         return View('todo_in_day_layout')
@@ -469,5 +478,75 @@ class TodoInProjectController extends Controller
             'month' => $dateArray[DateUtility::MONTH],
             'projectId' => $projectId,
         ]));
+    }
+
+    public function showInsertTodoToPrivateProject(Request $request, int $projectId)
+    {
+        $projectData = $this->projectServer->getProjectDataByPrivateProject($this->getOauthToken(), $projectId);
+        
+        session()->put('_old_input', $request->old());
+        return View('insert_todo_on_project_layout')
+            ->with('formError', $request->formError)
+            ->with('projectData', $projectData);
+    }
+
+    public function insertTodoToPrivateProject(InsertTodoOnProjectRequest $request, int $projectId)
+    {
+        try{
+            $todoId = $this->todoService->insertTodoOnProject($this->getOauthToken(), $projectId, $request->todoName,
+                $request->startDate, $request->finishData, $request->isCopyToResponsible !== null);
+            $this->contentService->insertContentArray($this->getOauthToken(), $todoId, $request->contentArray);
+            
+            return redirect(route('TodoInProjectController@showInsertTodoToPrivateProject',[
+                'projectId' => $projectId,
+            ]));
+        }
+        catch(NotHaveAuthorityToOperateProjectException){
+            return redirect(route('TodoInProjectController@showInsertTodoToPrivateProject',[
+                'projectId' => $projectId,
+                'formError' => 'あなたにはやることをこのプロジェクトに作成する権限がありません。',
+            ]));
+        }
+        catch(BadRequestException){
+            return redirect(route('TodoInProjectController@showInsertTodoToPrivateProject',[
+                'projectId' => $projectId,
+                'formError' => '指定されている開始日時と終了日時が不正だと思われます。プロジェクトの期間をご確認のうえ、期間内に設定してください。',
+            ]));
+        }
+    }
+
+    public function showInsertTodoToPublicProject(Request $request, int $projectId)
+    {
+        $projectData = $this->projectServer->getProjectDataByPublicProject($this->getOauthToken(), $projectId);
+        
+        session()->put('_old_input', $request->old());
+        return View('insert_todo_on_project_layout')
+            ->with('formError', $request->formError)
+            ->with('projectData', $projectData);
+    }
+
+    public function insertTodoToPublicProject(InsertTodoOnProjectRequest $request, int $projectId)
+    {
+        try{
+            $todoId = $this->todoService->insertTodoOnProject($this->getOauthToken(), $projectId, $request->todoName,
+                $request->startDate, $request->finishData, $request->isCopyToResponsible !== null);
+            $this->contentService->insertContentArray($this->getOauthToken(), $todoId, $request->contentArray);
+            
+            return redirect(route('TodoInProjectController@showInsertTodoToPublicProject',[
+                'projectId' => $projectId,
+            ]));
+        }
+        catch(NotHaveAuthorityToOperateProjectException){
+            return redirect(route('TodoInProjectController@showInsertTodoToPublicProject',[
+                'projectId' => $projectId,
+                'formError' => 'あなたにはやることをこのプロジェクトに作成する権限がありません。',
+            ]));
+        }
+        catch(BadRequestException){
+            return redirect(route('TodoInProjectController@showInsertTodoToPublicProject',[
+                'projectId' => $projectId,
+                'formError' => '指定されている開始日時と終了日時が不正だと思われます。プロジェクトの期間をご確認のうえ、期間内に設定してください。',
+            ]));
+        }
     }
 }

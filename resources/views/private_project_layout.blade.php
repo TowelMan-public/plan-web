@@ -10,6 +10,7 @@
 
 @section('contents_menu')
     <li><a href="/project/private/{{ $projectId }}/todo/onProject/month">やること一覧</a></li>
+    <li><a href="/project/private/{{ $projectId }}/todo/insert">やること作成</a></li>
 @endsection
 
 @section('contents')
