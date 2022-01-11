@@ -9,7 +9,7 @@
 @endsection
 
 @section('contents_menu')
-    <li><a href="#">やること系</a></li>
+    <li><a href="/project/private/{{ $projectId }}/todo/onProject/month">やること一覧</a></li>
 @endsection
 
 @section('contents')

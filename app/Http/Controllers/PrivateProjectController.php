@@ -26,8 +26,11 @@ class PrivateProjectController extends Controller
 
     public function insert(InsertProjectRequest $request)
     {
-        $this->projectServer->insertPrivateProject($this->getOauthToken(), $request->name);
-        return redirect()->action([TodoController::class, 'showDefaultInDay']);
+        $projectId = $this->projectServer->insertPrivateProject($this->getOauthToken(), $request->name);
+        
+        return redirect(route('PrivateProjectController@show', [
+            'projectId' => $projectId
+        ]));
     }
 
     public function show(int $projectId)

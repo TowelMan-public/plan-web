@@ -39,13 +39,13 @@
     @else
         <script>
             $('#back_month').click(function(){
-                window.location.href = "/project/{{ $projectData->getIsPrivate()? 'private' : 'public' }}/todo/" + 
-                    "{{ $projectData->getIsPrivate() || $mySubscriberData !== null ? 'onProject' : 'onResponsible' }}/month/{{ $dateAssociativeArray['year'] }}/{{ $dateAssociativeArray['month'] }}/back{{ $includeCompleted === null ? '' : '?includeCompleted=1' }}";
+                window.location.href = "/project/{{ $projectData->getIsPrivate()? 'private' : 'public' }}/{{ $projectData->getId() }}/todo/" + 
+                    "{{ $projectData->getIsPrivate() || $mySubscriberData !== null ? 'onProject' : 'onResponsible' }}/month/{{ $dateAssociativeArray['year'] }}/{{ $dateAssociativeArray['month'] }}/back?{{ $includeCompleted === null ? 'includeCompleted=1' : '' }}";
             });
 
             $('#next_month').click(function(){
-                window.location.href = "/project/{{ $projectData->getIsPrivate()? 'private' : 'public' }}/todo" + 
-                    "{{ $projectData->getIsPrivate() || $mySubscriberData !== null ? 'onProject' : 'onResponsible' }}/month/{{ $dateAssociativeArray['year'] }}/{{ $dateAssociativeArray['month'] }}/next{{ $includeCompleted === null ? '' : '?includeCompleted=1' }}";
+                window.location.href = "/project/{{ $projectData->getIsPrivate()? 'private' : 'public' }}/{{ $projectData->getId() }}/todo/" + 
+                    "{{ $projectData->getIsPrivate() || $mySubscriberData !== null ? 'onProject' : 'onResponsible' }}/month/{{ $dateAssociativeArray['year'] }}/{{ $dateAssociativeArray['month'] }}/next?{{ $includeCompleted === null ? 'includeCompleted=1' : '' }}";
             });
         </script>
     @endif
@@ -57,13 +57,13 @@
             {{ $includeCompleted === null ? '完了を表示' : '完了を非表示' }}
         </a></li>
     @else        
-        <li><a href="/me/todo/month/{{ $dateAssociativeArray['year'] }}/{{ $dateAssociativeArray['month'] }}?{{ $includeCompleted === null ? 'includeCompleted=1' : '' }}">
+        <li><a href="/project/{{ $projectData->getIsPrivate()? 'private' : 'public' }}/{{ $projectData->getId() }}/todo/{{ $projectData->getIsPrivate() || $mySubscriberData !== null ? 'onProject' : 'onResponsible' }}/month/{{ $dateAssociativeArray['year'] }}/{{ $dateAssociativeArray['month'] }}?{{ $includeCompleted === null ? 'includeCompleted=1' : '' }}">
             {{ $includeCompleted === null ? '完了を表示' : '完了を非表示' }}
         </a></li>
-        <li><a href="/project/{{ $projectData->getIsPrivate()? 'private' : 'public' }}/todo/{{ $projectData->getIsPrivate() || $mySubscriberData !== null ? 'onProject' : 'onResponsible' }}/day/{{ $dateAssociativeArray['year'] }}/{{ $dateAssociativeArray['month'] }}?{{ $includeCompleted === null ? '' : '?includeCompleted=1' }}">
+        <li><a href="/project/{{ $projectData->getIsPrivate()? 'private' : 'public' }}/{{ $projectData->getId() }}/todo/{{ $projectData->getIsPrivate() || $mySubscriberData !== null ? 'onProject' : 'onResponsible' }}/day/{{ $dateAssociativeArray['year'] }}/{{ $dateAssociativeArray['month'] }}/{{ $dateAssociativeArray['day'] }}?{{ $includeCompleted === null ? 'includeCompleted=1' : '' }}">
             日間表示に
         </a></li>
-        <li><a href="/project/{{ $projectData->getIsPrivate()? 'private' : 'public' }}/$projectData->getId()">
+        <li><a href="/project/{{ $projectData->getIsPrivate()? 'private' : 'public' }}/{{ $projectData->getId() }}">
             プロジェクトへ
         </a></li>
     @endif

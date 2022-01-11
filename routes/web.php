@@ -9,6 +9,7 @@ use App\Http\Controllers\SignUpController;
 use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\TerminalController;
 use App\Http\Controllers\TodoController;
+use App\Http\Controllers\TodoInProjectController;
 use App\Http\Controllers\UserConfigController;
 use App\Http\Controllers\WithdrawalController;
 use Illuminate\Support\Facades\Route;
@@ -87,6 +88,42 @@ Route::post('/project/public/{projectId}/subscriber/invitation', [SubscriberCont
 Route::post('/project/public/{projectId}/subscriber/update', [SubscriberController::class, 'update']);
 Route::post('/project/public/{projectId}/subscriber/delete', [SubscriberController::class, 'delete']);
 Route::post('/project/public/{projectId}/exit', [SubscriberController::class, 'exit']);
+
+Route::get('project/private/{projectId}/todo/onProject/day', [TodoInProjectController::class, 'showDefaultTodoInPrivateProjectInDay']);
+Route::get('project/private/{projectId}/todo/onProject/day/{year}/{month}/{day}', [TodoInProjectController::class, 'showTodoInPrivateProjectInDay'])
+    ->name("TodoInProjectController@showTodoInPrivateProjectInDay");
+Route::get('project/private/{projectId}/todo/onProject/day/{year}/{month}/{day}/next', [TodoInProjectController::class, 'showTodoInPrivateProjectInDayNext']);
+Route::get('project/private/{projectId}/todo/onProject/day/{year}/{month}/{day}/back', [TodoInProjectController::class, 'showTodoInPrivateProjectInDayBack']);
+
+Route::get('project/private/{projectId}/todo/onProject/month', [TodoInProjectController::class, 'showDefaultTodoInPrivateProjectInMonth']);
+Route::get('project/private/{projectId}/todo/onProject/month/{year}/{month}', [TodoInProjectController::class, 'showTodoInPrivateProjectInMonth'])
+    ->name("TodoInProjectController@showTodoInPrivateProjectInMonth");
+Route::get('project/private/{projectId}/todo/onProject/month/{year}/{month}/next', [TodoInProjectController::class, 'showTodoInPrivateProjectInMonthNext']);
+Route::get('project/private/{projectId}/todo/onProject/month/{year}/{month}/back', [TodoInProjectController::class, 'showTodoInPrivateProjectInMonthBack']);
+
+Route::get('project/public/{projectId}/todo/onProject/day', [TodoInProjectController::class, 'showDefaultTodoInPublicProjectInDay']);
+Route::get('project/public/{projectId}/todo/onProject/day/{year}/{month}/{day}', [TodoInProjectController::class, 'showTodoInPublicProjectInDay'])
+    ->name("TodoInProjectController@showTodoInPublicProjectInDay");
+Route::get('project/public/{projectId}/todo/onProject/day/{year}/{month}/{day}/next', [TodoInProjectController::class, 'showTodoInPublicProjectInDayNext']);
+Route::get('project/public/{projectId}/todo/onProject/day/{year}/{month}/{day}/back', [TodoInProjectController::class, 'showTodoInPublicProjectInDayBack']);
+
+Route::get('project/public/{projectId}/todo/onProject/month', [TodoInProjectController::class, 'showDefaultTodoPublicProjectInMonth']);
+Route::get('project/public/{projectId}/todo/onProject/month/{year}/{month}', [TodoInProjectController::class, 'showTodoInPublicProjectInMonth'])
+    ->name("TodoInProjectController@showTodoInPublicProjectInMonth");
+Route::get('project/public/{projectId}/todo/onProject/month/{year}/{month}/next', [TodoInProjectController::class, 'showTodoInPublicProjectInMonthNext']);
+Route::get('project/public/{projectId}/todo/onProject/month/{year}/{month}/back', [TodoInProjectController::class, 'showTodoInPublicProjectInMonthBack']);
+
+Route::get('project/public/{projectId}/todo/onResponsible/day', [TodoInProjectController::class, 'showDefaultResponsibleTodoInPublicProjectInDay']);
+Route::get('project/public/{projectId}/todo/onResponsible/day/{year}/{month}/{day}', [TodoInProjectController::class, 'showResponsibleTodoInPublicProjectInDay'])
+    ->name("TodoInProjectController@showResponsibleTodoInPublicProjectInDay");
+Route::get('project/public/{projectId}/todo/onResponsible/day/{year}/{month}/{day}/next', [TodoInProjectController::class, 'showResponsibleTodoInPublicProjectInDayNext']);
+Route::get('project/public/{projectId}/todo/onResponsible/day/{year}/{month}/{day}/back', [TodoInProjectController::class, 'showResponsibleTodoInPublicProjectInDayBack']);
+
+Route::get('project/public/{projectId}/todo/onResponsible/month', [TodoInProjectController::class, 'showResponsibleTodaulPublicPrivateProjectInMonth']);
+Route::get('project/public/{projectId}/todo/onResponsible/month/{year}/{month}', [TodoInProjectController::class, 'showResponsibleTodoInPublicProjectInMonth'])
+    ->name("TodoInProjectController@showResponsibleTodoInPublicProjectInMonth");
+Route::get('project/public/{projectId}/todo/onResponsible/month/{year}/{month}/next', [TodoInProjectController::class, 'showResponsibleTodoInPublicProjectInMonthNext']);
+Route::get('project/public/{projectId}/todo/onResponsible/month/{year}/{month}/back', [TodoInProjectController::class, 'showResponsibleTodoInPublicProjectInMonthBack']);
 
 //常に一番下にする
 Route::fallback([FallbackController::class, 'handl']);

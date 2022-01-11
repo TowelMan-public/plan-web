@@ -26,41 +26,49 @@ class TodoController extends Controller
 
     public function showDefaultInDay(Request $request)
     {
-        $nowDate = new DateTime();
-        $nowDateArray = DateUtility::getDateAssociativeArrayByDateTime($nowDate);
-        $finishDate = DateUtility::getNextDaysTopDateTime($nowDate);
-        $after5HourDate = DateUtility::addDate($nowDate, [
-            DateUtility::HOUR => 5
-        ]);
+        $nowDateArray = DateUtility::getDateAssociativeArrayByDateTime(new DateTime());
 
-        if ($finishDate->getTimestamp() < $after5HourDate->getTimestamp())
-            $finishDate = $after5HourDate;
-
-        $todoInDay = $this->todoService->getMyTodoInDayData($this->getOauthToken(), $nowDate, $finishDate, $request->includeCompleted !== null);
-
-        return View('todo_in_day_layout')
-            ->with('todoInDay', $todoInDay)
-            ->with('includeCompleted', $request->includeCompleted)
-            ->with('projectData', null)
-            ->with('mySubscriberData', null)
-            ->with('dateAssociativeArray', $nowDateArray);
+        return redirect(route('TodoInProjectController@showTodoInPrivateProjectInDay', $request->all() + [
+            'year' => $nowDateArray[DateUtility::YEAR],
+            'month' => $nowDateArray[DateUtility::MONTH],
+            'day' => $nowDateArray[DateUtility::DAY],
+        ]));
     }
 
     public function showInDay(Request $request, int $year, int $month, int $day)
     {
-        $nowDate = DateUtility::createDate($year, $month, $day, 0, 0);
+        $isToday = false;
+        $date = DateUtility::createDate($year, $month, $day, 0, 0);
+        $nowDate = new DateTime();
         $nowDateArray = DateUtility::getDateAssociativeArrayByDateTime($nowDate);
-        $finishDate = DateUtility::getNextDaysTopDateTime($nowDate);
+        $dateArray = DateUtility::getDateAssociativeArrayByDateTime($date);
+        $finishDate = DateUtility::getNextDaysTopDateTime($date);
+
+        if($dateArray[DateUtility::YEAR] === $nowDateArray[DateUtility::YEAR] &&
+            $dateArray[DateUtility::MONTH] === $nowDateArray[DateUtility::MONTH] &&
+            $dateArray[DateUtility::DAY] === $nowDateArray[DateUtility::DAY])
+        {
+            $isToday = true;
+            $date = $nowDate;
+
+            $after5HourDate = DateUtility::addDate($nowDate, [
+                DateUtility::HOUR => 5
+            ]);
+
+            if (DateUtility::getNextDaysTopDateTime($date)->getTimestamp() < $after5HourDate->getTimestamp())
+                $finishDate = $after5HourDate;
+        }
 
         $todoInDay = $this->todoService->getMyTodoInDayData($this->getOauthToken(), $nowDate, $finishDate, $request->includeCompleted !== null);
-        $todoInDay->setExpiredTodoList([]);
+        if($isToday)
+            $todoInDay->setExpiredTodoList([]);
 
         return View('todo_in_day_layout')
             ->with('todoInDay', $todoInDay)
             ->with('includeCompleted', $request->includeCompleted)
             ->with('projectData', null)
             ->with('mySubscriberData', null)
-            ->with('dateAssociativeArray', $nowDateArray);
+            ->with('dateAssociativeArray', $dateArray);
     }
 
     public function showNextInDay(Request $request, int $year, int $month, int $day)
@@ -97,9 +105,6 @@ class TodoController extends Controller
 
     public function showDefaultInMonth(Request $request)
     {
-        dd(
-            DateUtility::dateToString(new DateTime())
-        );
         $nowDateArray = DateUtility::getDateAssociativeArrayByDateTime(new DateTime());
 
         return redirect(route('TodoController@showInMonth', $request->all() + [
