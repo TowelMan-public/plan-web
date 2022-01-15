@@ -28,6 +28,30 @@ class TodoData
 
     private int $projectId;
 
+    private int $todoOnResponsibleId;
+
+
+    /**
+     * todoOnResponsibleIdのセット
+     * 
+     * @param int $todoOnResponsibleId
+     * @return void
+     */
+    public function setTodoOnResponsibleId(int $todoOnResponsibleId)
+    {
+        $this->todoOnResponsibleId = $todoOnResponsibleId;
+    }
+
+    /**
+     * todoOnResponsibleIdの取得
+     * 
+     * @return int
+     */
+    public function getTodoOnResponsibleId(): int
+    {
+        return $this->todoOnResponsibleId;
+    }
+
     /**
      * projectIdのセット
      * 

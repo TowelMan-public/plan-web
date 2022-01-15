@@ -427,10 +427,8 @@ class TodoInProjectController extends Controller
 
     public function showResponsibleTodoInPublicProjectInMonth(Request $request, int $projectId, int $year, int $month)
     {
-        $projectData = $this->projectServer->getProjectDataByPrivateProject($this->getOauthToken(), $projectId);
+        $projectData = $this->projectServer->getProjectDataByPublicProject($this->getOauthToken(), $projectId);
         $todoInMonth = $this->todoService->getResponsibleTodoInProjectInMonthData($this->getOauthToken(), $projectId, $year, $month, $request->includeCompleted !== null);
-
-        $projectData = $this->projectServer->getProjectDataByPrivateProject($this->getOauthToken(), $projectId);
         $mySubscriber = $this->subscriberService->getMySubscriberData($this->getOauthToken(), $projectId);
 
         return View('todo_in_month_layout')

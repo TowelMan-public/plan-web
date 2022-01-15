@@ -119,13 +119,13 @@
                                     $node->setDayLength( $node->getDayLength() - $dayLength);
                                     $node->setStartDay( $node->getStartDay() + $dayLength);
                                 @endphp
-                                <td class="todo_in_month {{ $dayLength === 0 ? 'single' : '' }}" id="todo_{{ $node->getId() }}"
+                                <td class="todo_in_month {{ $dayLength === 0 ? 'single' : '' }}" id="todo_{{ $node->getId() }}_{{ $nowDay }}"
                                     align="left" colspan="{{ $dayLength }}"
                                     style="background-color: {{ $todoInMonth->getBackGroundCollor($loop->index) }};">
                                     {{ $node->getName() }}
                                 </td>
                                 <script>
-                                    $('#todo_{{ $node->getId() }}').click(function () {
+                                    $('#todo_{{ $node->getId() }}_{{ $nowDay }}').click(function () {
                                         window.location.href = "/todo/{{ $node->getIsOnProject()? 'onProject' : 'onResponsible' }}/{{ $node->getId() }}";
                                     });
                                 </script>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Client\Exception\NotSelectedAsTodoResponsibleException;
 use App\Http\Requests\SetIsCompletedRequest;
 use App\Service\ProjectService;
 use App\Service\TodoService;
@@ -29,17 +30,24 @@ class TodoOnResponsibleController extends Controller
 
     public function show(Request $request, int $todoId)
     {
-        $todoData = $this->todoService->getTodoOnResponsible($this->getOauthToken(), $todoId);
-        $projectData = $this->projectServer->getProjectDataByPublicProject($this->getOauthToken(), $todoData->getProjectId());
-        $operatable = true;
+        try{
+            $todoData = $this->todoService->getTodoOnResponsible($this->getOauthToken(), $todoId);
+            $projectData = $this->projectServer->getProjectDataByPublicProject($this->getOauthToken(), $todoData->getProjectId());
+            $operatable = true;
 
-        session()->put('_old_input', $request->old());
-        return View('todo_layout')
-            ->with('formError', $request->formError)
-            ->with('errorForAll', $request->errorForAll)
-            ->with('todoData', $todoData)
-            ->with('projectData', $projectData)
-            ->with('operatable', $operatable);
+            session()->put('_old_input', $request->old());
+            return View('todo_layout')
+                ->with('formError', $request->formError)
+                ->with('errorForAll', $request->errorForAll)
+                ->with('todoData', $todoData)
+                ->with('projectData', $projectData)
+                ->with('operatable', $operatable);
+        }catch(NotSelectedAsTodoResponsibleException){
+            return redirect(route('TodoOnProjectController@show',[
+                'todoId' => $todoId,
+                'formError' => 'あなたはこのやることの担当者に抜擢されてません。',
+            ]));
+        }
     }
 
     public function exit(int $todoId)

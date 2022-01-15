@@ -81,6 +81,7 @@ class TodoLogic{
     {
         $todoData = new TodoData();
         
+        $todoData->setId($todoResponse->getTodoOnProjectId());
         $todoData->setFinishDate($todoResponse->getFinishDate());
         $todoData->setStartDate($todoResponse->getStartDate());
         $todoData->setIsCompleted($todoResponse->getIsCompleted());
@@ -89,11 +90,10 @@ class TodoLogic{
 
         if($todoResponse instanceof TodoOnProjectResponse){
             $todoData->setIsOnProject(true);
-            $todoData->setId($todoResponse->getTodoOnProjectId());
             $todoData->setIsCopyToResponsible($todoResponse->getIsCopyContentsToUsers());
         }else {
             $todoData->setIsOnProject(false);
-            $todoData->setId($todoResponse->getTodoOnResponsibleId());
+            $todoData->setTodoOnResponsibleId($todoResponse->getTodoOnResponsibleId());
         }
 
         return $todoData;

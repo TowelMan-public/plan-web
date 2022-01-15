@@ -213,27 +213,29 @@
 
     <br>
     <h3>内容</h3>
-    <div class="content" style="display: block; background-color: rgb(114, 247, 154);">
-        <div style="display: flex;">            
-            <div class="input_label" style="width: 100%; margin-bottom: 0; margin-right: 0.3em;">
-                <div class="input_label_core" style="width: 100%">
-                    <input style="width: 100%" type="text" id="content_add_title_input" placeholder="内容のタイトル"/>
+    @if ($operatable)
+        <div class="content" style="display: block; background-color: rgb(114, 247, 154);">
+            <div style="display: flex;">            
+                <div class="input_label" style="width: 100%; margin-bottom: 0; margin-right: 0.3em;">
+                    <div class="input_label_core" style="width: 100%">
+                        <input style="width: 100%" type="text" id="content_add_title_input" placeholder="内容のタイトル"/>
+                    </div>
+                    <div id="error_for_content_add_title_input" class="error"></div>
                 </div>
-                <div id="error_for_content_add_title_input" class="error"></div>
+                <div class="img_block" style="margin-left: auto;  margin-top: auto; margin-bottom: auto;">
+                    <input id="content_{{ $todoData->getId() }}_add" type="submit" value="追加" class="button" style="font-size: 0.7em;">
+                </div>
             </div>
-            <div class="img_block" style="margin-left: auto;  margin-top: auto; margin-bottom: auto;">
-                <input id="content_{{ $todoData->getId() }}_add" type="submit" value="追加" class="button" style="font-size: 0.7em;">
+            <div class="content_explanation" id="content_add_{{ $todoData->getId() }}_explanation" style="margin-top: 0.25em;">
+                <div class="input_label" style="margin-bottom: 0;">
+                    <div class="input_label_core">
+                        <textarea style="width: 100%; resize: none; font-size: 0.7em;" id="content_add_explanation_input" placeholder="内容の説明"></textarea>
+                    </div>
+                    <div class="error_for_content_add_explanation_input" class="error"></div>
+                </div>
             </div>
         </div>
-        <div class="content_explanation" id="content_add_{{ $todoData->getId() }}_explanation" style="margin-top: 0.25em;">
-            <div class="input_label" style="margin-bottom: 0;">
-                <div class="input_label_core">
-                    <textarea style="width: 100%; resize: none; font-size: 0.7em;" id="content_add_explanation_input" placeholder="内容の説明"></textarea>
-                </div>
-                <div class="error_for_content_add_explanation_input" class="error"></div>
-            </div>
-        </div>
-    </div>
+    @endif
 
     <br>
     <div id="content_list" style="background-color: rgb(88, 157, 247);">
@@ -246,7 +248,7 @@
                     <div style="display: flex;">
                         <div class="input_label" style="width: 100%; margin-bottom: 0;">
                             <div class="input_label_core" style="width: 100%">
-                                <input style="width: 100%" type="text" id="content_$contentId_title" placeholder="内容のタイトル" value="$contentTitle" />
+                                <input {{ $operatable? '' : 'disabled' }} style="width: 100%" type="text" id="content_$contentId_title" placeholder="内容のタイトル" value="$contentTitle" />
                             </div>
                         </div>
                         <div class="img_block" style="display: flex; margin-left: auto; width: 4.5em; height: 1.5em; margin-top: auto; margin-bottom: auto;">
@@ -261,7 +263,7 @@
                     <div class="content_explanation leaved" id="content_$contentId_explanation" style="margin-top: 0.25em;">
                         <div class="input_label" style="margin-bottom: 0;">
                             <div class="input_label_core">
-                                <textarea id="content_$contentId_explanation" name="content_$contentId_explanation" placeholder="内容の説明" >$contentExplanation</textarea>
+                                <textarea {{ $operatable? '' : 'disabled' }} id="content_$contentId_explanation" name="content_$contentId_explanation" placeholder="内容の説明" >$contentExplanation</textarea>
                             </div>
                         </div>
                     </div>
@@ -345,27 +347,28 @@
                             console.log(error.statusText)
                         })
                     });
-
-                    let contentExplanationVisible_$contentId = false;
-                    $('#content_$contentId_switch').click(function () {
-                        contentExplanationVisible_$contentId = !contentExplanationVisible_$contentId;
-
-                        if(contentExplanationVisible_$contentId){
-                            $('#content_$contentId_explanation')
-                                .removeClass('leaved')
-                                .addClass('visabled');
-                            $(this).css('transform', 'rotate(90deg)')
-                                .css('transition', '1s');
-                        }else{
-                            $('#content_$contentId_explanation')
-                                .removeClass('visabled')
-                                .addClass('leaved'); 
-                            $(this).css('transform', 'rotate(-90deg)')
-                                .css('transition', '1s');
-                        }
-                    });
                 </script>
             @endif
+            <script>
+                let contentExplanationVisible_$contentId = false;
+                $('#content_$contentId_switch').click(function () {
+                    contentExplanationVisible_$contentId = !contentExplanationVisible_$contentId;
+
+                    if(contentExplanationVisible_$contentId){
+                        $('#content_$contentId_explanation')
+                            .removeClass('leaved')
+                            .addClass('visabled');
+                        $(this).css('transform', 'rotate(90deg)')
+                            .css('transition', '1s');
+                    }else{
+                        $('#content_$contentId_explanation')
+                            .removeClass('visabled')
+                            .addClass('leaved'); 
+                        $(this).css('transform', 'rotate(-90deg)')
+                            .css('transition', '1s');
+                    }
+                });
+            </script>
         </div>
         @foreach ($todoData->getContentList() as $contentData)
             <div id="content_{{ $contentData->getId() }}" class="content" style="display: flex;">
@@ -376,7 +379,7 @@
                     <div style="display: flex;">
                         <div class="input_label" style="width: 100%; margin-bottom: 0;">
                             <div class="input_label_core" style="width: 100%">
-                                <input style="width: 100%" type="text" id="content_{{ $contentData->getId() }}_title" placeholder="内容のタイトル" value="{{ $contentData->getTitle() }}" />
+                                <input {{ $operatable? '' : 'disabled' }} style="width: 100%" type="text" id="content_{{ $contentData->getId() }}_title" placeholder="内容のタイトル" value="{{ $contentData->getTitle() }}" />
                             </div>
                         </div>
                         <div class="img_block" style="display: flex; margin-left: auto; width: 4.5em; height: 1.5em; margin-top: auto; margin-bottom: auto;">
@@ -391,7 +394,7 @@
                     <div class="content_explanation leaved" id="content_{{ $contentData->getId() }}_explanation" style="margin-top: 0.25em;">
                         <div class="input_label" style="margin-bottom: 0;">
                             <div class="input_label_core">
-                                <textarea id="content_{{ $contentData->getId() }}_explanation" name="content_{{ $contentData->getId() }}_explanation" placeholder="内容の説明" >{{ $contentData->getExplanation() }}</textarea>
+                                <textarea {{ $operatable? '' : 'disabled' }} id="content_{{ $contentData->getId() }}_explanation" name="content_{{ $contentData->getId() }}_explanation" placeholder="内容の説明" >{{ $contentData->getExplanation() }}</textarea>
                             </div>
                         </div>
                     </div>
@@ -475,70 +478,73 @@
                             console.log(error.statusText)
                         })
                     });
-
-                    let contentExplanationVisible_{{ $contentData->getId() }} = false;
-                    $('#content_{{ $contentData->getId() }}_switch').click(function () {
-                        contentExplanationVisible_{{ $contentData->getId() }} = !contentExplanationVisible_{{ $contentData->getId() }};
-
-                        if(contentExplanationVisible_{{ $contentData->getId() }}){
-                            $('#content_{{ $contentData->getId() }}_explanation')
-                                .removeClass('leaved')
-                                .addClass('visabled');
-                            $(this).css('transform', 'rotate(90deg)')
-                                .css('transition', '1s');
-                        }else{
-                            $('#content_{{ $contentData->getId() }}_explanation')
-                                .removeClass('visabled')
-                                .addClass('leaved'); 
-                            $(this).css('transform', 'rotate(-90deg)')
-                                .css('transition', '1s');
-                        }
-                    });
                 </script>
             @endif
+            <script>
+                let contentExplanationVisible_{{ $contentData->getId() }} = false;
+                $('#content_{{ $contentData->getId() }}_switch').click(function () {
+                    contentExplanationVisible_{{ $contentData->getId() }} = !contentExplanationVisible_{{ $contentData->getId() }};
+
+                    if(contentExplanationVisible_{{ $contentData->getId() }}){
+                        $('#content_{{ $contentData->getId() }}_explanation')
+                            .removeClass('leaved')
+                            .addClass('visabled');
+                        $(this).css('transform', 'rotate(90deg)')
+                            .css('transition', '1s');
+                    }else{
+                        $('#content_{{ $contentData->getId() }}_explanation')
+                            .removeClass('visabled')
+                            .addClass('leaved'); 
+                        $(this).css('transform', 'rotate(-90deg)')
+                            .css('transition', '1s');
+                    }
+                });
+            </script>
         @endforeach
     </div>
-    <script>
-        const newContentStr = $('#dummy_content').clone(true).html();
-        $('#content_{{ $todoData->getId() }}_add').click(function () {
-            let newTitle = $('#content_add_title_input').val();
-            let newExplanation = $('#content_add_explanation_input').val();
-            
-            if(newTitle === null || newTitle === '' || newTitle.length > 100){
-                confirm('内容のタイトルは必須なので100文字以内でご入力ください。');
-                return;
-            }
-            
-            if(newExplanation === null || newExplanation === '' || newExplanation.length > 2000){
-                confirm('内容の説明は必須なので2000文字以内でご入力ください。');
-                return;
-            }
+    @if ($operatable)
+        <script>
+            const newContentStr = $('#dummy_content').clone(true).html();
+            $('#content_{{ $todoData->getId() }}_add').click(function () {
+                let newTitle = $('#content_add_title_input').val();
+                let newExplanation = $('#content_add_explanation_input').val();
+                
+                if(newTitle === null || newTitle === '' || newTitle.length > 100){
+                    confirm('内容のタイトルは必須なので100文字以内でご入力ください。');
+                    return;
+                }
+                
+                if(newExplanation === null || newExplanation === '' || newExplanation.length > 2000){
+                    confirm('内容の説明は必須なので2000文字以内でご入力ください。');
+                    return;
+                }
 
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: "/content/insert",
-                type: "post",
-                data : {
-                    title : newTitle,
-                    explanation : newExplanation,
-                    todoId : {{ $todoData->getId() }},
-                },
-            })
-            .done((res)=>{
-                $newContentId = res['contentId'];
-                $('#content_list').append(newContentStr
-                    .split('$contentId').join($newContentId)
-                    .split('$contentTitle').join(newTitle)
-                    .split('$contentExplanation').join(newExplanation)
-                );
-                $('#content_add_title_input').val('');
-                $('#content_add_explanation_input').val('');
-            })
-            .fail((error)=>{
-                console.log(error.statusText)
-            })
-        });
-    </script>
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "/content/insert",
+                    type: "post",
+                    data : {
+                        title : newTitle,
+                        explanation : newExplanation,
+                        todoId : {{ $todoData->getId() }},
+                    },
+                })
+                .done((res)=>{
+                    $newContentId = res['contentId'];
+                    $('#content_list').append(newContentStr
+                        .split('$contentId').join($newContentId)
+                        .split('$contentTitle').join(newTitle)
+                        .split('$contentExplanation').join(newExplanation)
+                    );
+                    $('#content_add_title_input').val('');
+                    $('#content_add_explanation_input').val('');
+                })
+                .fail((error)=>{
+                    console.log(error.statusText)
+                })
+            });
+        </script>
+    @endif
 @endsection
