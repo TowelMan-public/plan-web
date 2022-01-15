@@ -60,7 +60,7 @@ class TodoController extends Controller
         }
 
         $todoInDay = $this->todoService->getMyTodoInDayData($this->getOauthToken(), $nowDate, $finishDate, $request->includeCompleted !== null);
-        if($isToday)
+        if(!$isToday)
             $todoInDay->setExpiredTodoList([]);
 
         return View('todo_in_day_layout')
@@ -116,7 +116,6 @@ class TodoController extends Controller
     public function showInMonth(Request $request, int $year, int $month)
     {
         $todoInMonth = $this->todoService->getMyTodoInMonth($this->getOauthToken(), $year, $month, $request->includeCompleted !== null);
-
         return View('todo_in_month_layout')
             ->with('todoInMonth', $todoInMonth)
             ->with('includeCompleted', $request->includeCompleted)

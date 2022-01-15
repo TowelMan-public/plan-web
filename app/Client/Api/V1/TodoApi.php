@@ -176,7 +176,7 @@ class TodoAPI
      */
     public function putIsCompleted(string $token, int $todoOnProjectId, bool $isCompleted)
     {
-        $url = self::ROOT_URL . "/$isCompleted";
+        $url = self::ROOT_URL . "/$todoOnProjectId/is_completed";
 
         //リクエストパラメタ
         $dto = new DtoParamaters();

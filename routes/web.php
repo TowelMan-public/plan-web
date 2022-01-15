@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContentController;
 use App\Http\Controllers\FallbackController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PrivateProjectController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\TerminalController;
 use App\Http\Controllers\TodoController;
 use App\Http\Controllers\TodoInProjectController;
+use App\Http\Controllers\TodoOnProjectController;
 use App\Http\Controllers\UserConfigController;
 use App\Http\Controllers\WithdrawalController;
 use Illuminate\Support\Facades\Route;
@@ -132,6 +134,23 @@ Route::post('project/private/{projectId}/todo/insert', [TodoInProjectController:
 Route::get('project/public/{projectId}/todo/insert', [TodoInProjectController::class, 'showInsertTodoToPublicProject'])
     ->name("TodoInProjectController@showInsertTodoToPublicProject");
 Route::post('project/public/{projectId}/todo/insert', [TodoInProjectController::class, 'insertTodoToPublicProject']);
+
+//TODO
+Route::get('todo/onProject/{todoId}', [TodoOnProjectController::class, 'show'])
+    ->name("TodoOnProjectController@show");
+Route::post('todo/onProject/{todoId}/update', [TodoOnProjectController::class, 'update']);
+Route::post('todo/onProject/{todoId}/delete', [TodoOnProjectController::class, 'delete']);
+Route::post('todo/onProject/{todoId}/isCompleted', [TodoOnProjectController::class, 'setIsCompleted']);
+
+Route::get('todo/onResponsible/{todoId}', [TodoOnResponsibleController::class, 'show'])
+    ->name("TodoOnResponsibleController@show");
+Route::post('todo/onResponsible/{todoId}/exit', [TodoOnResponsibleController::class, 'exit']);
+Route::post('todo/onResponsible/{todoId}/isCompleted', [TodoOnResponsibleController::class, 'setIsCompleted']);
+
+Route::post('content/insert', [ContentController::class, 'insert']);
+Route::post('content/{contentId}/update', [ContentController::class, 'update']);
+Route::post('content/{contentId}/delete', [ContentController::class, 'delete']);
+Route::post('content/{contentId}/isCompleted', [ContentController::class, 'setIsCompleted']);
 
 //常に一番下にする
 Route::fallback([FallbackController::class, 'handl']);

@@ -24,13 +24,67 @@ class TodoData
 
     private bool $isOnProject;
 
+    private bool $isCopyToResponsible;
+
+    private int $projectId;
+
     /**
-     * finishDateのintの日付情報が入った連想配列を取得する。
-     * この連想配列は、DateUtilityの定数をキーとして使うと使える。
-     *
-     * @return array intの日付情報が入った連想配列
+     * projectIdのセット
+     * 
+     * @param int $projectId
+     * @return void
      */
-    public function getFinishDateAssociativeArray()
+    public function setProjectId(int $projectId)
+    {
+        $this->projectId = $projectId;
+    }
+
+    /**
+     * projectIdの取得
+     * 
+     * @return int
+     */
+    public function getProjectId(): int
+    {
+        return $this->projectId;
+    }
+
+    /**
+     * コンストラクタ
+     */
+    public function __construct()
+    {
+        $this->isCopyToResponsible = true;
+        $this->projectId = 0;
+    }
+
+    /**
+     * isCopyToResponsibleのセット
+     * 
+     * @param bool $isCopyToResponsible
+     * @return void
+     */
+    public function setIsCopyToResponsible(bool $isCopyToResponsible)
+    {
+        $this->isCopyToResponsible = $isCopyToResponsible;
+    }
+
+    /**
+     * isCopyToResponsibleの取得
+     * 
+     * @return bool
+     */
+    public function getIsCopyToResponsible(): bool
+    {
+        return $this->isCopyToResponsible;
+    }
+
+    public function getStartDateAssociativeArray(): array
+    {
+        return DateUtility::getDateAssociativeArrayByDateTime($this->startDate);
+    }
+
+    public function getFinishDateAssociativeArray(): array
     {
         return DateUtility::getDateAssociativeArrayByDateTime($this->finishDate);
     }

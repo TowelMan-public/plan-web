@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Client\Api\Api;
+use App\Http\Data\TodoData;
 use App\Http\Data\TodoInDayData;
 use App\Http\Data\TodoInMonthData;
 use App\Logic\ContentLogic;
@@ -32,7 +33,11 @@ class TodoService
     
     public function getMyTodoInDayData(string $oauthToken, DateTime $nowDate, DateTime $finishDate, bool $isIncludeCompleted = false): TodoInDayData
     {
-        $todoOnProjectArray = Api::last()->todo()->getListByExample($oauthToken, null, null, $finishDate, true, $isIncludeCompleted);
+        $startDate = DateUtility::addDate($finishDate, [
+            DateUtility::HOUR => -23,
+            DateUtility::MINUTE => -59
+        ]);
+        $todoOnProjectArray = Api::last()->todo()->getListByExample($oauthToken, null, $startDate, $finishDate, false, $isIncludeCompleted);
         $todoOnResponsibleArray = Api::last()->todoOnResoinsible()->getListByExample($oauthToken, null, null, $finishDate, $isIncludeCompleted);
         $todoDataArray = [];
 
@@ -78,7 +83,11 @@ class TodoService
 
     public function getTodoInProjectInDayData(string $oauthToken, int $projectId, DateTime $nowDate, DateTime $finishDate, bool $isIncludeCompleted): TodoInDayData
     {
-        $todoOnProjectArray = Api::last()->todo()->getListByExample($oauthToken, $projectId, null, $finishDate, true, $isIncludeCompleted);
+        $startDate = DateUtility::addDate($finishDate, [
+            DateUtility::HOUR => -23,
+            DateUtility::MINUTE => -59
+        ]);
+        $todoOnProjectArray = Api::last()->todo()->getListByExample($oauthToken, $projectId, $startDate, $finishDate, true, $isIncludeCompleted);
         $todoDataArray = [];
 
         foreach($todoOnProjectArray AS $response){
@@ -106,7 +115,7 @@ class TodoService
             [DateUtility::MINUTE => -1]
         );
 
-        $todoOnProjectArray = Api::last()->todo()->getListByExample($oauthToken, $projectId, null, $finishDate, true, $isIncludeCompleted);
+        $todoOnProjectArray = Api::last()->todo()->getListByExample($oauthToken, $projectId, $startDate, $finishDate, true, $isIncludeCompleted);
 
         return TodoLogic::createTodoInMonth($todoOnProjectArray, [], $finishDate);
     }
@@ -141,7 +150,7 @@ class TodoService
             [DateUtility::MINUTE => -1]
         );
 
-        $todoOnResponsibleArray = Api::last()->todoOnResoinsible()->getListByExample($oauthToken, $projectId, null, $finishDate, true, $isIncludeCompleted);
+        $todoOnResponsibleArray = Api::last()->todoOnResoinsible()->getListByExample($oauthToken, $projectId, $startDate, $finishDate, true, $isIncludeCompleted);
 
         return TodoLogic::createTodoInMonth([], $todoOnResponsibleArray, $finishDate);
     }
@@ -149,5 +158,65 @@ class TodoService
     public function insertTodoOnProject(string $oauthToken, int $projectId, string $todoName, DateTime $startDate, DateTime $finishDate, bool $isCopyToResponsible): int
     {
         return Api::last()->todo()->post($oauthToken, $projectId, $todoName, $startDate, $finishDate, $isCopyToResponsible);
+    }
+
+    public function getTodoOnProject(string $oauthToken, int $todoId): TodoData
+    {
+        $todoData = TodoLogic::createTodoData(
+            Api::last()->todo()->get($oauthToken, $todoId)
+        );
+        $todoData->setContentList(
+            ContentLogic::createContentdataArray(
+                Api::last()->content()->getList($oauthToken, $todoId),
+                true
+            )
+        );
+
+        return $todoData;
+    }
+
+    public function getTodoOnResponsible(string $oauthToken, int $todoId): TodoData
+    {
+        $todoData = TodoLogic::createTodoData(
+            Api::last()->todoOnResoinsible()->get($oauthToken, $todoId)
+        );
+        $todoData->setContentList(
+            ContentLogic::createContentdataArray(
+                Api::last()->content()->getList($oauthToken, $todoId),
+                true
+            )
+        );
+
+        return $todoData;
+    }
+
+    public function updateTodoOnProject(string $oauthToken, int $todoId, string $todoName, DateTime $startDate, DateTime $finishDate, bool $isCopyToResponsible)
+    {
+        Api::last()->todo()->put($oauthToken, $todoId, $todoName, $startDate, $finishDate, $isCopyToResponsible);
+    }
+
+    public function deleteTodoOnProject(string $oauthToken, int $todoId)
+    {
+        Api::last()->todo()->delete($oauthToken, $todoId);
+    }
+
+    public function setIsCompletedToTodoOnProject(string $oauthToken, int $todoId, bool $isCompleted)
+    {
+        Api::last()->todo()->putIsCompleted($oauthToken, $todoId, $isCompleted);
+    }
+
+    public function setIsCompletedToTodoOnResponsible(string $oauthToken, int $todoId, bool $isCompleted)
+    {
+        Api::last()->todoOnResoinsible()->putIsCompleted($oauthToken, $todoId, $isCompleted);
+    }
+
+    public function deleteTodoOnResponsible(string $oauthToken, int $todoId, string $userName)
+    {
+        Api::last()->todoOnResoinsible()->delete($oauthToken, $todoId, $userName);
+    }
+
+    public function exitTodoOnResponsible(string $oauthToken, int $todoId)
+    {
+        Api::last()->todoOnResoinsible()->postExit($oauthToken, $todoId);
     }
 }

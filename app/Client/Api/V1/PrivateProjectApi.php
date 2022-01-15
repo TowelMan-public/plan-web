@@ -139,4 +139,19 @@ class PrivateProjectAPI
         
         $this->restTemplate->delete($url, $dto, $header);
     }
+
+   public function getIsPrivate(string $token, int $privateProjectId) :bool
+   {
+        $url = self::ROOT_URL . "/$privateProjectId/isPrivate";
+        
+        //リクエストパラメタ
+        $dto = new DtoParamaters();
+        
+        
+        //ヘッダー
+        $header = new OauthHeader($token);
+        
+        $responseArrayOrContents = $this->restTemplate->get($url, $dto, $header, false);
+        return ((string)$responseArrayOrContents[0] === 'true');
+   }
 }

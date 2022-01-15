@@ -180,7 +180,7 @@ class TodoOnResponsibleAPI
      */
     public function putIsCompleted(string $token, int $todoOnProjectId, string $userName = null)
     {
-        $url = self::ROOT_URL . "/$todoOnProjectId/responsible/isCompleted";
+        $url = self::ROOT_URL . "/$todoOnProjectId/responsible/is_completed";
         
         //リクエストパラメタ
         $dto = new DtoParamaters();

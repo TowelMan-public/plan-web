@@ -104,4 +104,18 @@ class ProjectService
         
         return $dataArray;
     }
+
+    public function getProjectData(string $oauthToken, int $projectId): ProjectData
+    {
+        $isPrivate = Api::last()->privateProject()->getIsPrivate($oauthToken, $projectId);
+        if($isPrivate){
+            return ProjectLogic::createProjectData(
+                Api::last()->privateProject()->get($oauthToken, $projectId)
+            );
+        }else{
+            return ProjectLogic::createProjectData(
+                Api::last()->publicProject()->get($oauthToken, $projectId)
+            );
+        }
+    }
 }

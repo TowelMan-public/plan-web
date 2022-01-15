@@ -76,7 +76,7 @@ class TodoInProjectController extends Controller
 
         $projectData = $this->projectServer->getProjectDataByPrivateProject($this->getOauthToken(), $projectId);
         $todoInDay = $this->todoService->getTodoInProjectInDayData($this->getOauthToken(), $projectId, $nowDate, $finishDate, $request->includeCompleted !== null);
-        if ($isToday)
+        if (!$isToday)
             $todoInDay->setExpiredTodoList([]);
 
         return View('todo_in_day_layout')
@@ -223,7 +223,7 @@ class TodoInProjectController extends Controller
         $mySubscriber = $this->subscriberService->getMySubscriberData($this->getOauthToken(), $projectId);
         $todoInDay = $this->todoService->getTodoInProjectInDayData($this->getOauthToken(), $projectId, $nowDate, $finishDate, $request->includeCompleted !== null);
 
-        if ($isToday)
+        if (!$isToday)
             $todoInDay->setExpiredTodoList([]);
 
         return View('todo_in_day_layout')
@@ -281,10 +281,8 @@ class TodoInProjectController extends Controller
 
     public function showTodoInPublicProjectInMonth(Request $request, int $projectId, int $year, int $month)
     {
-        $projectData = $this->projectServer->getProjectDataByPrivateProject($this->getOauthToken(), $projectId);
+        $projectData = $this->projectServer->getProjectDataByPublicProject($this->getOauthToken(), $projectId);
         $todoInMonth = $this->todoService->getTodoInProjectInMonthData($this->getOauthToken(), $projectId, $year, $month, $request->includeCompleted !== null);
-
-        $projectData = $this->projectServer->getProjectDataByPrivateProject($this->getOauthToken(), $projectId);
         $mySubscriber = $this->subscriberService->getMySubscriberData($this->getOauthToken(), $projectId);
 
         return View('todo_in_month_layout')
@@ -369,9 +367,9 @@ class TodoInProjectController extends Controller
                 $finishDate = $after5HourDate;
         }
 
-        $projectData = $this->projectServer->getProjectDataByPrivateProject($this->getOauthToken(), $projectId);
+        $projectData = $this->projectServer->getProjectDataByPublicProject($this->getOauthToken(), $projectId);
         $todoInDay = $this->todoService->getResponsibleTodoInProjectInDayData($this->getOauthToken(), $projectId, $nowDate, $finishDate, $request->includeCompleted !== null);
-        if ($isToday)
+        if (!$isToday)
             $todoInDay->setExpiredTodoList([]);
 
         return View('todo_in_day_layout')

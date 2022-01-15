@@ -126,7 +126,7 @@
                                 </td>
                                 <script>
                                     $('#todo_{{ $node->getId() }}').click(function () {
-                                        window.location.href = "/todo/{{ $node->getIsOnProject()? 'onProject' : 'onPrivate' }}/{{ $node->getId() }}";
+                                        window.location.href = "/todo/{{ $node->getIsOnProject()? 'onProject' : 'onResponsible' }}/{{ $node->getId() }}";
                                     });
                                 </script>
                             @endif

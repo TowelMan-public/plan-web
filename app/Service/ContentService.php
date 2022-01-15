@@ -39,12 +39,30 @@ class ContentService
       * @param array $contentArray 中身は、「title」と「explanation」をそれぞれnullがないことを保証し保持している連想配列の連想配列。
       * @return void
       */
-     public function insertContentArray(string $oauthToken, int $todoId, array $contentArray)
+     public function insertContentArray(string $oauthToken, int $todoId, array|null $contentArray)
      {
+          if($contentArray === null)
+               return;
+               
           foreach ($contentArray as $nullableContent) {
                if($nullableContent !== null){
                     Api::last()->content()->post($oauthToken, $todoId, $nullableContent['title'], $nullableContent['explanation']);
                }
           }
+     }
+
+     public function updateContent(string $oauthToken, int $contentId, string $contentTitle, string $contentExplanation)
+     {
+          Api::last()->content()->put($oauthToken, $contentId, $contentTitle, $contentExplanation);
+     }
+
+     public function deleteContent(string $oauthToken, int $contentId)
+     {
+          Api::last()->content()->delete($oauthToken, $contentId);
+     }
+
+     public function setIsCompletedToContent(string $oauthToken, int $contentId, bool $isCompleted)
+     {
+          Api::last()->content()->putIsCompleted($oauthToken, $contentId, $isCompleted);
      }
 }

@@ -160,7 +160,7 @@ class ContentAPI
      */
     public function putIsCompleted(string $token, int $contentId, bool $isCompleted)
     {
-        $url = self::ROOT_URL . "/$contentId/isCompleted";
+        $url = self::ROOT_URL . "/$contentId/is_completed";
         
         //リクエストパラメタ
         $dto = new DtoParamaters();

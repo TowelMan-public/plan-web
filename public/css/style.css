@@ -42,6 +42,7 @@
 .todo>.inner>.text{
     margin-right: auto;
     margin-left: auto;
+    width: 100%;
 }
 
 .name{
@@ -257,9 +258,18 @@
     height: 3em;
 }
 
+textarea{
+    width: 100%;
+    resize: none;
+    font-size: 0.7em;
+}
+
 /**
 * スマホ向け
 */
 @media (max-width: 767px) {
-    
+    textarea{
+        width:100%;
+        font-size: 4em;
+    }
 }

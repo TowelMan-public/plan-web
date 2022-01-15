@@ -53,7 +53,7 @@
 
 @section('contents_menu')
     @if ($projectData === null)
-        <li><a href="/me/todo//day/{{ $dateAssociativeArray['year'] }}/{{ $dateAssociativeArray['month'] }}/{{ $dateAssociativeArray['day'] }}?{{ $includeCompleted === null ? 'includeCompleted=1' : '' }}">
+        <li><a href="/me/todo/day/{{ $dateAssociativeArray['year'] }}/{{ $dateAssociativeArray['month'] }}/{{ $dateAssociativeArray['day'] }}?{{ $includeCompleted === null ? 'includeCompleted=1' : '' }}">
             {{ $includeCompleted === null ? '完了を表示' : '完了を非表示' }}
         </a></li>
     @else        
@@ -81,155 +81,34 @@
             <div class="inner">
                 <div class="text">
                     <div class="name">{{ $todo->getName() }}</div>
-                    <div class="date_string">{{ '締め切り：'.$todo->getFinishDateAssociativeArray()['year'].'-'.$todo->getFinishDateAssociativeArray()['month'].'-'.$todo->getFinishDateAssociativeArray()['day'].' ' 
-                        .$todo->getFinishDateAssociativeArray()['hour'].':'.$todo->getFinishDateAssociativeArray()['minute'] }}</div>
-                </div>
-
-                <div class="hamburger_img">
-                    <img src="{{ asset('img/plus.png') }}">
-                    <img class="none" src="{{ asset('img/close.png') }}">
-                </div>
-
-                <div class="is_completed" id="#content_{{ $content->getId() }}_is_comleted">
-                    <input type="text" id="content_{{ $content->getId() }}_is_comleted" class="none" value="{{ $content->getIsCompleted() }}"/>
-                    <img src="{{ asset('img/check.png') }}" class="{{ $content->getIsCompleted()? '' : 'none' }}">
-                </div>
-            </div>
-
-            <div class="contents none">
-                @foreach ($todo->getContentList() as $content)
-                    <div class="content" id="content_{{ $content->getId() }}">
-                        <div class="name">{{ $content->getTitle() }}</div>
-
-                        <div class="is_completed" id="#content_{{ $content->getId() }}_is_comleted">
-                            <input type="text" id="content_{{ $content->getId() }}_is_comleted" class="none" value="{{ $content->getIsCompleted() }}"/>
-                            <img src="{{ asset('img/check.png') }}" class="{{ $content->getIsCompleted()? '' : 'none' }}">
-                        </div>
-                    </div>
-                    <script>
-                        $('#content_{{ $content->getId() }}').not('.is_completed').click(function () {
-                            window.location.href = "/content/{{ $content->getId() }}";
-                        });
-
-                        @if($mySubscriberData === null || $mySubscriberData->hasSuperAuthority())
-                            $('#content_{{ $content->getId() }}_is_comleted').click(function () {
-                                let newIsCompleted = !$('this').val();
-                                
-                                $.ajax({
-                                    headers: {
-                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                    },
-                                    url: "/content/{{ $content->getId() }}/isCompleted",
-                                    type: "post",
-                                    data : {
-                                        isCompleted : newIsCompleted,
-                                    },
-                                })
-                                .done((res)=>{
-                                    $('this').val(newIsCompleted);
-
-                                    if(newIsCompleted){
-                                        @if($includeCompleted === null)
-                                            $('this').addClass('leaved')
-                                        @else
-                                            $('this').children('img').addClass('none')
-                                        @endif
-                                    }else{
-                                        $('this').children('img').removeClass('none');
-                                    }
-                                })
-                                .fail((error)=>{
-                                    console.log(error.statusText)
-                                })
-                            });
-                        @endif
-                    </scrip>
-                @endforeach                
-            </div>
-        </div>
-        <script>
-            $('#todo_{{ $todo->getId() }}').not('.hamburger_img').not('is_completed').not(contents).click(function () {
-                window.location.href = "/todo/{{ $todo->getIsOnProject? 'onProject' : 'onPrivate' }}/{{ $todo->getId() }}";
-            });
-
-            @if($mySubscriberData === null || $mySubscriberData->hasSuperAuthority())
-                $('#todo_{{ $todo->getId() }}_is_comleted').click(function () {
-                    let newIsCompleted = !$('this').val();
-
-                    $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        url: "/todo/{{ $todo->getIsOnProject? 'onProject' : 'onPrivate' }}/{{ $content->getId() }}/isCompleted",
-                        type: "post",
-                        data : {
-                            isCompleted : newIsCompleted,
-                        },
-                    })
-                    .done((res)=>{
-                        $('this').val(newIsCompleted);
-
-                        if(newIsCompleted){
-                            @if($includeCompleted === null)
-                                $('this').addClass('leaved')
-                            @else
-                                $('this').children('img').addClass('none')
-                            @endif
-                        }else{
-                            $('this').children('img').removeClass('none');
-                        }
-                    })
-                    .fail((error)=>{
-                        console.log(error.statusText)
-                    })
-                });
-            </script>
-        @endif
-    @endforeach
-
-    @foreach ($todoInDay->getApproachingTodoList() as $todo)
-        
-        <div class="todo" id="todo_{{ $todo->getId() }}"
-            style="
-                border-color: rgb(255, 111, 0);
-                background-color: rgb(255, 111, 0);">
-                
-            <div class="inner">
-                <div class="text">
-                    <div class="name">{{ $todo->getName() }}</div>
-                    <div class="date_string">{{ '締め切り：'.$todo->getFinishDateAssociativeArray()['hour'].':'.$todo->getFinishDateAssociativeArray()['minute'] }}</div>
+                    <div class="date_string">{{ '締め切り：'.$todo->getFinishDateAssociativeArray()['hour'].'時'.$todo->getFinishDateAssociativeArray()['minute'].'分' }}</div>
                 </div>                
 
-                <div class="hamburger_img">
-                    <img src="{{ asset('img/plus.png') }}">
-                    <img class="none" src="{{ asset('img/close.png') }}">
+                <div class="hamburger_img" id="todo_{{ $todo->getId() }}_hamburger_img">
+                    <img src="{{ asset('img/triangle.png') }}"
+                            style="width: 1.5em; height: 1.5em; transform: rotate(-90deg);">
                 </div>
 
-                <div class="is_completed" id="#content_{{ $content->getId() }}_is_comleted">
-                    <input type="text" id="content_{{ $content->getId() }}_is_comleted" class="none" value="{{ $content->getIsCompleted() }}"/>
-                    <img src="{{ asset('img/check.png') }}" class="{{ $content->getIsCompleted()? '' : 'none' }}">
+                <div class="is_completed" id="todo_{{ $todo->getId() }}_is_comleted">                    
+                    <img src="{{ asset('img/check.png') }}" class="{{ $todo->getIsCompleted()? '' : 'none' }}">
                 </div>
             </div>
 
-            <div class="contents none">
+            <div class="contents leaved" id="todo_{{ $todo->getId() }}_content_list">
                 @foreach ($todo->getContentList() as $content)
-                    <div class="content" id="content_{{ $content->getId() }}">
+                    <div class="content {{ $includeCompleted === null && $content->getIsCompleted() ? 'none' : '' }}" id="content_{{ $content->getId() }}">
                         <div class="name">{{ $content->getTitle() }}</div>
 
-                        <div class="is_completed" id="#content_{{ $content->getId() }}_is_comleted">
-                            <input type="text" id="content_{{ $content->getId() }}_is_comleted" class="none" value="{{ $content->getIsCompleted() }}"/>
+                        <div class="is_completed" id="content_{{ $content->getId() }}_is_comleted">
                             <img src="{{ asset('img/check.png') }}" class="{{ $content->getIsCompleted()? '' : 'none' }}">
                         </div>
                     </div>
                     <script>
-                        $('#content_{{ $content->getId() }}').not('.is_completed').click(function () {
-                            window.location.href = "/content/{{ $content->getId() }}";
-                        });
-
                         @if($mySubscriberData === null || $mySubscriberData->hasSuperAuthority())
+                            let content_newIsCompleted_{{ $content->getId() }} = {{ $content->getIsCompleted()? 'true' : 'false' }};
                             $('#content_{{ $content->getId() }}_is_comleted').click(function () {
-                                let newIsCompleted = !$('this').val();
-                                
+                                content_newIsCompleted_{{ $content->getId() }} = !content_newIsCompleted_{{ $content->getId() }};
+                                console.log(content_newIsCompleted_{{ $content->getId() }});
                                 $.ajax({
                                     headers: {
                                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -237,20 +116,18 @@
                                     url: "/content/{{ $content->getId() }}/isCompleted",
                                     type: "post",
                                     data : {
-                                        isCompleted : newIsCompleted,
+                                        isCompleted : content_newIsCompleted_{{ $content->getId() }} ? 1 : 0,
                                     },
                                 })
                                 .done((res)=>{
-                                    $('this').val(newIsCompleted);
-
-                                    if(newIsCompleted){
+                                    if(content_newIsCompleted_{{ $content->getId() }}){
                                         @if($includeCompleted === null)
-                                            $('this').addClass('leaved')
+                                            $('#content_{{ $content->getId() }}').addClass('leaved');
                                         @else
-                                            $('this').children('img').addClass('none')
+                                            $(this).children('img').removeClass('none');
                                         @endif
                                     }else{
-                                        $('this').children('img').removeClass('none');
+                                        $(this).children('img').addClass('none');
                                     }
                                 })
                                 .fail((error)=>{
@@ -263,39 +140,186 @@
             </div>
         </div>
         <script>
-            $('#todo_{{ $todo->getId() }}').not('.hamburger_img').not('is_completed').not(contents).click(function () {
-                window.location.href = "/todo/{{ $todo->getIsOnProject? 'onProject' : 'onPrivate' }}/{{ $todo->getId() }}";
+            $('#todo_{{ $todo->getId() }} .inner .text').click(function () {
+                window.location.href = "/todo/{{ $todo->getIsOnProject()? 'onProject' : 'onResponsible' }}/{{ $todo->getId() }}";
             });
 
-            @if($mySubscriberData === null || $mySubscriberData->hasSuperAuthority())
-                $('#todo_{{ $todo->getId() }}_is_comleted').click(function () {
-                    let newIsCompleted = !$('this').val();
+            let visibleContentListInTodo_{{ $todo->getId() }} = false;
+            $('#todo_{{ $todo->getId() }}_hamburger_img').click(function () {
+                visibleContentListInTodo_{{ $todo->getId() }} = !visibleContentListInTodo_{{ $todo->getId() }};
+                if(visibleContentListInTodo_{{ $todo->getId() }}){
+                    $('#todo_{{ $todo->getId() }}_content_list')
+                        .removeClass('leaved')
+                        .addClass('visabled');
+                    $(this).children('img')
+                        .css('transform', 'rotate(90deg)')
+                        .css('transition', '1s');
+                }else{
+                    $('#todo_{{ $todo->getId() }}_content_list')
+                        .removeClass('visabled')
+                        .addClass('leaved')
+                    $(this).children('img')
+                        .css('transform', 'rotate(-90deg)')
+                        .css('transition', '1s');
+                }
+            });            
 
+            @if($mySubscriberData === null || $mySubscriberData->hasSuperAuthority())
+                let newIsCompleted_{{ $todo->getId() }} = {{ $todo->getIsCompleted()? 'true' : 'false' }};
+                $('#todo_{{ $todo->getId() }}_is_comleted').click(function () {
+                    newIsCompleted_{{ $todo->getId() }} = !newIsCompleted_{{ $todo->getId() }};
                     $.ajax({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
-                        url: "/todo/{{ $todo->getIsOnProject? 'onProject' : 'onPrivate' }}/{{ $content->getId() }}/isCompleted",
+                        url: "/todo/{{ $todo->getIsOnProject()? 'onProject' : 'onResponsible' }}/{{ $todo->getId() }}/isCompleted",
                         type: "post",
                         data : {
-                            isCompleted : newIsCompleted,
+                            isCompleted : newIsCompleted_{{ $todo->getId() }} ? 1 : 0,
                         },
                     })
                     .done((res)=>{
-                        $('this').val(newIsCompleted);
-
-                        if(newIsCompleted){
+                        if(newIsCompleted_{{ $todo->getId() }}){
                             @if($includeCompleted === null)
-                                $('this').addClass('leaved')
+                                $('#todo_{{ $todo->getId() }}').addClass('leaved');
                             @else
-                                $('this').children('img').addClass('none')
+                                $(this).children('img').removeClass('none');
                             @endif
                         }else{
-                            $('this').children('img').removeClass('none');
+                            $(this).children('img').addClass('none');
                         }
                     })
                     .fail((error)=>{
-                        console.log(error.statusText)
+                        newIsCompleted_{{ $todo->getId() }} = !newIsCompleted_{{ $todo->getId() }};
+                        console.log(error.statusText);
+                    })
+                });
+            </script>
+        @endif
+
+    @endforeach
+
+    @foreach ($todoInDay->getApproachingTodoList() as $todo)
+        
+        <div class="todo" id="todo_{{ $todo->getId() }}"
+            style="
+                border-color: rgb(255, 111, 0);
+                background-color: rgb(255, 111, 0);">
+                
+            <div class="inner">
+                <div class="text">
+                    <div class="name">{{ $todo->getName() }}</div>
+                    <div class="date_string">{{ '締め切り：'.$todo->getFinishDateAssociativeArray()['hour'].'時'.$todo->getFinishDateAssociativeArray()['minute'].'分' }}</div>
+                </div>                
+
+                <div class="hamburger_img" id="todo_{{ $todo->getId() }}_hamburger_img">
+                    <img src="{{ asset('img/triangle.png') }}"
+                            style="width: 1.5em; height: 1.5em; transform: rotate(-90deg);">
+                </div>
+
+                <div class="is_completed" id="todo_{{ $todo->getId() }}_is_comleted">                    
+                    <img src="{{ asset('img/check.png') }}" class="{{ $todo->getIsCompleted()? '' : 'none' }}">
+                </div>
+            </div>
+
+            <div class="contents leaved" id="todo_{{ $todo->getId() }}_content_list">
+                @foreach ($todo->getContentList() as $content)
+                    <div class="content {{ $includeCompleted === null && $content->getIsCompleted() ? 'none' : '' }}" id="content_{{ $content->getId() }}">
+                        <div class="name">{{ $content->getTitle() }}</div>
+
+                        <div class="is_completed" id="content_{{ $content->getId() }}_is_comleted">
+                            <img src="{{ asset('img/check.png') }}" class="{{ $content->getIsCompleted()? '' : 'none' }}">
+                        </div>
+                    </div>
+                    <script>
+                        @if($mySubscriberData === null || $mySubscriberData->hasSuperAuthority())
+                            let content_newIsCompleted_{{ $content->getId() }} = {{ $content->getIsCompleted()? 'true' : 'false' }};
+                            $('#content_{{ $content->getId() }}_is_comleted').click(function () {
+                                content_newIsCompleted_{{ $content->getId() }} = !content_newIsCompleted_{{ $content->getId() }};
+                                console.log(content_newIsCompleted_{{ $content->getId() }});
+                                $.ajax({
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    url: "/content/{{ $content->getId() }}/isCompleted",
+                                    type: "post",
+                                    data : {
+                                        isCompleted : content_newIsCompleted_{{ $content->getId() }} ? 1 : 0,
+                                    },
+                                })
+                                .done((res)=>{
+                                    if(content_newIsCompleted_{{ $content->getId() }}){
+                                        @if($includeCompleted === null)
+                                            $('#content_{{ $content->getId() }}').addClass('leaved');
+                                        @else
+                                            $(this).children('img').removeClass('none');
+                                        @endif
+                                    }else{
+                                        $(this).children('img').addClass('none');
+                                    }
+                                })
+                                .fail((error)=>{
+                                    console.log(error.statusText)
+                                })
+                            });
+                        </script>
+                    @endif
+                @endforeach                
+            </div>
+        </div>
+        <script>
+            $('#todo_{{ $todo->getId() }} .inner .text').click(function () {
+                window.location.href = "/todo/{{ $todo->getIsOnProject()? 'onProject' : 'onResponsible' }}/{{ $todo->getId() }}";
+            });
+
+            let visibleContentListInTodo_{{ $todo->getId() }} = false;
+            $('#todo_{{ $todo->getId() }}_hamburger_img').click(function () {
+                visibleContentListInTodo_{{ $todo->getId() }} = !visibleContentListInTodo_{{ $todo->getId() }};
+                if(visibleContentListInTodo_{{ $todo->getId() }}){
+                    $('#todo_{{ $todo->getId() }}_content_list')
+                        .removeClass('leaved')
+                        .addClass('visabled');
+                    $(this).children('img')
+                        .css('transform', 'rotate(90deg)')
+                        .css('transition', '1s');
+                }else{
+                    $('#todo_{{ $todo->getId() }}_content_list')
+                        .removeClass('visabled')
+                        .addClass('leaved')
+                    $(this).children('img')
+                        .css('transform', 'rotate(-90deg)')
+                        .css('transition', '1s');
+                }
+            });            
+
+            @if($mySubscriberData === null || $mySubscriberData->hasSuperAuthority())
+                let newIsCompleted_{{ $todo->getId() }} = {{ $todo->getIsCompleted()? 'true' : 'false' }};
+                $('#todo_{{ $todo->getId() }}_is_comleted').click(function () {
+                    newIsCompleted_{{ $todo->getId() }} = !newIsCompleted_{{ $todo->getId() }};
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: "/todo/{{ $todo->getIsOnProject()? 'onProject' : 'onResponsible' }}/{{ $todo->getId() }}/isCompleted",
+                        type: "post",
+                        data : {
+                            isCompleted : newIsCompleted_{{ $todo->getId() }} ? 1 : 0,
+                        },
+                    })
+                    .done((res)=>{
+                        if(newIsCompleted_{{ $todo->getId() }}){
+                            @if($includeCompleted === null)
+                                $('#todo_{{ $todo->getId() }}').addClass('leaved');
+                            @else
+                                $(this).children('img').removeClass('none');
+                            @endif
+                        }else{
+                            $(this).children('img').addClass('none');
+                        }
+                    })
+                    .fail((error)=>{
+                        newIsCompleted_{{ $todo->getId() }} = !newIsCompleted_{{ $todo->getId() }};
+                        console.log(error.statusText);
                     })
                 });
             </script>
@@ -313,39 +337,34 @@
             <div class="inner">
                 <div class="text">
                     <div class="name">{{ $todo->getName() }}</div>
-                    <div class="date_string">{{ '締め切り：'.$todo->getFinishDateAssociativeArray()['hour'].':'.$todo->getFinishDateAssociativeArray()['minute'] }}</div>
+                    <div class="date_string">{{ '締め切り：'.$todo->getFinishDateAssociativeArray()['hour'].'時'.$todo->getFinishDateAssociativeArray()['minute'].'分' }}</div>
+                </div>                
+
+                <div class="hamburger_img" id="todo_{{ $todo->getId() }}_hamburger_img">
+                    <img src="{{ asset('img/triangle.png') }}"
+                            style="width: 1.5em; height: 1.5em; transform: rotate(-90deg);">
                 </div>
 
-                <div class="hamburger_img">
-                    <img src="{{ asset('img/plus.png') }}">
-                    <img class="none" src="{{ asset('img/close.png') }}">
-                </div>
-
-                <div class="is_completed">
-                    <input type="text" id="todo_{{ $todo->getId() }}_is_comleted" class="none" value="{{ $todo->getIsCompleted() }}"/>
+                <div class="is_completed" id="todo_{{ $todo->getId() }}_is_comleted">                    
                     <img src="{{ asset('img/check.png') }}" class="{{ $todo->getIsCompleted()? '' : 'none' }}">
                 </div>
             </div>
 
-            <div class="contents none">
+            <div class="contents leaved" id="todo_{{ $todo->getId() }}_content_list">
                 @foreach ($todo->getContentList() as $content)
-                    <div class="content" id="content_{{ $content->getId() }}">
+                    <div class="content {{ $includeCompleted === null && $content->getIsCompleted() ? 'none' : '' }}" id="content_{{ $content->getId() }}">
                         <div class="name">{{ $content->getTitle() }}</div>
 
-                        <div class="is_completed" id="#content_{{ $content->getId() }}_is_comleted">
-                            <input type="text" id="content_{{ $content->getId() }}_is_comleted" class="none" value="{{ $content->getIsCompleted() }}"/>
+                        <div class="is_completed" id="content_{{ $content->getId() }}_is_comleted">
                             <img src="{{ asset('img/check.png') }}" class="{{ $content->getIsCompleted()? '' : 'none' }}">
                         </div>
                     </div>
                     <script>
-                        $('#content_{{ $content->getId() }}').not('.is_completed').click(function () {
-                            window.location.href = "/content/{{ $content->getId() }}";
-                        });
-
                         @if($mySubscriberData === null || $mySubscriberData->hasSuperAuthority())
+                            let content_newIsCompleted_{{ $content->getId() }} = {{ $content->getIsCompleted()? 'true' : 'false' }};
                             $('#content_{{ $content->getId() }}_is_comleted').click(function () {
-                                let newIsCompleted = !$('this').val();
-                                
+                                content_newIsCompleted_{{ $content->getId() }} = !content_newIsCompleted_{{ $content->getId() }};
+                                console.log(content_newIsCompleted_{{ $content->getId() }});
                                 $.ajax({
                                     headers: {
                                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -353,20 +372,18 @@
                                     url: "/content/{{ $content->getId() }}/isCompleted",
                                     type: "post",
                                     data : {
-                                        isCompleted : newIsCompleted,
+                                        isCompleted : content_newIsCompleted_{{ $content->getId() }} ? 1 : 0,
                                     },
                                 })
                                 .done((res)=>{
-                                    $('this').val(newIsCompleted);
-
-                                    if(newIsCompleted){
+                                    if(content_newIsCompleted_{{ $content->getId() }}){
                                         @if($includeCompleted === null)
-                                            $('this').addClass('leaved')
+                                            $('#content_{{ $content->getId() }}').addClass('leaved');
                                         @else
-                                            $('this').children('img').addClass('none')
+                                            $(this).children('img').removeClass('none');
                                         @endif
                                     }else{
-                                        $('this').children('img').removeClass('none');
+                                        $(this).children('img').addClass('none');
                                     }
                                 })
                                 .fail((error)=>{
@@ -379,43 +396,63 @@
             </div>
         </div>
         <script>
-            $('#todo_{{ $todo->getId() }}').not('.hamburger_img').not('is_completed').not(contents).click(function () {
-                window.location.href = "/todo/{{ $todo->getIsOnProject? 'onProject' : 'onPrivate' }}/{{ $todo->getId() }}";
+            $('#todo_{{ $todo->getId() }} .inner .text').click(function () {
+                window.location.href = "/todo/{{ $todo->getIsOnProject()? 'onProject' : 'onResponsible' }}/{{ $todo->getId() }}";
             });
 
-            @if($mySubscriberData === null || $mySubscriberData->hasSuperAuthority())
-                $('#todo_{{ $todo->getId() }}_is_comleted').click(function () {
-                    let newIsCompleted = !$('this').val();
+            let visibleContentListInTodo_{{ $todo->getId() }} = false;
+            $('#todo_{{ $todo->getId() }}_hamburger_img').click(function () {
+                visibleContentListInTodo_{{ $todo->getId() }} = !visibleContentListInTodo_{{ $todo->getId() }};
+                if(visibleContentListInTodo_{{ $todo->getId() }}){
+                    $('#todo_{{ $todo->getId() }}_content_list')
+                        .removeClass('leaved')
+                        .addClass('visabled');
+                    $(this).children('img')
+                        .css('transform', 'rotate(90deg)')
+                        .css('transition', '1s');
+                }else{
+                    $('#todo_{{ $todo->getId() }}_content_list')
+                        .removeClass('visabled')
+                        .addClass('leaved')
+                    $(this).children('img')
+                        .css('transform', 'rotate(-90deg)')
+                        .css('transition', '1s');
+                }
+            });            
 
+            @if($mySubscriberData === null || $mySubscriberData->hasSuperAuthority())
+                let newIsCompleted_{{ $todo->getId() }} = {{ $todo->getIsCompleted()? 'true' : 'false' }};
+                $('#todo_{{ $todo->getId() }}_is_comleted').click(function () {
+                    newIsCompleted_{{ $todo->getId() }} = !newIsCompleted_{{ $todo->getId() }};
                     $.ajax({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
-                        url: "/todo/{{ $todo->getIsOnProject? 'onProject' : 'onPrivate' }}/{{ $content->getId() }}/isCompleted",
+                        url: "/todo/{{ $todo->getIsOnProject()? 'onProject' : 'onResponsible' }}/{{ $todo->getId() }}/isCompleted",
                         type: "post",
                         data : {
-                            isCompleted : newIsCompleted,
+                            isCompleted : newIsCompleted_{{ $todo->getId() }} ? 1 : 0,
                         },
                     })
                     .done((res)=>{
-                        $('this').val(newIsCompleted);
-
-                        if(newIsCompleted){
+                        if(newIsCompleted_{{ $todo->getId() }}){
                             @if($includeCompleted === null)
-                                $('this').addClass('leaved')
+                                $('#todo_{{ $todo->getId() }}').addClass('leaved');
                             @else
-                                $('this').children('img').addClass('none')
+                                $(this).children('img').removeClass('none');
                             @endif
                         }else{
-                            $('this').children('img').removeClass('none');
+                            $(this).children('img').addClass('none');
                         }
                     })
                     .fail((error)=>{
-                        console.log(error.statusText)
+                        newIsCompleted_{{ $todo->getId() }} = !newIsCompleted_{{ $todo->getId() }};
+                        console.log(error.statusText);
                     })
                 });
             </script>
         @endif
+
     @endforeach
 
     @foreach ($todoInDay->getOtherTodoList() as $todo)
@@ -428,38 +465,32 @@
             <div class="inner">
                 <div class="text">
                     <div class="name">{{ $todo->getName() }}</div>
-                </div>   
+                </div>                
 
-                <div class="hamburger_img">
-                    <img src="{{ asset('img/plus.png') }}">
-                    <img class="none" src="{{ asset('img/close.png') }}">
+                <div class="hamburger_img" id="todo_{{ $todo->getId() }}_hamburger_img">
+                    <img src="{{ asset('img/triangle.png') }}"
+                            style="width: 1.5em; height: 1.5em; transform: rotate(-90deg);">
                 </div>
 
-                <div class="is_completed" id="#content_{{ $content->getId() }}_is_comleted">
-                    <input type="text" id="content_{{ $content->getId() }}_is_comleted" class="none" value="{{ $content->getIsCompleted() }}"/>
-                    <img src="{{ asset('img/check.png') }}" class="{{ $content->getIsCompleted()? '' : 'none' }}">
+                <div class="is_completed" id="todo_{{ $todo->getId() }}_is_comleted">                    
+                    <img src="{{ asset('img/check.png') }}" class="{{ $todo->getIsCompleted()? '' : 'none' }}">
                 </div>
             </div>
 
-            <div class="contents none">
+            <div class="contents leaved" id="todo_{{ $todo->getId() }}_content_list">
                 @foreach ($todo->getContentList() as $content)
-                    <div class="content" id="content_{{ $content->getId() }}">
+                    <div class="content {{ $includeCompleted === null && $content->getIsCompleted() ? 'none' : '' }}" id="content_{{ $content->getId() }}">
                         <div class="name">{{ $content->getTitle() }}</div>
 
-                        <div class="is_completed" id="#content_{{ $content->getId() }}_is_comleted">
-                            <input type="text" id="content_{{ $content->getId() }}_is_comleted" class="none" value="{{ $content->getIsCompleted() }}"/>
+                        <div class="is_completed" id="content_{{ $content->getId() }}_is_comleted">
                             <img src="{{ asset('img/check.png') }}" class="{{ $content->getIsCompleted()? '' : 'none' }}">
                         </div>
                     </div>
                     <script>
-                        $('#content_{{ $content->getId() }}').not('.is_completed').click(function () {
-                            window.location.href = "/content/{{ $content->getId() }}";
-                        });
-
                         @if($mySubscriberData === null || $mySubscriberData->hasSuperAuthority())
+                            let content_newIsCompleted_{{ $content->getId() }} = {{ $content->getIsCompleted()? 'true' : 'false' }};
                             $('#content_{{ $content->getId() }}_is_comleted').click(function () {
-                                let newIsCompleted = !$('this').val();
-                                
+                                content_newIsCompleted_{{ $content->getId() }} = !content_newIsCompleted_{{ $content->getId() }};
                                 $.ajax({
                                     headers: {
                                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -467,20 +498,18 @@
                                     url: "/content/{{ $content->getId() }}/isCompleted",
                                     type: "post",
                                     data : {
-                                        isCompleted : newIsCompleted,
+                                        isCompleted : content_newIsCompleted_{{ $content->getId() }} ? 1 : 0,
                                     },
                                 })
                                 .done((res)=>{
-                                    $('this').val(newIsCompleted);
-
-                                    if(newIsCompleted){
+                                    if(content_newIsCompleted_{{ $content->getId() }}){
                                         @if($includeCompleted === null)
-                                            $('this').addClass('leaved')
+                                            $('#content_{{ $content->getId() }}').addClass('leaved');
                                         @else
-                                            $('this').children('img').addClass('none')
+                                            $(this).children('img').removeClass('none');
                                         @endif
                                     }else{
-                                        $('this').children('img').removeClass('none');
+                                        $(this).children('img').addClass('none');
                                     }
                                 })
                                 .fail((error)=>{
@@ -493,43 +522,63 @@
             </div>
         </div>
         <script>
-            $('#todo_{{ $todo->getId() }}').not('.hamburger_img').not('is_completed').not(contents).click(function () {
-                window.location.href = "/todo/{{ $todo->getIsOnProject? 'onProject' : 'onPrivate' }}/{{ $todo->getId() }}";
+            $('#todo_{{ $todo->getId() }} .inner .text').click(function () {
+                window.location.href = "/todo/{{ $todo->getIsOnProject()? 'onProject' : 'onResponsible' }}/{{ $todo->getId() }}";
             });
 
-            @if($mySubscriberData === null || $mySubscriberData->hasSuperAuthority())
-                $('#todo_{{ $todo->getId() }}_is_comleted').click(function () {
-                    let newIsCompleted = !$('this').val();
+            let visibleContentListInTodo_{{ $todo->getId() }} = false;
+            $('#todo_{{ $todo->getId() }}_hamburger_img').click(function () {
+                visibleContentListInTodo_{{ $todo->getId() }} = !visibleContentListInTodo_{{ $todo->getId() }};
+                if(visibleContentListInTodo_{{ $todo->getId() }}){
+                    $('#todo_{{ $todo->getId() }}_content_list')
+                        .removeClass('leaved')
+                        .addClass('visabled');
+                    $(this).children('img')
+                        .css('transform', 'rotate(90deg)')
+                        .css('transition', '1s');
+                }else{
+                    $('#todo_{{ $todo->getId() }}_content_list')
+                        .removeClass('visabled')
+                        .addClass('leaved')
+                    $(this).children('img')
+                        .css('transform', 'rotate(-90deg)')
+                        .css('transition', '1s');
+                }
+            });            
 
+            @if($mySubscriberData === null || $mySubscriberData->hasSuperAuthority())
+                let newIsCompleted_{{ $todo->getId() }} = {{ $todo->getIsCompleted()? 'true' : 'false' }};
+                $('#todo_{{ $todo->getId() }}_is_comleted').click(function () {
+                    newIsCompleted_{{ $todo->getId() }} = !newIsCompleted_{{ $todo->getId() }};
                     $.ajax({
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
-                        url: "/todo/{{ $todo->getIsOnProject? 'onProject' : 'onPrivate' }}/{{ $content->getId() }}/isCompleted",
+                        url: "/todo/{{ $todo->getIsOnProject()? 'onProject' : 'onResponsible' }}/{{ $todo->getId() }}/isCompleted",
                         type: "post",
                         data : {
-                            isCompleted : newIsCompleted,
+                            isCompleted : newIsCompleted_{{ $todo->getId() }} ? 1 : 0,
                         },
                     })
                     .done((res)=>{
-                        $('this').val(newIsCompleted);
-
-                        if(newIsCompleted){
+                        if(newIsCompleted_{{ $todo->getId() }}){
                             @if($includeCompleted === null)
-                                $('this').addClass('leaved')
+                                $('#todo_{{ $todo->getId() }}').addClass('leaved');
                             @else
-                                $('this').children('img').addClass('none')
+                                $(this).children('img').removeClass('none');
                             @endif
                         }else{
-                            $('this').children('img').removeClass('none');
+                            $(this).children('img').addClass('none');
                         }
                     })
                     .fail((error)=>{
-                        console.log(error.statusText)
+                        newIsCompleted_{{ $todo->getId() }} = !newIsCompleted_{{ $todo->getId() }};
+                        console.log(error.statusText);
                     })
                 });
             </script>
         @endif
+
     @endforeach
 
 @endsection
