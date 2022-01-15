@@ -528,7 +528,7 @@
                     data : {
                         title : newTitle,
                         explanation : newExplanation,
-                        todoId : {{ $todoData->getId() }},
+                        todoId : {{ $todoData->getIsOnProject()? $todoData->getId() : $todoData->getTodoOnResponsibleId() }},
                     },
                 })
                 .done((res)=>{
