@@ -12,6 +12,7 @@ use App\Http\Controllers\TerminalController;
 use App\Http\Controllers\TodoController;
 use App\Http\Controllers\TodoInProjectController;
 use App\Http\Controllers\TodoOnProjectController;
+use App\Http\Controllers\TodoOnResponsibleController;
 use App\Http\Controllers\UserConfigController;
 use App\Http\Controllers\WithdrawalController;
 use Illuminate\Support\Facades\Route;

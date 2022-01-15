@@ -530,8 +530,8 @@ class TodoInProjectController extends Controller
                 $request->startDate, $request->finishData, $request->isCopyToResponsible !== null);
             $this->contentService->insertContentArray($this->getOauthToken(), $todoId, $request->contentArray);
             
-            return redirect(route('TodoInProjectController@showInsertTodoToPublicProject',[
-                'projectId' => $projectId,
+            return redirect(route('TodoOnProjectController@show',[
+                'todoId' => $todoId,
             ]));
         }
         catch(NotHaveAuthorityToOperateProjectException){
