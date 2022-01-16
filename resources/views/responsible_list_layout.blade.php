@@ -103,7 +103,7 @@
                 })
                 .fail((error)=>{
                     console.log(error.statusText)
-                    confirm('あなたにその捜査権限がないため、その操作を行うことができないと思われます。。');
+                    confirm('あなたにその捜査権限がないため、その操作を行うことができないと思われます。');
                 })
             })
         </script>

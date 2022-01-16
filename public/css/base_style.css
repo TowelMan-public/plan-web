@@ -393,6 +393,7 @@ footer>p {
 */
 
 .hamburger_menu_contents_outer{
+    display: flex;
     z-index: 2;
     width: 100%;
     height: 100%;
@@ -400,14 +401,14 @@ footer>p {
     top: 0;
     left: 100%;/*leftの値を変更してメニューを画面外へ*/
     z-index: 80;
-    background-color: #3584bb;
     transition: all 0.3s linear 0s;/*アニメーション設定*/
 }
 
 .hamburger_menu_contents{
-    width: 100%;
-    height: 100%;
+    width: 90%;
+    height: 70%;
     background-color: #3584bb;
+    margin: auto;
 }
 
 #hamburger_menu_button:checked ~ .hamburger_menu_contents_outer {
@@ -438,6 +439,17 @@ footer>p {
 }
 
 /**
+* 通知
+*/
+#notice_hamburger_menu_contents_outer_input:checked ~ .hamburger_menu_contents_outer {
+    left: 0;/*メニューを画面内へ*/
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+}
+
+/**
 * アコーディオンメニュー
 */
 
@@ -455,6 +467,20 @@ footer>p {
     flex-wrap: wrap;
 }
 
+.acd_switch_img{
+    width: 1em;
+    height: 1em;
+    transform: rotate(-90deg);
+    transition: 1s;
+}
+
+.acd_menu>input[type="checkbox"]:checked + .acd_menu_label>.acd_switch_img{
+    width: 1em;
+    height: 1em;
+    transform: rotate(+90deg);
+    transition: 1s;
+}
+
 .acd_menu_label>div{
     margin-left: auto;
     align-self: center;
@@ -469,24 +495,12 @@ footer>p {
     margin-top: 0.2em;
 }
 
-.acd_menu_label>.close_img{
-    display: none;
-}
-
 .acd_content>ul{
     display: block;
 }
 
 .acd_menu>input[type="checkbox"]:checked + .acd_menu_label + .acd_content{
     display: block;
-}
-
-.acd_menu>input[type="checkbox"]:checked + .acd_menu_label>.close_img{
-    display: block;
-}
-
-.acd_menu>input[type="checkbox"]:checked + .acd_menu_label>.open_img{
-    display: none;
 }
 
 .top_menu>ul>li>.acd_menu>.acd_content>ul{

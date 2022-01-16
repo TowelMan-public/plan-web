@@ -3,6 +3,7 @@
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\FallbackController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\PrivateProjectController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PublicProjectController;
@@ -158,6 +159,8 @@ Route::post('content/insert', [ContentController::class, 'insert']);
 Route::post('content/{contentId}/update', [ContentController::class, 'update']);
 Route::post('content/{contentId}/delete', [ContentController::class, 'delete']);
 Route::post('content/{contentId}/isCompleted', [ContentController::class, 'setIsCompleted']);
+
+Route::get('notice', [NoticeController::class, 'show']);
 
 //常に一番下にする
 Route::fallback([FallbackController::class, 'handl']);
