@@ -23,6 +23,12 @@
         @endif
     @endif
 
+    @if (!$projectData->getIsPrivate() && $todoData->getIsOnProject())
+        <li>
+            <a href="/todo/onProject/{{ $todoData->getId() }}/responsibleList">担当者一覧へ</a>
+        </li>
+    @endif
+
     <li><a href="/project/{{ $projectData->getIsPrivate() ? 'private' : 'public' }}/{{ $projectData->getId() }}">プロジェクトへ</a></li>
     <li><a href="/project/{{ $projectData->getIsPrivate() ? 'private' : 'public' }}/{{ $projectData->getId() }}/todo/{{ $todoData->getIsOnProject() ? 'onProject' : 'onResponsible' }}/month">やることの一月ごとの表示</a></li>
 @endsection

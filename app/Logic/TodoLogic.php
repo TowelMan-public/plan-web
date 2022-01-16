@@ -4,10 +4,13 @@ namespace App\Logic;
 
 use App\Client\Response\TodoOnProjectResponse;
 use App\Client\Response\TodoOnResponsibleResponse;
+use App\Client\Response\UserInTodoOnResponsibleResponse;
+use App\Client\Response\UserResponse;
 use App\Http\Data\TodoData;
 use App\Http\Data\TodoDataNode;
 use App\Http\Data\TodoInDayData;
 use App\Http\Data\TodoInMonthData;
+use App\Http\Data\UserInResposnibleData;
 use App\Utility\DateUtility;
 use App\Utility\SortUtility;
 use DateTime;
@@ -234,5 +237,15 @@ class TodoLogic{
             $emptyNode->getBackNode()->setNextNode($node);
             $node->setBackNode($emptyNode->getBackNode());
         }    
+    }
+
+    static public function createUserInResposnibleDataArray(UserInTodoOnResponsibleResponse $userInResponsibleResponse, UserResponse $userResponsible): UserInResposnibleData
+    {
+        $data = new UserInResposnibleData();
+        $data->setUserNickName($userResponsible->getUserNickName());
+        $data->setUserName($userInResponsibleResponse->getUserName());
+        $data->setIsCompleted($userInResponsibleResponse->getIsCompleted());
+
+        return $data;
     }
 }

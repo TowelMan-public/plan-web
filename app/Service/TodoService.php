@@ -210,6 +210,11 @@ class TodoService
         Api::last()->todoOnResoinsible()->putIsCompleted($oauthToken, $todoId, $isCompleted);
     }
 
+    public function setIsCompletedToTodoOnResponsibleAll(string $oauthToken, int $todoId, bool $isCompleted)
+    {
+        Api::last()->todoOnResoinsible()->putIsCompleted($oauthToken, $todoId, $isCompleted, false);
+    }
+
     public function deleteTodoOnResponsible(string $oauthToken, int $todoId, string $userName)
     {
         Api::last()->todoOnResoinsible()->delete($oauthToken, $todoId, $userName);
@@ -218,5 +223,23 @@ class TodoService
     public function exitTodoOnResponsible(string $oauthToken, int $todoId)
     {
         Api::last()->todoOnResoinsible()->postExit($oauthToken, $todoId);
+    }
+
+    public function getUserInResponsibleDataArray(string $oauthToken, int $todoId)
+    {
+        $responseArray = Api::last()->todoOnResoinsible()->getListInTodo($oauthToken, $todoId);
+
+        $dataArray = [];
+        foreach ($responseArray as $userInResoinsibleResponce) {
+            $userResponsible = Api::last()->user()->get($oauthToken, $userInResoinsibleResponce->getUserName());
+            $dataArray[] = TodoLogic::createUserInResposnibleDataArray($userInResoinsibleResponce, $userResponsible);
+        }
+
+        return $dataArray;
+    }
+
+    public function insertResponsible(string $oauthToken, int $todoOnProjectId, string $userName)
+    {
+        Api::last()->todoOnResoinsible()->post($oauthToken, $todoOnProjectId, $userName);
     }
 }

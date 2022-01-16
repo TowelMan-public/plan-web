@@ -264,6 +264,38 @@ textarea{
     font-size: 0.7em;
 }
 
+.todo_on_responsible{
+    display: flex;
+    border-radius: 2em;
+    background-color: aqua;
+    margin-bottom: 1em;
+}
+
+.todo_on_responsible>.is_now_invitation{
+    text-align: left;
+    margin-left: -0.25em;
+    margin-right: -7em;
+    margin-top: -0.5em;
+    background-color: #6abe24;
+    height: 1.5em;
+    border-radius: 1.5em;
+}
+
+.todo_on_responsible>.text{
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 100%;
+}
+
+.todo_on_responsible>.delete_button{
+    margin-right: 1em;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 3em;
+}
+
 /**
 * スマホ向け
 */

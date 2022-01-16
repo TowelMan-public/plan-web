@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Client\Exception\FailureCreateAuthenticationTokenException;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\TodoController;
 use App\Service\OauthService;
@@ -37,23 +38,29 @@ class SesstionOauth
     {
         $path = $request->path();
 
-        if(session()->has('oauthToken')){
+        try{
+            if(session()->has('oauthToken')){
+                //tokenの再生成
+                if(session('oauthTokenExpiration') < time()){
+                    $tokenResponse = $this->oauthService->updateToken(session('refreshToken'));
+                    session(['oauthToken' => $tokenResponse->getAuthenticationToken()]);
+                    session(['oauthTokenExpiration' => time() + 25 * 60]);
+                    session(['refreshToken' => $tokenResponse->getRefreshToken()]);
+                    session()->save();
+                }
 
-            //tokenの再生成
-            if(session('oauthTokenExpiration') < time()){
-                $tokenResponse = $this->oauthService->updateToken(session('refreshToken'));
-                session(['oauthToken' => $tokenResponse->getAuthenticationToken()]);
-                session(['oauthTokenExpiration' => time() + 25 * 60]);
-                session(['refreshToken' => $tokenResponse->getRefreshToken()]);
-                session()->save();
+                if($path === 'sign_in' || $path === 'sign_up')
+                    return redirect()->action(self::HOME_PAGE_CONTROLLER);
+                else
+                    return $next($request);
             }
-
-            if($path === 'sign_in' || $path === 'sign_up')
-                return redirect()->action(self::HOME_PAGE_CONTROLLER);
-            else
-                return $next($request);
-        }
-        else{
+            else{
+                if($path === 'sign_in' || $path === 'sign_up')
+                    return $next($request);
+                else
+                    return redirect()->action([LoginController::class, 'show']);
+            }
+        }catch(FailureCreateAuthenticationTokenException){
             if($path === 'sign_in' || $path === 'sign_up')
                 return $next($request);
             else

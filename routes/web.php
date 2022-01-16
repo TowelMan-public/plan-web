@@ -143,10 +143,16 @@ Route::post('todo/onProject/{todoId}/update', [TodoOnProjectController::class, '
 Route::post('todo/onProject/{todoId}/delete', [TodoOnProjectController::class, 'delete']);
 Route::post('todo/onProject/{todoId}/isCompleted', [TodoOnProjectController::class, 'setIsCompleted']);
 
+Route::get('todo/onProject/{todoId}/responsibleList', [TodoOnResponsibleController::class, 'showResponsibleList'])
+    ->name("TodoOnResponsibleController@showResponsibleList");
+Route::post('todo/onResponsible/{todoId}/insert', [TodoOnResponsibleController::class, 'insertResponsible']);
+
 Route::get('todo/onResponsible/{todoId}', [TodoOnResponsibleController::class, 'show'])
     ->name("TodoOnResponsibleController@show");
+Route::post('todo/onResponsible/{todoId}/delete', [TodoOnResponsibleController::class, 'delete']);
 Route::post('todo/onResponsible/{todoId}/exit', [TodoOnResponsibleController::class, 'exit']);
 Route::post('todo/onResponsible/{todoId}/isCompleted', [TodoOnResponsibleController::class, 'setIsCompleted']);
+Route::post('todo/onResponsible/{todoId}/isCompleted/all', [TodoOnResponsibleController::class, 'setIsCompletedAll']);
 
 Route::post('content/insert', [ContentController::class, 'insert']);
 Route::post('content/{contentId}/update', [ContentController::class, 'update']);

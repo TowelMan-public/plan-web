@@ -46,6 +46,7 @@
         })
     </script>
 
+    @if ($mySubscriberData->hasSuperAuthority())
     <h3>ユーザーの勧誘</h3>
     <form action="/project/public/{{ $projectData->getId() }}/subscriber/invitation" method="post">
         @csrf
@@ -63,6 +64,8 @@
     </form>
 
     <br>
+    @endif
+
     <h3>加入者一覧</h3>
     @foreach ($subscriberDataArray as $subscriberData)
         <div id="subscriber_{{ $subscriberData->getUserName() }}" class="subscriber">

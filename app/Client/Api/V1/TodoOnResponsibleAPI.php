@@ -178,18 +178,17 @@ class TodoOnResponsibleAPI
      * @param string|null $userName
      * @return void
      */
-    public function putIsCompleted(string $token, int $todoOnProjectId, string $userName = null)
+    public function putIsCompleted(string $token, int $todoOnProjectId, bool $isCompleted, bool $isMyResponsible = true)
     {
         $url = self::ROOT_URL . "/$todoOnProjectId/responsible/is_completed";
         
         //リクエストパラメタ
         $dto = new DtoParamaters();
+        $dto->setIsCompleted($isCompleted);
         
         //$userNameの指定の有無でAPIが変わる
-        if(is_null($userName))
+        if(!$isMyResponsible)
             $url .= "/all";
-        else
-            $dto->setUserName($userName);
         
         //ヘッダー
         $header = new OauthHeader($token);
