@@ -47,6 +47,7 @@ class PublicProjectController extends Controller
         session()->put('_old_input', $request->old());
 
         return View('public_project_layout')
+            ->with('errorForAll', $request->errorForAll)
             ->with('projectData', $projectData)
             ->with('mySubscriberData', $mySubscriberData);
     }
@@ -61,8 +62,8 @@ class PublicProjectController extends Controller
                 'projectId' => $projectId,
             ]));
         }catch(NotHaveAuthorityToOperateProjectException){
-            //TODO
             return redirect(route('PublicProjectController@show', [
+                'errorForAll' => 'あなたにはその操作をする権限がありません。',
                 'projectId' => $projectId,
             ]));
         }
@@ -76,6 +77,7 @@ class PublicProjectController extends Controller
             return redirect()->action([ProjectController::class, 'showDefaultList']);
         }catch(NotHaveAuthorityToOperateProjectException){
             return redirect(route('PublicProjectController@show', [
+                'errorForAll' => 'あなたにはその操作をする権限がありません。',
                 'projectId' => $projectId,
             ]));
         }
@@ -95,7 +97,9 @@ class PublicProjectController extends Controller
                 'projectId' => $projectId,
             ]));
         }catch(BadRequestException){
-            //TODO
+            return redirect(route('ProjectController@showInvitationList', [
+                'errorForAll' => 'あなたへの勧誘は消されたか、既にあなたが他の機種等でこの勧誘について既に受け入れたか断ったと思われます。',
+            ]));
         }
     }
 
@@ -106,7 +110,9 @@ class PublicProjectController extends Controller
             
             return redirect()->action([ProjectController::class, 'invitation']);
         }catch(BadRequestException){
-            //TODO
+            return redirect(route('ProjectController@showInvitationList', [
+                'errorForAll' => 'あなたへの勧誘は消されたか、既にあなたが他の機種等でこの勧誘について既に受け入れたか断ったと思われます。',
+            ]));
         }
     }
 }

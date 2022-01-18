@@ -36,6 +36,11 @@
 @endsection
 
 @section('contents')
+    @if ($errorForAll !== null)
+        <script>
+            confirm('{{ $errorForAll }}');
+        </script>
+    @endif
 
     @foreach ($projectListData->getPrivateProjectList() as $data)
         <div id="private_project_{{ $data->getId() }}" class="project" style="background-color: aqua;">

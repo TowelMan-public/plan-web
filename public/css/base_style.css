@@ -409,6 +409,7 @@ footer>p {
     height: 70%;
     background-color: #3584bb;
     margin: auto;
+    border-radius: 1.4em;
 }
 
 #hamburger_menu_button:checked ~ .hamburger_menu_contents_outer {

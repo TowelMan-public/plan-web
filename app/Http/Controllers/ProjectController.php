@@ -117,6 +117,7 @@ class ProjectController extends Controller
         $dateList->setOtherProjectList($projectListDataArray);
 
         return View('project_list_layout')
+            ->with('errorForAll', $request->errorForAll)
             ->with('projectListData', $dateList)
             ->with('isInvitation', 1)
             ->with('unIncludePrivate', $request->unIncludePrivate??null)

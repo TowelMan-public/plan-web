@@ -33,6 +33,11 @@
 @endsection
 
 @section('contents')
+    @if ($errorForAll !== null)
+        <script>
+            confirm('{{ $errorForAll }}');
+        </script>
+    @endif
     <form action={{ $mySubscriberData->hasSuperAuthority() ? '/project/public/'.$projectData->getId().'/update' : '' }} method="post">
         @csrf
 

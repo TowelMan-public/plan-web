@@ -28,11 +28,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/test', function () {
-    return view('test');
-});
-
 Route::get('sign_in', [LoginController::class, 'show']);
 Route::post('sign_in', [LoginController::class, 'login']);
 Route::get('logout', [LoginController::class, 'logout']);
@@ -52,7 +47,8 @@ Route::get('me/todo/month/{year}/{month}/next', [TodoController::class, 'showNex
 Route::get('me/todo/month/{year}/{month}/back', [TodoController::class, 'showBackInMonth']);
 
 Route::get('me/project/list', [ProjectController::class, 'showDefaultList']);
-Route::get('me/project/list/invitation', [ProjectController::class, 'showInvitationList']);
+Route::get('me/project/list/invitation', [ProjectController::class, 'showInvitationList'])
+    ->name('ProjectController@showInvitationList');
 Route::get('me/project/month', [ProjectController::class, 'showDefaultListInMonth']);
 Route::get('me/project/month/{year}/{month}', [ProjectController::class, 'showListInMonth'])
     ->name("ProjectController@showListInMonth");
@@ -137,7 +133,6 @@ Route::get('project/public/{projectId}/todo/insert', [TodoInProjectController::c
     ->name("TodoInProjectController@showInsertTodoToPublicProject");
 Route::post('project/public/{projectId}/todo/insert', [TodoInProjectController::class, 'insertTodoToPublicProject']);
 
-//TODO
 Route::get('todo/onProject/{todoId}', [TodoOnProjectController::class, 'show'])
     ->name("TodoOnProjectController@show");
 Route::post('todo/onProject/{todoId}/update', [TodoOnProjectController::class, 'update']);

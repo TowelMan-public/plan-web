@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -35,7 +36,12 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->reportable(function (Throwable $e) {
-            //TODO
+            return View('error_page_layout');
         });
+    }
+
+    protected function renderHttpException(HttpExceptionInterface $exception)
+    {
+        return response()->view('error_page_layout');
     }
 }

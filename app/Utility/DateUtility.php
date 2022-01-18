@@ -166,7 +166,6 @@ class DateUtility
      */
     static public function createDateString(int $year, int $month, int $day, int $hour, int $minute): string
     {
-        //TODO 0付ける
         return "$year-$month-$day $hour:$minute";
     }
 
