@@ -11,7 +11,7 @@ use App\Config\Config;
 /**
 * 内容に関するAPI
 */
-class ContentAPI
+class ContentApi
 {
     private const ROOT_URL = Config::API_ROOT_URL_V1 . "content";
     private static ContentApi $instance;

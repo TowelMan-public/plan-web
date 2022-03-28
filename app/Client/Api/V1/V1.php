@@ -25,9 +25,9 @@ class V1
         return self::$instance;
     }
     
-    public function user() :UserAPI
+    public function user() :UserApi
     {
-        return UserAPI::getInstance();
+        return UserApi::getInstance();
     }
 
     public function userConfig() :UserConfigApi
@@ -35,43 +35,43 @@ class V1
         return UserConfigApi::getInstance();
     }
 
-    public function terminal() :TerminalAPI
+    public function terminal() :TerminalApi
     {
-        return TerminalAPI::getInstance();
+        return TerminalApi::getInstance();
     }
 
-    public function notice() :NoticeAPI
+    public function notice() :NoticeApi
     {
-        return NoticeAPI::getInstance();
+        return NoticeApi::getInstance();
     }
 
-    public function privateProject() :PrivateProjectAPI
+    public function privateProject() :PrivateProjectApi
     {
-        return PrivateProjectAPI::getInstance();
+        return PrivateProjectApi::getInstance();
     }
 
-    public function publicProject() :PublicprojectAPI
+    public function publicProject() :PublicProjectApi
     {
-        return PublicprojectAPI::getInstance();
+        return PublicProjectApi::getInstance();
     }
 
-    public function subscriber() :SubscriberAPI
+    public function subscriber() :SubscriberApi
     {
-        return SubscriberAPI::getInstance();
+        return SubscriberApi::getInstance();
     }
 
-    public function todo() :TodoAPI
+    public function todo() :TodoApi
     {
-        return TodoAPI::getInstance();
+        return TodoApi::getInstance();
     }
 
-    public function todoOnResoinsible() :TodoOnResponsibleAPI
+    public function todoOnResoinsible() :TodoOnResponsibleApi
     {
-        return TodoOnResponsibleAPI::getInstance();
+        return TodoOnResponsibleApi::getInstance();
     }
 
-    public function content() :ContentAPI
+    public function content() :ContentApi
     {
-        return ContentAPI::getInstance();
+        return ContentApi::getInstance();
     }
 }

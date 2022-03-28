@@ -11,7 +11,7 @@ use App\Config\Config;
 /**
 * プライベートプロジェクトに関するAPI
 */
-class PrivateProjectAPI
+class PrivateProjectApi
 {
     private const ROOT_URL = Config::API_ROOT_URL_V1 . "project/private";
     private static PrivateProjectApi $instance;

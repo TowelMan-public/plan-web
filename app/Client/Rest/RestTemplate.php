@@ -52,6 +52,7 @@ class RestTemplate
                 'http_errors' => false,
                 'headers'         => $header->toArray(),
                 'query'     => $dtoParamaters->toArray(),
+                'verify' => false,
             ]);
         
         $statusCode = $result->getStatusCode();
@@ -77,22 +78,23 @@ class RestTemplate
     public function post(string $url, DtoParamaters $dtoParamaters, BaseHeader $header, bool $isJson = true): ?array
     {
         $result = $this->client->post($url, 
-        [
-            'allow_redirects' => true,
-            'http_errors' => false,
-            'headers'         => $header->toArray(),
-            'json'     => $dtoParamaters->toArray(),
-        ]);
-        
-        $statusCode = $result->getStatusCode();
-        $resultContents = $result->getBody()->getContents();
-        $resultArray = json_decode($resultContents, true);
+            [
+                'allow_redirects' => true,
+                'http_errors' => false,
+                'headers'         => $header->toArray(),
+                'json'     => $dtoParamaters->toArray(),
+                'verify' => false,
+            ]);
+            
+            $statusCode = $result->getStatusCode();
+            $resultContents = $result->getBody()->getContents();
+            $resultArray = json_decode($resultContents, true);
 
-        $this->checkErrorAndThrows($statusCode, $resultArray);
-        if($isJson)
-            return $resultArray;
-        else
-            return [$resultContents];
+            $this->checkErrorAndThrows($statusCode, $resultArray);
+            if($isJson)
+                return $resultArray;
+            else
+                return [$resultContents];
     }
 
     /**
@@ -112,6 +114,7 @@ class RestTemplate
             'http_errors' => false,
             'headers'         => $header->toArray(),
             'json'     => $dtoParamaters->toArray(),
+            'verify' => false,
         ]);
         
         $statusCode = $result->getStatusCode();
@@ -142,6 +145,7 @@ class RestTemplate
             'http_errors' => false,
             'headers'         => $header->toArray(),
             'json'     => $dtoParamaters->toArray(),
+            'verify' => false,
         ]);
         
         $statusCode = $result->getStatusCode();

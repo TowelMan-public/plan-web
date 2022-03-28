@@ -13,7 +13,7 @@ use DateTime;
 /**
 * 担当者向け「やること」に関するAPI
 */
-class TodoOnResponsibleAPI
+class TodoOnResponsibleApi
 {
     private const ROOT_URL = Config::API_ROOT_URL_V1 . "todo";
     private static TodoOnResponsibleApi $instance;

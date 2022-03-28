@@ -11,7 +11,7 @@ use App\Config\Config;
 /**
 * 通知に関するAPI
 */
-class NoticeAPI
+class NoticeApi
 {
     private const ROOT_URL = Config::API_ROOT_URL_V1 . "notice";
     private static NoticeApi $instance;

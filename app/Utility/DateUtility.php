@@ -102,23 +102,30 @@ class DateUtility
      */
     static function stringToDate(string $dateString): DateTime
     {
-        $dateOrBool = DateTime::createFromFormat(Config::DATE_FORMAT, $dateString, self::timeZoon());
-        
-        if($dateOrBool === false){
-            $stringCount = strlen($dateString);
-            $subString = substr($dateString, $stringCount - 2, 1);
-            
-            if($subString !== '0'){
-                $muiteString = '0'.substr($dateString, $stringCount - 1, 1);
-                $dateString = substr($dateString, 0, $stringCount - 1).$muiteString;
-            }
-
-            $dateOrBool = DateTime::createFromFormat('Y-n-j G:i', $dateString, self::timeZoon());
-
-            if($dateOrBool === false)
-                throw new DateException("$dateString is Illegal. \$dateString is not Date.");
+        $newDateString = $dateString;
+        if (!ctype_digit(substr($newDateString, 0, 1))){
+            $newDateString = substr($newDateString, 1);
+        }
+        if (!ctype_digit(substr($newDateString, strlen($newDateString) - 1, 1))){
+            $newDateString = substr($newDateString, 0, strlen($newDateString) - 1);
+        }
+        if(substr($newDateString, 6, 1) === "-"){
+            $newDateString = substr($newDateString, 0, 5)."0".substr($newDateString, 5);
+        }
+        if(substr($newDateString, 9, 1) === " "){
+            $newDateString = substr($newDateString, 0, 8)."0".substr($newDateString, 8);
+        }
+        if(substr($newDateString, 12, 1) === ":"){
+            $newDateString = substr($newDateString, 0, 11)."0".substr($newDateString, 11);
+        }
+        if(strlen(substr($newDateString, 14)) === 1){
+            $newDateString = substr($newDateString, 0, 14)."0".substr($newDateString, 14);
         }
 
+        $dateOrBool = DateTime::createFromFormat(Config::DATE_FORMAT, $newDateString, self::timeZoon());
+        if($dateOrBool === false){
+            throw new DateException("$dateString is Illegal. \$dateString is not Date.");
+        }
         return $dateOrBool;
     }
 

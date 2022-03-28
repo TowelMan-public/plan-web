@@ -28,8 +28,6 @@ class ProjectController extends Controller
 
     public function showDefaultList(Request $request)
     {
-        $isIncludePrivate = isset($request->includePrivate);
-
         $projectListData = $this->projectService->getProjectListData($this->getOauthToken(), new DateTime(), $request->unIncludePrivate === null, $request->includeCompleted != null);
 
         return View('project_list_layout')

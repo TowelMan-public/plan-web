@@ -11,7 +11,7 @@ use App\Config\Config;
 /**
 * 機種に関するAPI
 */
-class TerminalAPI
+class TerminalApi
 {
     private const ROOT_URL = Config::API_ROOT_URL_V1 . "user/terminal";
     private static TerminalApi $instance;

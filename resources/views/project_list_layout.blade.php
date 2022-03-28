@@ -36,7 +36,7 @@
 @endsection
 
 @section('contents')
-    @if ($errorForAll !== null)
+    @if ( isset($errorForAll) && $errorForAll !== null)
         <script>
             confirm('{{ $errorForAll }}');
         </script>

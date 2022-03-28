@@ -30,7 +30,7 @@ class UserApi
     /**
      * インスタンスを取得する
      *
-     * @return UserAPI UserApiのインスタンス
+     * @return UserApi UserApiのインスタンス
      */
     public static function getInstance(): UserApi
     {

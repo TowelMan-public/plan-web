@@ -11,7 +11,7 @@ use App\Config\Config;
 /**
 * パブリックプロジェクトの参画者に関するAPI
 */
-class SubscriberAPI
+class SubscriberApi
 {
     private const ROOT_URL = Config::API_ROOT_URL_V1 . "project";
     private static SubscriberApi $instance;
@@ -28,7 +28,7 @@ class SubscriberAPI
     /**
      * インスタンスを取得する
      *
-     * @return SubscriberAPI SubscriberApiのインスタンス
+     * @return SubscriberApi SubscriberApiのインスタンス
      */
     public static function getInstance(): SubscriberApi{
         self::$instance ??= new SubscriberApi();

@@ -12,10 +12,10 @@ use DateTime;
 /**
  * パブリックプロジェクトに関するAPI
  */
-class PublicprojectAPI
+class PublicProjectApi
 {
     private const ROOT_URL = Config::API_ROOT_URL_V1 . "project";
-    private static PublicprojectApi $instance;
+    private static PublicProjectApi $instance;
     private RestTemplate $restTemplate;
 
     /**
@@ -29,11 +29,11 @@ class PublicprojectAPI
     /**
      * インスタンスを取得する
      *
-     * @return PublicprojectApi PublicprojectApiのインスタンス
+     * @return PublicProjectApi PublicProjectApiのインスタンス
      */
-    public static function getInstance(): PublicprojectApi
+    public static function getInstance(): PublicProjectApi
     {
-        self::$instance ??= new PublicprojectApi();
+        self::$instance ??= new PublicProjectApi();
         return self::$instance;
     }
 
