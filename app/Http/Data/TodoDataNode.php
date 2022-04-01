@@ -49,6 +49,9 @@ class TodoDataNode
     public function setNextNode(TodoDataNode|null $nextNode)
     {
         $this->nextNode = $nextNode;
+        if($nextNode !== null){
+            $nextNode->backNode = $this;
+        }
     }
 
     /**
@@ -70,6 +73,9 @@ class TodoDataNode
     public function setBackNode(TodoDataNode|null $backNode)
     {
         $this->backNode = $backNode;
+        if($backNode !== null){
+            $backNode->nextNode = $this;
+        }
     }
 
     /**

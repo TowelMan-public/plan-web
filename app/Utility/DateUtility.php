@@ -196,12 +196,13 @@ class DateUtility
      */
     static function getDateAssociativeArrayByDateTime(DateTime $date): array
     {
+        $newDate = self::getDateTimeInDefaultTimeZone($date);
         return [
-            self::YEAR => intval($date->format('Y')),
-            self::MONTH => intval($date->format('m')),
-            self::DAY => intval($date->format('d')),
-            self::HOUR => intval($date->format('H')),
-            self::MINUTE => intval($date->format('i')),
+            self::YEAR => intval($newDate->format('Y')),
+            self::MONTH => intval($newDate->format('m')),
+            self::DAY => intval($newDate->format('d')),
+            self::HOUR => intval($newDate->format('H')),
+            self::MINUTE => intval($newDate->format('i')),
         ];
     }
 

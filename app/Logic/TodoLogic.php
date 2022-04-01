@@ -151,10 +151,14 @@ class TodoLogic{
 
         //Todoのレスポンス系のオブジェクトからTodoDataNodeを生成
         $todoNodeArray = [];
-        foreach ($todoOnProjectArray as $todoResponse)
-            $todoNodeArray[] = self::createTodoDataNode($todoResponse, $year, $month, $dayLengthInMonth);
-        foreach ($todoOnResponsibleArray as $todoResponse)
-            $todoNodeArray[] = self::createTodoDataNode($todoResponse, $year, $month, $dayLengthInMonth);
+        foreach ($todoOnProjectArray as $todoResponse){
+            if($finishDate->getTimestamp() >= $todoResponse->getStartDate()->getTimestamp())
+                $todoNodeArray[] = self::createTodoDataNode($todoResponse, $year, $month, $dayLengthInMonth);
+        }
+        foreach ($todoOnResponsibleArray as $todoResponse){
+            if($finishDate->getTimestamp() >= $todoResponse->getStartDate()->getTimestamp())
+                $todoNodeArray[] = self::createTodoDataNode($todoResponse, $year, $month, $dayLengthInMonth);
+        }
 
         //期間が長い順にTodoDataNodeをソート
         $todoNodeSortedArray = SortUtility::heapDescSort($todoNodeArray, function(TodoDataNode $node){
@@ -219,24 +223,13 @@ class TodoLogic{
         $emptyNodeLastDay = $emptyNode->getStartDay() + $emptyNode->getDayLength() - 1;
         $nodeLastDay = $node->getStartDay() + $node->getDayLength() - 1;
 
-        if($emptyNodeLastDay > $nodeLastDay){
-            $startDay = $nodeLastDay + 1;
-            $dayLength = $emptyNodeLastDay - $nodeLastDay;
+        $emptyNode->setDayLength($node->getStartDay() - $emptyNode->getStartDay());
+        $node->setNextNode($emptyNode->getNextNode());
+        $emptyNode->setNextNode($node);
 
-            $newNode = new TodoDataNode($startDay, $dayLength);
-            $newNode->setNextNode($emptyNode->getNextNode());    
-            $node->setNextNode($newNode);
-            $newNode->setBackNode($node);
-        }
-
-        if($node->getStartDay() - $emptyNode->getStartDay() !== 0 || $emptyNode->getBackNode() === null){
-            $emptyNode->setDayLength($node->getStartDay() - $emptyNode->getStartDay());
-            $emptyNode->setNextNode($node);
-            $node->setBackNode($emptyNode);
-        }else{
-            $emptyNode->getBackNode()->setNextNode($node);
-            $node->setBackNode($emptyNode->getBackNode());
-        }    
+        $newNextEmptyNode = new TodoDataNode($nodeLastDay + 1, $emptyNodeLastDay - $nodeLastDay);
+        $newNextEmptyNode->setNextNode($node->getNextNode());
+        $node->setNextNode($newNextEmptyNode);
     }
 
     static public function createUserInResposnibleDataArray(UserInTodoOnResponsibleResponse $userInResponsibleResponse, UserResponse $userResponsible): UserInResposnibleData
